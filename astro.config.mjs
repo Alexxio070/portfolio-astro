@@ -7,9 +7,6 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
-import netlify from '@astrojs/netlify';
-import cloudflare from '@astrojs/cloudflare';
 import i18nConfig from './src/config/i18n.config.ts';
 import { SITE_URL_FALLBACK } from './src/config/site-url.ts';
 import {
@@ -48,26 +45,6 @@ for (const file of ['.env.local', '.env']) {
     process.loadEnvFile(file);
   } catch {
     // Not present. Nothing to load.
-  }
-}
-
-/**
- * Deploy-target adapter selection. Vercel is the default; set
- * `DEPLOY_TARGET=netlify` or `DEPLOY_TARGET=cloudflare` to build for those
- * platforms instead. All three keep `output: 'static'`, so every page is
- * prerendered and only the `prerender = false` API routes (the contact form
- * and newsletter) ship as the platform's serverless/edge function — on
- * Cloudflare Pages, as a Pages Function.
- */
-const deployTarget = process.env.DEPLOY_TARGET;
-function resolveAdapter() {
-  switch (deployTarget) {
-    case 'netlify':
-      return netlify();
-    case 'cloudflare':
-      return cloudflare();
-    default:
-      return vercel();
   }
 }
 
@@ -353,7 +330,6 @@ const astroI18nOptions = i18nEnabled
 
 export default defineConfig({
   output: 'static',
-  adapter: resolveAdapter(),
   site: process.env.SITE_URL || SITE_URL_FALLBACK,
   ...(astroI18nOptions ? { i18n: astroI18nOptions } : {}),
 
@@ -380,10 +356,6 @@ export default defineConfig({
         optional: true,
         default: 'https://cloud.umami.is/script.js',
       }),
-      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
-      RESEND_FROM_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),
-      RESEND_AUDIENCE_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
-      NEWSLETTER_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       GOOGLE_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
       BING_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
       PUBLIC_GOOGLE_MAPS_API_KEY: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),

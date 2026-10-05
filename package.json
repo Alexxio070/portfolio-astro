@@ -1,8 +1,7 @@
 {
   "name": "astro-rocket",
   "version": "2.6.0",
-  "packageManager": "pnpm@10.33.0",
-  "description": "Astro Rocket \u2014 A production-ready Astro 7 theme built on Tailwind CSS v4",
+  "description": "Astro Rocket — A production-ready Astro 7 theme built on Tailwind CSS v4",
   "type": "module",
   "author": "Hans Martens",
   "license": "MIT",
@@ -29,8 +28,6 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "build:netlify": "DEPLOY_TARGET=netlify astro build",
-    "build:cloudflare": "DEPLOY_TARGET=cloudflare astro build",
     "verify": "node scripts/verify-build.mjs",
     "preview": "astro preview",
     "check": "astro check",
@@ -38,17 +35,14 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "validate": "pnpm lint && pnpm check && pnpm test:run && pnpm build && pnpm verify",
+    "validate": "npm run lint && npm run check && npm run test:run && npm run build && npm run verify",
     "test": "vitest",
     "test:run": "vitest run"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.0.1",
     "@astrojs/mdx": "8.0.0",
-    "@astrojs/netlify": "^8.0.0",
     "@astrojs/react": "6.0.1",
     "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/vercel": "^11.0.0",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/manrope": "^5.2.8",
     "@fontsource-variable/outfit": "^5.2.8",
@@ -64,7 +58,6 @@
     "png-to-ico": "^3.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "resend": "^6.9.3",
     "schema-dts": "^1.1.2",
     "sharp": "^0.34.0",
     "tailwind-merge": "^2.6.0"
@@ -88,12 +81,6 @@
     "typescript-eslint": "^8.18.0",
     "vitest": "^3.2.0",
     "zod": "^4.0.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp"
-    ]
   },
   "engines": {
     "node": ">=22.12.0"

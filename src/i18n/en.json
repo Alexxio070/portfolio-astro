@@ -157,7 +157,7 @@
     "titleHighlight": "found.",
     "description": "This page has moved, been removed, or never existed in the first place. Let's get you back on track.",
     "backHome": "Back to home",
-    "browseBlog": "Browse the blog",
+    "browseProjects": "Browse projects",
     "tryInstead": "Try one of these instead",
     "projectsDesc": "Selected work and case studies.",
     "blogDesc": "Notes on design, code, and the craft.",
@@ -230,12 +230,12 @@
     "about": {
       "meta": {
         "title": "About — Free Open-Source Astro 7 Theme",
-        "description": "What Astro Rocket is and how it's built: a free Astro 7 starter theme with 44 designed components, 8 colour themes, i18n, and dark mode."
+        "description": "What Astro Rocket is and how it's built: a free Astro 7 starter theme with 42 designed components, 8 colour themes, i18n, and dark mode."
       },
       "hero": {
         "badge": "About",
         "titleLead": "Astro Rocket —",
-        "typingWords": ["Lightning-fast", "Starter theme", "44 Components", "8 Themes", "Dark Mode", "Built-in i18n"],
+        "typingWords": ["Lightning-fast", "Starter theme", "42 Components", "8 Themes", "Dark Mode", "Built-in i18n"],
         "typingWordsMobile": ["Lightning-fast", "Starter theme", "8 Themes", "Dark Mode", "Built-in i18n"],
         "description": "A free, open-source Astro 7 starter\u00a0theme to build anything on."
       },
@@ -246,7 +246,7 @@
         "items": [
           {
             "icon": "component",
-            "title": "44 designed components",
+            "title": "42 designed components",
             "description": "From buttons to hero sections: typed, accessible, consistent, and documented in a live showcase."
           },
           {
@@ -529,15 +529,15 @@
     "home": {
       "meta": {
         "title": "Free open-source Astro 7 theme",
-        "description": "A free, fast Astro 7 starter theme to build anything on: 44 designed components, 8 colour themes, dark mode, and built-in i18n."
+        "description": "A free, fast Astro 7 starter theme to build anything on: 42 designed components, 8 colour themes, dark mode, and built-in i18n."
       },
       "hero": {
         "badge": "Available for new projects",
         "titleLine1": "Astro Rocket —",
         "titleLine2": "Web Designer",
         "titleLine3": "& Developer",
-        "description": "A free, lightning-fast Astro 7 starter theme to build anything on: 44 designed components, 8 colour themes, and dark mode.",
-        "descriptionMobile": "A free, lightning-fast Astro 7 starter theme to build anything on: 44 designed components and 8 colour themes.",
+        "description": "A free, lightning-fast Astro 7 starter theme to build anything on: 42 designed components, 8 colour themes, and dark mode.",
+        "descriptionMobile": "A free, lightning-fast Astro 7 starter theme to build anything on: 42 designed components and 8 colour themes.",
         "github": "Get it on GitHub",
         "getStarted": "Get started"
       },

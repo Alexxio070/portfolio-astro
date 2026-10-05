@@ -11,7 +11,7 @@ make changes that fit rather than changes that merely work.
 src/config/          Site settings — start here for almost any request
 src/content/         The site's content (Markdown/MDX/JSON collections)
 src/i18n/            All user-facing interface text, per language
-src/components/      44 components, grouped by purpose
+src/components/      42 components, grouped by purpose
 src/pages/           Routes; a file here is a URL
 src/layouts/         Page shells the routes render into
 src/lib/             Helpers for blog, projects, tags, SEO, themes

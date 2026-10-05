@@ -48,8 +48,5 @@ coverage/
 # Claude Code
 .claude/
 
-# npm lockfile (pnpm only)
-package-lock.json
-
 # referencia local (nunca se comitea)
 referencias/

@@ -3,17 +3,14 @@
  * ContactView — the Contact page body.
  *
  * Shared by the default-locale route (`/contact`) and the locale-prefixed route
- * (`/<locale>/contact`). Page copy is read from `pages.contact.*`; the embedded
- * `ContactForm` localizes itself from the URL path, so the form fields follow
- * the active locale automatically. Untranslated keys fall back to the default
- * locale.
+ * (`/<locale>/contact`). Page copy is read from `pages.contact.*`. Untranslated
+ * keys fall back to the default locale.
  */
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import { Hero } from '@/components/hero';
-import ContactForm from '@/components/patterns/ContactForm.astro';
 import siteConfig from '@/config/site.config';
 import { resolveSocialLinks } from '@/lib/utils';
 import { t, tData, defaultLocale } from '@/i18n';
@@ -75,18 +72,10 @@ const channels = [
   <!-- Contact Section -->
   <section class="relative isolate overflow-hidden py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="relative z-10 mx-auto max-w-5xl px-6">
-      <div class="grid grid-cols-1 glitch:grid-cols-5 gap-10 glitch:gap-16 items-stretch">
-
-        <!-- Left column: contact form -->
-        <div class="glitch:col-span-3 h-full sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0" data-reveal data-reveal-ease="smooth">
-          <Card padding="lg" class="h-full flex flex-col justify-center">
-            <h2 class="font-display text-xl font-bold text-foreground mb-6 sm:text-center glitch:text-left">{t('pages.contact.formTitle', locale)}</h2>
-            <ContactForm />
-          </Card>
-        </div>
+      <div class="grid grid-cols-1">
 
         <!-- Right column: contact channels -->
-        <div class="glitch:col-span-2 space-y-4 sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0" data-reveal data-reveal-delay="1" data-reveal-ease="smooth">
+        <div class="space-y-4 max-w-xl mx-auto w-full" data-reveal data-reveal-delay="1" data-reveal-ease="smooth">
           <div class="sm:text-center glitch:text-left">
             <h2 class="font-display text-lg font-bold text-foreground mb-1">{t('pages.contact.channelsTitle', locale)}</h2>
             <p class="text-sm text-foreground-muted">{t('pages.contact.channelsSubtitle', locale)}</p>

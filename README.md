@@ -60,7 +60,7 @@
 
 **Astro Rocket is an Astro 7 theme.**
 
-It ships as a working site: homepage, about, services, contact, a blog and a projects portfolio — both with tags and pagination — a components showcase, and a 404 page. Underneath sits a library of **44 designed, accessible, TypeScript components** on a three-tier design-token system, with static search, SEO, opt-in i18n, dark mode, and 8 colour themes you can switch live in the browser.
+It ships as a working site: homepage, about, services, contact, a blog and a projects portfolio — both with tags and pagination — a components showcase, and a 404 page. Underneath sits a library of **42 designed, accessible, TypeScript components** on a three-tier design-token system, with static search, SEO, opt-in i18n, dark mode, and 8 colour themes you can switch live in the browser.
 
 Content is Markdown in `src/content/`, the rest is `site.config.ts`, and it deploys to Vercel, Netlify, Cloudflare, or as static files.
 
@@ -81,7 +81,7 @@ Use all of it or only the parts you need. The site you build on it is yours.
 | **8 Colour Themes** | All 8 colour swatches are shown in the header dropdown — click one and the logo badge, blog image gradients, and every brand color update live instantly. No file edits, no rebuilds. The selector can be removed from the header once you've settled on a color. |
 | **Scroll Progress Bar** | A thin 2px brand-coloured bar on the header edge that fills as you scroll. Enabled on the homepage (above the floating header), blog index, and post pages (below the solid header). Controlled via `showScrollProgress` and `scrollProgressPosition` props on the Header component. |
 | **Design Tokens** | Three-tier token architecture (reference → semantic → component) |
-| **44 Components** | 34 UI, 7 patterns, 2 layout, 1 hero — every entry in `component-registry.json`, all accessible with TypeScript |
+| **42 Components** | 34 UI, 5 patterns, 2 layout, 1 hero — every entry in `component-registry.json`, all accessible with TypeScript |
 | **Auto Logo & Favicon** | First letter of your site name on brand color — generated automatically from `site.config.ts`, no design tools needed. Prefer your own logo? Set `branding.logo.image` to a file in `public/`. |
 | **Icon System** | Unified `Icon` component (Astro + React) — 350+ [Lucide](https://lucide.dev) UI icons and 3000+ [Simple Icons](https://simpleicons.org) brand icons via Iconify |
 | **Typing Effect** | Animated typing effect in the hero section |
@@ -110,7 +110,7 @@ Use all of it or only the parts you need. The site you build on it is yours.
 ### Prerequisites
 
 - **Node.js 22.12.0+** (required for Astro 7)
-- **pnpm 10.33.0** — the version in `packageManager`, which `corepack` installs for you
+- **npm** — this repo uses `package-lock.json`
 
 ### Installation
 
@@ -185,7 +185,7 @@ astro-rocket/
 │   │   │   ├── primitives/  # Icon
 │   │   │   ├── content/     # CodeBlock
 │   │   │   └── marketing/   # Logo, CTA, NpmCopyButton, SocialProof, TerminalDemo
-│   │   ├── patterns/        # Composed patterns (ContactForm, SearchInput, StatCard, etc.)
+│   │   ├── patterns/        # Composed patterns (SearchInput, StatCard, etc.)
 │   │   ├── layout/          # Header, Footer, Navigation, ThemeModeDropdown, ThemeSelector(Dropdown)
 │   │   ├── seo/             # SEO, JsonLd, Breadcrumbs
 │   │   ├── blog/            # Blog-specific components
@@ -584,7 +584,7 @@ Foreground tokens are documented with their contrast ratios inline. When customi
 
 ## Components
 
-Astro Rocket includes 44 components across four categories. All UI components use [class-variance-authority (CVA)](https://cva.style) for type-safe variant management.
+Astro Rocket includes 42 components across four categories. All UI components use [class-variance-authority (CVA)](https://cva.style) for type-safe variant management.
 
 ### UI Components (34)
 
@@ -662,12 +662,10 @@ Astro Rocket includes 44 components across four categories. All UI components us
 | SocialProof | Testimonial and trust indicator cards |
 | TerminalDemo | Animated terminal demonstration (React) |
 
-### Pattern Components (7)
+### Pattern Components (5)
 
 | Component | Description |
 |-----------|-------------|
-| ContactForm | Complete contact form with validation |
-| NewsletterForm | Email subscription form |
 | FormField | Reusable form field wrapper |
 | SearchInput | Search input with icon |
 | PasswordInput | Password input with visibility toggle |
@@ -681,7 +679,7 @@ Astro Rocket includes 44 components across four categories. All UI components us
 | Layout | 2 | Header (with scroll progress bar), Footer |
 | Hero | 1 | Hero section with centered/split layouts, grid pattern, and typing effect |
 
-`src/components/` also holds components built for this site's own pages — blog, landing, SEO and theme-switching pieces, the `YouTube` embed for MDX, and the `Callout`, `CtaBand` and `LetterGlitchBand` patterns. They are outside the 44 that `component-registry.json` counts.
+`src/components/` also holds components built for this site's own pages — blog, landing, SEO and theme-switching pieces, the `YouTube` embed for MDX, and the `Callout`, `CtaBand` and `LetterGlitchBand` patterns. They are outside the 42 that `component-registry.json` counts.
 
 ### Usage Example
 

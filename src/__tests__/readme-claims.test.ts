@@ -41,12 +41,6 @@ describe('what the README claims', () => {
     expect(claimed).toBe(pkg.engines.node.replace(/^[^\d]*/, ''));
   });
 
-  it('asks for the pnpm version packageManager pins', () => {
-    const claimed = /- \*\*pnpm ([\d.]+)\*\*/.exec(readme)?.[1];
-    expect(claimed).toBeDefined();
-    expect(claimed).toBe(pkg.packageManager.split('@')[1]);
-  });
-
   it.each([
     ['Astro', 'astro'],
     ['Tailwind', 'tailwindcss'],
