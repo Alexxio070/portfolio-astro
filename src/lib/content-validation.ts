@@ -142,16 +142,11 @@ export function formatSlugCollisions(collisions: SlugCollision[]): string {
  */
 export async function assertNoSlugCollisions(): Promise<void> {
   const { getCollection } = await import('astro:content');
-  const [posts, pages, projects] = await Promise.all([
-    getCollection('blog'),
-    getCollection('pages'),
-    getCollection('projects'),
-  ]);
+  const projects = await getCollection('projects');
 
-  const publishablePosts = posts.filter((post) => post.data.draft !== true);
   const publishableProjects = projects.filter((project) => project.data.draft !== true);
   const collisions = findSlugCollisions(
-    collectSlugRecords(publishablePosts, pages, publishableProjects)
+    collectSlugRecords([], [], publishableProjects)
   );
 
   if (collisions.length > 0) {

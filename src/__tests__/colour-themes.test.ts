@@ -118,8 +118,6 @@ describe('colour themes', () => {
   it('the README and the docs quote the count', () => {
     for (const file of [
       'README.md',
-      'src/content/blog/en/astro-rocket-configuration-guide.mdx',
-      'src/content/blog/en/astro-rocket-getting-started.mdx',
     ]) {
       expect(read(file), file).toMatch(new RegExp(`${COUNT} (ready-to-use )?colour themes`));
     }
@@ -133,10 +131,6 @@ describe('colour themes', () => {
       'src/i18n/en.json',
       'src/i18n/nl.json',
       'src/content/projects/en/astro-rocket.mdx',
-      'src/content/blog/en/astro-rocket-configuration-guide.mdx',
-      'src/content/blog/en/astro-rocket-getting-started.mdx',
-      'src/content/blog/en/component-library.mdx',
-      'src/content/blog/en/scroll-progress-ring.mdx',
     ]) {
       expect(read(file), file).not.toMatch(/\btwelve\b/i);
       expect(read(file), file).not.toMatch(/\b12[- ](colour|color|swatch|theme)/i);
@@ -147,8 +141,6 @@ describe('colour themes', () => {
     const gone = ['orange', 'amber', 'lime', 'magenta'];
     for (const file of [
       'src/content/projects/en/astro-rocket.mdx',
-      'src/content/blog/en/astro-rocket-configuration-guide.mdx',
-      'src/content/blog/en/scroll-progress-ring.mdx',
       'README.md',
     ]) {
       const prose = read(file)

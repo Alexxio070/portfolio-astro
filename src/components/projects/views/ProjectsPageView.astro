@@ -15,7 +15,7 @@ import { Hero } from '@/components/hero';
 import CtaBand from '@/components/patterns/CtaBand.astro';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
 import ProjectTagList from '@/components/projects/ProjectTagList.astro';
-import Pagination from '@/components/blog/Pagination.astro';
+import Pagination from '@/components/projects/Pagination.astro';
 import { t, defaultLocale, localizedPath } from '@/i18n';
 import {
   collectTopProjectTags,
@@ -45,7 +45,7 @@ const topTags = collectTopProjectTags(projects, PROJECT_TAG_CLOUD_LIMIT);
 
 const projectsHref = getProjectsBaseUrl(locale);
 const contactUrl = localizedPath('/contact', locale);
-const aboutUrl = localizedPath('/about', locale);
+const aboutUrl = localizedPath('/contact', locale);
 ---
 
 <PageLayout

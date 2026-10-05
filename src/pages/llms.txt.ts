@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import siteConfig from '@/config/site.config';
 import { defaultLocale } from '@/i18n';
-import { getPublishedPosts, getPostUrl, getRssUrl } from '@/lib/blog';
 import { getVisibleProjects, getProjectUrl } from '@/lib/projects';
 import { getNavItems } from '@/config/nav.config';
 
@@ -48,16 +47,10 @@ const hasComponentsPage = Object.keys(componentsPage).length > 0;
 export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || siteConfig.url).replace(/\/$/, '');
 
-  const posts = await getPublishedPosts(defaultLocale);
   const projects = await getVisibleProjects(defaultLocale);
 
   const line = (title: string, url: string, description?: string) =>
     description ? `- [${title}](${url}): ${description}` : `- [${title}](${url})`;
-
-  const postLines = [...posts]
-    .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
-    .map((post) => line(post.data.title, `${base}${getPostUrl(post.id, defaultLocale)}`, post.data.description))
-    .join('\n');
 
   const projectLines = [...projects]
     .sort((a, b) => a.data.order - b.data.order)
@@ -94,16 +87,11 @@ export const GET: APIRoute = async ({ site }) => {
     sections.push(``, `## Projects`, ``, projectLines);
   }
 
-  if (postLines) {
-    sections.push(``, `## Blog posts`, ``, postLines);
-  }
-
   sections.push(
     ``,
     `## More`,
     ``,
     line('Sitemap', `${base}/sitemap-index.xml`),
-    line('RSS feed', `${base}${getRssUrl(defaultLocale)}`),
     ``,
     `---`,
     ``,

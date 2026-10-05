@@ -17,12 +17,10 @@ import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import ProofTile from '@/components/ui/data-display/ProofTile/ProofTile.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
-import BlogCard from '@/components/blog/BlogCard.astro';
 import CtaBand from '@/components/patterns/CtaBand.astro';
 import StackMarquee from '@/components/landing/StackMarquee.astro';
 import { getCollection } from 'astro:content';
 import siteConfig from '@/config/site.config';
-import { getPostUrl, getPublishedPosts } from '@/lib/blog';
 import { getVisibleProjects } from '@/lib/projects';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
 import { t, tData, defaultLocale, localizedPath } from '@/i18n';
@@ -54,17 +52,6 @@ if (projectItems.length === 0 && locale !== defaultLocale) {
 const featuredProjects = projectItems
   .filter((p) => p.data.featured)
   .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4);
-
-let postItems = await getPublishedPosts(locale);
-if (postItems.length === 0 && locale !== defaultLocale) {
-  postItems = await getPublishedPosts(defaultLocale);
-}
-const posts = [...postItems]
-  .sort((a, b) => {
-    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
-    return b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf();
-  })
   .slice(0, 4);
 
 // Hero marquee — a focused subset of the tech stack, in this order, pulled from
@@ -119,20 +106,15 @@ const aboutTeaser = tData<{
   stat3: string;
   basedIn: string;
 }>('pages.home.aboutTeaser', locale)!;
-const blogSection = tData<{ badge: string; heading: string; viewAll: string }>('pages.home.blog', locale)!;
 const cta = tData<{ badge: string; heading: string; description: string; primary: string; secondary: string }>(
   'pages.home.cta',
   locale
 )!;
 
-const servicesUrl = localizedPath('/services', locale);
+const servicesUrl = localizedPath('/projects', locale);
 const projectsUrl = localizedPath('/projects', locale);
-const aboutUrl = localizedPath('/about', locale);
+const aboutUrl = localizedPath('/contact', locale);
 const contactUrl = localizedPath('/contact', locale);
-const blogUrl = localizedPath('/blog', locale);
-// The getting-started guide lives at the default-locale URL; link there so the
-// CTA always resolves even before a locale has translated that post.
-const getStartedUrl = '/blog/astro-rocket-getting-started';
 
 // About-teaser copy with the configured location woven in (mirrors the original
 // page's conditional). Falls back to a location-free sentence when no city is set.
@@ -185,7 +167,7 @@ const basedInDisplay = `${city ?? 'Your City'}${country ? `, ${country}` : ''}`;
         {hero.github}
         <Icon name="arrow-right" size="sm" />
       </Button>
-      <Button size="lg" variant="outline" href={getStartedUrl}>
+      <Button size="lg" variant="outline" href={projectsUrl}>
         <Icon name="rocket" size="sm" />
         {hero.getStarted}
         <Icon name="arrow-right" size="sm" />
@@ -428,46 +410,6 @@ const basedInDisplay = `${city ?? 'Your City'}${country ? `, ${country}` : ''}`;
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Blog -->
-  <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
-    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
-      <div class="flex flex-col items-center gap-6 text-center" data-reveal>
-        <Badge variant="brand" pill>
-          <Icon name="book" size="sm" />
-          {blogSection.badge}
-        </Badge>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-          {blogSection.heading}
-        </h2>
-      </div>
-
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post, index) => (
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            href={getPostUrl(post.id, post.data.locale)}
-            publishedAt={post.data.publishedAt}
-            tags={post.data.tags}
-            author={post.data.author}
-            image={post.data.image}
-            svgSlug={post.data.svgSlug}
-            body={post.body}
-            revealDelay={index}
-            class={index === 3 ? 'hidden sm:block lg:hidden' : undefined}
-          />
-        ))}
-      </div>
-
-      <div class="flex justify-center">
-        <Button variant="brand-outline" href={blogUrl}>
-          {blogSection.viewAll}
-          <Icon name="arrow-right" size="sm" />
-        </Button>
       </div>
     </div>
   </section>

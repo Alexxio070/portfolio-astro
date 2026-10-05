@@ -2,4 +2,4 @@ dist/
 node_modules/
 .astro/
 public/pagefind/
-pnpm-lock.yaml
+referencias/

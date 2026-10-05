@@ -1,5 +1,4 @@
 import { getFooterNavItems, footerLinkGroups, resolveNavItem } from '@/config/nav.config';
-import { getPublishedPosts, collectTopTags, getTagUrl } from '@/lib/blog';
 import { getVisibleProjects, getProjectUrl } from '@/lib/projects';
 import { defaultLocale, t } from '@/i18n';
 import type { FooterLinkGroup } from '@/components/layout/Footer.astro';
@@ -22,7 +21,6 @@ import type { FooterLinkGroup } from '@/components/layout/Footer.astro';
  */
 
 /** How many entries each derived group shows before it stops. */
-const TOPICS_LIMIT = 6;
 const PROJECTS_LIMIT = 5;
 
 export async function getDerivedFooterGroups(
@@ -38,18 +36,6 @@ export async function getDerivedFooterGroups(
   }));
   if (navLinks.length) {
     groups.push({ title: t('footer.groups.site', locale), links: navLinks });
-  }
-
-  // The most-used tags. Real pages, and they show the tagging off at the same
-  // time — a footer full of a site's own subjects reads better than a footer
-  // full of its section names twice over.
-  const posts = await getPublishedPosts(locale);
-  const topics = collectTopTags(posts, TOPICS_LIMIT).map((tag) => ({
-    label: tag,
-    href: getTagUrl(tag, locale),
-  }));
-  if (topics.length) {
-    groups.push({ title: t('footer.groups.topics', locale), links: topics });
   }
 
   // Every visible project is listed; the ones marked `placeholder` have no
