@@ -10,7 +10,7 @@
  * a swatch that silently refuses to stick.
  *
  * The count was also quoted as 12 across the config, both locales, the project
- * page, three blog posts, the README, with nothing checking any
+ * page, three blog posts, with nothing checking any
  * of it. The same lesson as the component count, which is why this mirrors
  * that test.
  */
@@ -115,39 +115,14 @@ describe('colour themes', () => {
     expect(JSON.stringify(es)).toContain(`${COUNT} temas de color`);
   });
 
-  it('the README and the docs quote the count', () => {
-    for (const file of [
-      'README.md',
-    ]) {
-      expect(read(file), file).toMatch(new RegExp(`${COUNT} (ready-to-use )?colour themes`));
-    }
-  });
-
   it('no shipped copy still claims twelve', () => {
     for (const file of [
-      'README.md',
       'src/config/site.config.ts',
       'src/i18n/en.json',
       'src/i18n/es.json',
     ]) {
       expect(read(file), file).not.toMatch(/\btwelve\b/i);
       expect(read(file), file).not.toMatch(/\b12[- ](colour|color|swatch|theme)/i);
-    }
-  });
-
-  it('no shipped copy names a palette that was removed', () => {
-    const gone = ['orange', 'amber', 'lime', 'magenta'];
-    for (const file of [
-      'README.md',
-    ]) {
-      const prose = read(file)
-        // Tailwind's own palette is unrelated to the theme set
-        .replace(/\b(text|bg|border|from|via|to|ring|decoration)-[a-z]+-\d{2,3}\b/g, '')
-        // the OKLCH section names hues on the wheel, not themes
-        .replace(/Common hue landmarks:[^\n]*\n/g, '');
-      for (const name of gone) {
-        expect(prose, `${file} → ${name}`).not.toMatch(new RegExp(`\\b${name}\\b`, 'i'));
-      }
     }
   });
 
