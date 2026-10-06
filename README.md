@@ -60,7 +60,7 @@
 
 **Astro Rocket is an Astro 7 theme.**
 
-It ships as a working site: homepage, about, services, contact, a blog and a projects portfolio — both with tags and pagination — a components showcase, and a 404 page. Underneath sits a library of **42 designed, accessible, TypeScript components** on a three-tier design-token system, with static search, SEO, opt-in i18n, dark mode, and 8 colour themes you can switch live in the browser.
+It ships as a working site: homepage, about, services, contact, a blog and a projects portfolio — both with tags and pagination — a components showcase, and a 404 page. Underneath sits a library of **40 designed, accessible, TypeScript components** on a three-tier design-token system, with static search, SEO, opt-in i18n, dark mode, and 8 colour themes you can switch live in the browser.
 
 Content is Markdown in `src/content/`, the rest is `site.config.ts`, and it deploys to Vercel, Netlify, Cloudflare, or as static files.
 
@@ -81,7 +81,7 @@ Use all of it or only the parts you need. The site you build on it is yours.
 | **8 Colour Themes** | All 8 colour swatches are shown in the header dropdown — click one and the logo badge, blog image gradients, and every brand color update live instantly. No file edits, no rebuilds. The selector can be removed from the header once you've settled on a color. |
 | **Scroll Progress Bar** | A thin 2px brand-coloured bar on the header edge that fills as you scroll. Enabled on the homepage (above the floating header), blog index, and post pages (below the solid header). Controlled via `showScrollProgress` and `scrollProgressPosition` props on the Header component. |
 | **Design Tokens** | Three-tier token architecture (reference → semantic → component) |
-| **42 Components** | 34 UI, 5 patterns, 2 layout, 1 hero — every entry in `component-registry.json`, all accessible with TypeScript |
+| **40 Components** | 32 UI, 5 patterns, 2 layout, 1 hero — every entry in `component-registry.json`, all accessible with TypeScript |
 | **Auto Logo & Favicon** | First letter of your site name on brand color — generated automatically from `site.config.ts`, no design tools needed. Prefer your own logo? Set `branding.logo.image` to a file in `public/`. |
 | **Icon System** | Unified `Icon` component (Astro + React) — 350+ [Lucide](https://lucide.dev) UI icons and 3000+ [Simple Icons](https://simpleicons.org) brand icons via Iconify |
 | **Typing Effect** | Animated typing effect in the hero section |
@@ -176,7 +176,7 @@ astro-rocket/
 ├── src/
 │   ├── assets/              # Images and icons (processed by Astro)
 │   ├── components/
-│   │   ├── ui/              # UI component library (34 components)
+│   │   ├── ui/              # UI component library (32 components)
 │   │   │   ├── form/        # Button, Input, Textarea, Select, Checkbox, Radio, Switch
 │   │   │   ├── data-display/ # Card, Badge, Avatar, Table, Pagination, Progress, Skeleton
 │   │   │   ├── feedback/    # Alert, Toast, Tooltip
@@ -275,14 +275,6 @@ Create a `.env` file from `.env.example`:
 # Required
 SITE_URL=https://yoursite.com
 
-# Optional - Analytics
-PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-PUBLIC_GTM_ID=GTM-XXXXXXX
-
-# Optional - Umami (privacy-friendly, cookieless analytics)
-PUBLIC_UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-# PUBLIC_UMAMI_SRC=https://cloud.umami.is/script.js   # set when your snippet's src differs
-
 # Optional - Contact form and newsletter (server-side only)
 RESEND_API_KEY=your-resend-api-key
 RESEND_AUDIENCE_ID=your-audience-id
@@ -291,12 +283,6 @@ RESEND_AUDIENCE_ID=your-audience-id
 GOOGLE_SITE_VERIFICATION=your-code
 BING_SITE_VERIFICATION=your-code
 ```
-
-Astro Rocket ships with built-in support for **Google Analytics 4**, **Google Tag Manager**, and **Umami**. For Umami, set `PUBLIC_UMAMI_WEBSITE_ID` (the UUID from your Umami dashboard) and the tracking script loads automatically. Umami is cookieless and stores no personal data, so it loads without the cookie-consent banner.
-
-Copy the Website ID **and** the script `src` out of the tracking snippet Umami shows you, and set `PUBLIC_UMAMI_SRC` whenever that `src` is not `https://cloud.umami.is/script.js` — which covers self-hosting and Umami Cloud's other instances alike. Set the **Domain** on the Umami website record to your bare hostname (`yoursite.com`), since Umami rejects events whose origin does not match it.
-
-Both are the same silent failure: the script loads, the page is fine, and nothing is recorded. After deploying, check the **Network** tab for `POST /api/send` returning 200 — a successful `script.js` request proves only that the file was fetched.
 
 ### Newsletter Signup
 
@@ -584,9 +570,9 @@ Foreground tokens are documented with their contrast ratios inline. When customi
 
 ## Components
 
-Astro Rocket includes 42 components across four categories. All UI components use [class-variance-authority (CVA)](https://cva.style) for type-safe variant management.
+Astro Rocket includes 40 components across four categories. All UI components use [class-variance-authority (CVA)](https://cva.style) for type-safe variant management.
 
-### UI Components (34)
+### UI Components (32)
 
 #### Form (`ui/form/`)
 
@@ -613,7 +599,6 @@ Astro Rocket includes 42 components across four categories. All UI components us
 | Progress | Progress bar indicator |
 | Skeleton | Loading placeholders |
 | ProofTile | Centred tile for a fact, feature, or process step — brand icon or step number above bold text, in two sizes |
-| GoogleMap | Consent-aware Google Maps embed: a setup prompt without an API key, a "Load Map" placeholder until consent is granted, the iframe after |
 
 #### Feedback (`ui/feedback/`)
 
@@ -632,7 +617,6 @@ Astro Rocket includes 42 components across four categories. All UI components us
 | Tabs | Horizontal tabbed content panels |
 | VerticalTabs | Vertical tab navigation |
 | Accordion | Collapsible content sections |
-| ConsentBanner | Cookie consent with Google Consent Mode v2 — accept, decline, or a settings panel. Renders only when `PUBLIC_CONSENT_ENABLED` is on |
 
 #### Layout (`ui/layout/`)
 

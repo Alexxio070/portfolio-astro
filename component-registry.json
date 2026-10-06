@@ -225,20 +225,6 @@
       },
       "premium": false
     },
-    "consent-banner": {
-      "name": "ConsentBanner",
-      "category": "ui",
-      "subcategory": "overlay",
-      "files": [
-        "src/components/ui/overlay/ConsentBanner/ConsentBanner.astro",
-        "src/components/ui/overlay/ConsentBanner/index.ts"
-      ],
-      "dependencies": {
-        "utilities": [],
-        "components": []
-      },
-      "premium": false
-    },
     "cta": {
       "name": "CTA",
       "category": "ui",
@@ -329,23 +315,6 @@
       "category": "patterns",
       "files": [
         "src/components/patterns/FormField.astro"
-      ],
-      "dependencies": {
-        "utilities": [
-          "cn"
-        ],
-        "components": []
-      },
-      "premium": false
-    },
-    "google-map": {
-      "name": "GoogleMap",
-      "category": "ui",
-      "subcategory": "data-display",
-      "files": [
-        "src/components/ui/data-display/GoogleMap/GoogleMap.astro",
-        "src/components/ui/data-display/GoogleMap/googleMap.variants.ts",
-        "src/components/ui/data-display/GoogleMap/index.ts"
       ],
       "dependencies": {
         "utilities": [

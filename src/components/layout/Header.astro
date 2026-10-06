@@ -28,7 +28,6 @@ import { headerVariants, headerInnerVariants } from './header.variants';
 import Button from '@/components/ui/form/Button/Button.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import Logo from '@/components/ui/marketing/Logo/Logo.astro';
-import SearchModal from '@/components/layout/SearchModal.astro';
 import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
 import ThemeSelector from '@/components/layout/ThemeSelector.astro';
 import ThemeSelectorDropdown from '@/components/layout/ThemeSelectorDropdown.astro';
@@ -61,7 +60,6 @@ interface Props extends HTMLAttributes<'header'> {
   showCta?: boolean;
   cta?: { label?: string; href?: string; icon?: string; trailingIcon?: string };
   actions?: HeaderAction[];
-  showSearch?: boolean;
   showThemeToggle?: boolean;
   showThemeSelector?: boolean;
   showMobileMenu?: boolean;
@@ -99,7 +97,6 @@ const {
   showCta = false,
   cta = { label: 'Start a project', href: '/contact' },
   actions = [],
-  showSearch = true,
   showThemeToggle = true,
   showThemeSelector = true,
   showMobileMenu = true,
@@ -217,7 +214,7 @@ const buttonId = `${menuId}-button`;
 
 <header
   class={headerClasses}
-  data-pagefind-ignore
+ 
   data-menu-id={menuId}
   data-button-id={buttonId}
   data-header-shape={shape}
@@ -289,16 +286,6 @@ const buttonId = `${menuId}-button`;
           <slot name="actions" />
         ) : (
           <>
-            {/* On phones the search trigger lives in the menu drawer instead —
-                three icons squeezed the brand onto two lines below 390px. The
-                modal itself stays mounted here at every size: the drawer row
-                clicks this (hidden) trigger. */}
-            {showSearch && (
-              <div class="hidden lg:flex">
-                <SearchModal class={isFloating ? 'hdr-invert-text' : undefined} />
-              </div>
-            )}
-
             {showThemeToggle && (
               <div class="flex">
                 <ThemeModeDropdown class={isFloating ? 'hdr-invert-text' : undefined} />
@@ -456,23 +443,6 @@ const buttonId = `${menuId}-button`;
             'mobile-menu-body py-3',
             isFloating ? 'px-3' : cn('mx-auto px-4', maxWidthClass)
           )}>
-            {showSearch && (
-              <section class="mobile-menu-section">
-                <button
-                  type="button"
-                  class="mobile-menu-search mobile-menu-stagger flex w-full items-center gap-3 rounded-xl border border-border-strong px-3 py-3 text-base text-foreground-muted transition-colors hover:text-foreground hover:border-brand-500"
-                  style="--stagger-index: 0"
-                  aria-haspopup="dialog"
-                >
-                  <span class="mobile-menu-tile">
-                    <Icon name="search" size="sm" />
-                  </span>
-                  <span class="flex-1 text-left">{t('nav.searchSite', locale)}</span>
-                  <kbd class="hidden sm:inline-block rounded border border-border-strong px-1.5 py-0.5 text-xs text-foreground-muted">⌘K</kbd>
-                </button>
-              </section>
-            )}
-
             <section class="mobile-menu-section">
               <p class="mobile-menu-label">{t('nav.sectionNavigate', locale)}</p>
               <ul class="space-y-0.5">
@@ -717,20 +687,6 @@ const buttonId = `${menuId}-button`;
       menu.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', close);
       });
-
-      // The in-menu search row closes the drawer and opens the site search
-      // modal (the same modal the desktop header trigger uses — clicking its
-      // hidden trigger reuses all of its logic).
-      const searchRow = menu.querySelector<HTMLButtonElement>('.mobile-menu-search');
-      if (searchRow) {
-        searchRow.addEventListener('click', () => {
-          close();
-          window.setTimeout(() => {
-            const trigger = document.querySelector<HTMLButtonElement>('.search-trigger');
-            trigger?.click();
-          }, 210);
-        });
-      }
     });
   }
 
@@ -1069,15 +1025,13 @@ const buttonId = `${menuId}-button`;
   }
 
   html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .ttg-wrapper > .ttg-trigger,
-  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .theme-dropdown-wrapper > button,
-  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .search-wrapper > .search-trigger {
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .theme-dropdown-wrapper > button {
     border-color: oklch(58% 0.008 250 / 0.6);
     color: oklch(68% 0.01 250);
     box-shadow: none;
   }
   html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .ttg-wrapper > .ttg-trigger:hover,
-  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .theme-dropdown-wrapper > button:hover,
-  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .search-wrapper > .search-trigger:hover {
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .theme-dropdown-wrapper > button:hover {
     border-color: oklch(58% 0.008 250 / 0.85);
     background-color: rgb(255 255 255 / 0.06);
     color: oklch(91% 0.008 250);
@@ -1094,8 +1048,7 @@ const buttonId = `${menuId}-button`;
   }
 
   .dark [data-header-shape="floating"] .theme-dropdown-wrapper button,
-  .dark [data-header-shape="floating"] .ttg-wrapper .ttg-trigger,
-  .dark [data-header-shape="floating"] .search-wrapper .search-trigger {
+  .dark [data-header-shape="floating"] .ttg-wrapper .ttg-trigger {
     border-color: var(--color-foreground-subtle);
   }
 
@@ -1151,8 +1104,7 @@ const buttonId = `${menuId}-button`;
     color: var(--color-brand-700);
   }
   .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper button,
-  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger,
-  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .search-wrapper .search-trigger {
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger {
     border-color: rgba(0, 0, 0, 0.15);
   }
 
@@ -1173,8 +1125,7 @@ const buttonId = `${menuId}-button`;
     color: var(--color-brand-500);
   }
   html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper button,
-  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger,
-  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .search-wrapper .search-trigger {
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger {
     border-color: rgba(255, 255, 255, 0.2);
   }
 

@@ -9,7 +9,6 @@
     "mobileNav": "Mobile navigation",
     "toggleMenu": "Toggle menu",
     "sectionNavigate": "Navigate",
-    "searchSite": "Search this site",
     "sectionTheme": "Theme",
     "sectionLanguage": "Language",
     "sectionConnect": "Connect",
@@ -32,11 +31,7 @@
     "next": "Next",
     "previous": "Previous",
     "home": "Home",
-    "map": "Map",
-    "mapConsentPrompt": "Accept cookies to load the interactive map.",
-    "viewOnGoogleMaps": "View on Google Maps",
     "themeModeTitle": "Theme: {mode} (click to cycle)",
-    "googleMaps": "Google Maps",
     "progress": "Progress",
     "themeMode": "Theme: {mode}",
     "browseByTag": "Browse by tag",
@@ -164,18 +159,6 @@
     "contactTitle": "Contact",
     "contactDesc": "Start a conversation about your project."
   },
-  "newsletter": {
-    "heading": "Subscribe to the newsletter",
-    "description": "Get the latest posts in your inbox.",
-    "emailPlaceholder": "Enter your email",
-    "subscribe": "Subscribe",
-    "subscribing": "Subscribing…",
-    "success": "Thanks for subscribing!",
-    "genericError": "Something went wrong",
-    "notConfigured": "Not configured yet — set RESEND_API_KEY and RESEND_AUDIENCE_ID to switch this on. Only you can see this line.",
-    "unavailable": "Signups are not available right now.",
-    "error": "Subscription failed. Please try again."
-  },
   "contact": {
     "heading": "Get in touch",
     "name": "Name",
@@ -202,14 +185,6 @@
     "currentlyDark": "Currently dark",
     "swatchLabel": "{name} theme"
   },
-  "search": {
-    "placeholder": "Search posts, projects, and pages…",
-    "inputLabel": "Search query",
-    "resultsLabel": "Search results",
-    "hint": "Start typing to search the site.",
-    "noResults": "No results for “{query}”",
-    "unavailable": "The search index is generated at build time and isn’t available in <code class=\"rounded bg-secondary px-1.5 py-0.5 text-xs\">astro dev</code>.<br />Run <code class=\"rounded bg-secondary px-1.5 py-0.5 text-xs\">pnpm build &amp;&amp; pnpm preview</code> to try it locally."
-  },
   "video": {
     "playLabel": "Play video: {title}",
     "watchOn": "Watch on YouTube"
@@ -230,12 +205,12 @@
     "about": {
       "meta": {
         "title": "About — Free Open-Source Astro 7 Theme",
-        "description": "What Astro Rocket is and how it's built: a free Astro 7 starter theme with 42 designed components, 8 colour themes, i18n, and dark mode."
+        "description": "What Astro Rocket is and how it's built: a free Astro 7 starter theme with 40 designed components, 8 colour themes, i18n, and dark mode."
       },
       "hero": {
         "badge": "About",
         "titleLead": "Astro Rocket —",
-        "typingWords": ["Lightning-fast", "Starter theme", "42 Components", "8 Themes", "Dark Mode", "Built-in i18n"],
+        "typingWords": ["Lightning-fast", "Starter theme", "40 Components", "8 Themes", "Dark Mode", "Built-in i18n"],
         "typingWordsMobile": ["Lightning-fast", "Starter theme", "8 Themes", "Dark Mode", "Built-in i18n"],
         "description": "A free, open-source Astro 7 starter\u00a0theme to build anything on."
       },
@@ -246,7 +221,7 @@
         "items": [
           {
             "icon": "component",
-            "title": "42 designed components",
+            "title": "40 designed components",
             "description": "From buttons to hero sections: typed, accessible, consistent, and documented in a live showcase."
           },
           {
@@ -529,15 +504,15 @@
     "home": {
       "meta": {
         "title": "Free open-source Astro 7 theme",
-        "description": "A free, fast Astro 7 starter theme to build anything on: 42 designed components, 8 colour themes, dark mode, and built-in i18n."
+        "description": "A free, fast Astro 7 starter theme to build anything on: 40 designed components, 8 colour themes, dark mode, and built-in i18n."
       },
       "hero": {
         "badge": "Available for new projects",
         "titleLine1": "Astro Rocket —",
         "titleLine2": "Web Designer",
         "titleLine3": "& Developer",
-        "description": "A free, lightning-fast Astro 7 starter theme to build anything on: 42 designed components, 8 colour themes, and dark mode.",
-        "descriptionMobile": "A free, lightning-fast Astro 7 starter theme to build anything on: 42 designed components and 8 colour themes.",
+        "description": "A free, lightning-fast Astro 7 starter theme to build anything on: 40 designed components, 8 colour themes, and dark mode.",
+        "descriptionMobile": "A free, lightning-fast Astro 7 starter theme to build anything on: 40 designed components and 8 colour themes.",
         "github": "Get it on GitHub",
         "getStarted": "Get started"
       },

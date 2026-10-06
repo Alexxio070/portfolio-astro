@@ -9,7 +9,6 @@
     "mobileNav": "Mobiele navigatie",
     "toggleMenu": "Menu wisselen",
     "sectionNavigate": "Navigatie",
-    "searchSite": "Doorzoek deze site",
     "sectionTheme": "Thema",
     "sectionLanguage": "Taal",
     "sectionConnect": "Volgen",
@@ -32,11 +31,7 @@
     "next": "Volgende",
     "previous": "Vorige",
     "home": "Home",
-    "map": "Kaart",
-    "mapConsentPrompt": "Accepteer cookies om de interactieve kaart te laden.",
-    "viewOnGoogleMaps": "Bekijken op Google Maps",
     "themeModeTitle": "Thema: {mode} (klik om te wisselen)",
-    "googleMaps": "Google Maps",
     "progress": "Voortgang",
     "themeMode": "Thema: {mode}",
     "browseByTag": "Bladeren op tag",
@@ -164,18 +159,6 @@
     "contactTitle": "Contact",
     "contactDesc": "Begin een gesprek over je project."
   },
-  "newsletter": {
-    "heading": "Abonneer op de nieuwsbrief",
-    "description": "Ontvang de nieuwste berichten in je inbox.",
-    "emailPlaceholder": "Voer je e-mailadres in",
-    "subscribe": "Abonneren",
-    "subscribing": "Bezig met abonneren…",
-    "success": "Bedankt voor je aanmelding!",
-    "genericError": "Er ging iets mis",
-    "notConfigured": "Nog niet ingesteld — stel RESEND_API_KEY en RESEND_AUDIENCE_ID in om dit aan te zetten. Alleen jij ziet deze regel.",
-    "unavailable": "Aanmelden is op dit moment niet mogelijk.",
-    "error": "Aanmelding mislukt. Probeer het opnieuw."
-  },
   "contact": {
     "heading": "Neem contact op",
     "name": "Naam",
@@ -202,14 +185,6 @@
     "currentlyDark": "Momenteel donker",
     "swatchLabel": "{name}-thema"
   },
-  "search": {
-    "placeholder": "Zoek berichten, projecten en pagina's…",
-    "inputLabel": "Zoekopdracht",
-    "resultsLabel": "Zoekresultaten",
-    "hint": "Begin met typen om de site te doorzoeken.",
-    "noResults": "Geen resultaten voor “{query}”",
-    "unavailable": "De zoekindex wordt tijdens de build gegenereerd en is niet beschikbaar in <code class=\"rounded bg-secondary px-1.5 py-0.5 text-xs\">astro dev</code>.<br />Voer <code class=\"rounded bg-secondary px-1.5 py-0.5 text-xs\">pnpm build &amp;&amp; pnpm preview</code> uit om het lokaal te proberen."
-  },
   "video": {
     "playLabel": "Video afspelen: {title}",
     "watchOn": "Bekijk op YouTube"
@@ -230,12 +205,12 @@
     "about": {
       "meta": {
         "title": "Over — Gratis open-source Astro 7 thema",
-        "description": "Wat Astro Rocket is en hoe het gebouwd is: een gratis, razendsnel Astro 7 starter-thema met 42 ontworpen componenten, 8 kleurthema's, ingebouwde i18n en donkere modus."
+        "description": "Wat Astro Rocket is en hoe het gebouwd is: een gratis, razendsnel Astro 7 starter-thema met 40 ontworpen componenten, 8 kleurthema's, ingebouwde i18n en donkere modus."
       },
       "hero": {
         "badge": "Over",
         "titleLead": "Astro Rocket —",
-        "typingWords": ["Razendsnel", "Starter-thema", "42 Componenten", "8 Thema's", "Donkere modus", "Ingebouwde i18n"],
+        "typingWords": ["Razendsnel", "Starter-thema", "40 Componenten", "8 Thema's", "Donkere modus", "Ingebouwde i18n"],
         "typingWordsMobile": ["Razendsnel", "Starter-thema", "8 Thema's", "Donkere modus", "Ingebouwde i18n"],
         "description": "Een gratis, open-source Astro 7 starter-thema om alles op te bouwen."
       },
@@ -246,7 +221,7 @@
         "items": [
           {
             "icon": "component",
-            "title": "42 ontworpen componenten",
+            "title": "40 ontworpen componenten",
             "description": "Van knoppen tot complete hero-secties: getypeerd, toegankelijk, consistent en gedocumenteerd in een live showcase."
           },
           {
@@ -529,15 +504,15 @@
     "home": {
       "meta": {
         "title": "Gratis open-source Astro 7 thema",
-        "description": "Astro Rocket is een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen — met 42 ontworpen componenten, 8 kleurthema's, donkere modus en ingebouwde i18n aan boord."
+        "description": "Astro Rocket is een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen — met 40 ontworpen componenten, 8 kleurthema's, donkere modus en ingebouwde i18n aan boord."
       },
       "hero": {
         "badge": "Beschikbaar voor nieuwe projecten",
         "titleLine1": "Astro Rocket —",
         "titleLine2": "Webdesigner",
         "titleLine3": "& Ontwikkelaar",
-        "description": "Een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen: 42 ontworpen componenten, 8 kleurthema's en donkere modus.",
-        "descriptionMobile": "Een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen: 42 ontworpen componenten en 8 kleurthema's.",
+        "description": "Een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen: 40 ontworpen componenten, 8 kleurthema's en donkere modus.",
+        "descriptionMobile": "Een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen: 40 ontworpen componenten en 8 kleurthema's.",
         "github": "Bekijk op GitHub",
         "getStarted": "Aan de slag"
       },
