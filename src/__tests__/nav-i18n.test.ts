@@ -19,13 +19,13 @@ import { getNavItems, getLogoHref, resolveNavItem, type NavItem } from '@/config
 describe('nav config — locale resolution (en default, nl secondary)', () => {
   it('keeps default-locale hrefs at the site root', () => {
     const items = getNavItems('en');
-    expect(items.find((i) => i.label === 'Projects')?.href).toBe('/projects');
-    expect(items.find((i) => i.label === 'Contact')?.href).toBe('/contact');
+    expect(items.find((i) => i.label === 'Projects')?.href).toBe('/#projects');
+    expect(items.find((i) => i.label === 'Contact')?.href).toBe('/#contact');
   });
 
   it('prefixes secondary-locale hrefs with the locale', () => {
     const items = getNavItems('nl');
-    expect(items.map((i) => i.href)).toEqual(['/nl', '/nl/projects', '/nl/contact']);
+    expect(items.map((i) => i.href)).toEqual(['/nl', '/nl/#projects', '/nl/#contact']);
   });
 
   it('points the logo at the locale home', () => {

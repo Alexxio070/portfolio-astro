@@ -17,13 +17,13 @@ const recoveryLinks = [
     icon: 'layers',
     title: t('projects.title', locale),
     description: t('errors.projectsDesc', locale),
-    href: '/projects',
+    href: '/#projects',
   },
   {
     icon: 'mail',
     title: t('errors.contactTitle', locale),
     description: t('errors.contactDesc', locale),
-    href: '/contact',
+    href: '/#contact',
   },
 ];
 ---
@@ -53,7 +53,7 @@ const recoveryLinks = [
         <Icon name="arrow-left" size="sm" />
         {t('errors.backHome', locale)}
       </Button>
-      <Button href="/projects" variant="brand-outline" size="lg">
+      <Button href="/#projects" variant="brand-outline" size="lg">
         {t('errors.browseProjects', locale)}
         <Icon name="arrow-right" size="sm" />
       </Button>

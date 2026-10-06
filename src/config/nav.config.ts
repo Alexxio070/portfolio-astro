@@ -85,8 +85,8 @@ export interface ResolvedNavItem {
 
 export const navItems: NavItem[] = [
   { label: 'Home', href: '/', order: 0, labelKey: 'nav.items.home' },
-  { label: 'Projects', href: '/projects', order: 2, labelKey: 'nav.items.projects' },
-  { label: 'Contact', href: '/contact', order: 5, labelKey: 'nav.items.contact' },
+  { label: 'Projects', href: '/#projects', order: 2, labelKey: 'nav.items.projects' },
+  { label: 'Contact', href: '/#contact', order: 5, labelKey: 'nav.items.contact' },
 ];
 
 /** Anchors of the single-page home, used by `FloatingNav`. */
@@ -99,8 +99,8 @@ export const homeNavItems: NavItem[] = [
 
 export const footerNavItems: NavItem[] = [
   { label: 'Home', href: '/', order: 0, labelKey: 'nav.items.home' },
-  { label: 'Projects', href: '/projects', order: 2, labelKey: 'nav.items.projects' },
-  { label: 'Contact', href: '/contact', order: 5, labelKey: 'nav.items.contact' },
+  { label: 'Projects', href: '/#projects', order: 2, labelKey: 'nav.items.projects' },
+  { label: 'Contact', href: '/#contact', order: 5, labelKey: 'nav.items.contact' },
   { label: 'GitHub', href: 'https://github.com/hansmartensdev/Astro-Rocket', order: 6, external: true },
 ];
 
