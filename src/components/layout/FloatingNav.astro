@@ -171,6 +171,24 @@ const languages = languagesEnabled
     #main-nav:not(.scrolling) .nav-link[aria-current] {
       color: oklch(98% 0 0);
     }
+    /* The controls use the page's own border and muted-text tokens, which are
+       dark in light mode and disappear against the dark hero. Until the bar
+       has a fill they get their own light outline, text and tint. */
+    #main-nav:not(.scrolling) #theme-dropdown-trigger,
+    #main-nav:not(.scrolling) .ttg-trigger,
+    #main-nav:not(.scrolling) .lang-trigger {
+      border-color: oklch(98% 0 0 / 0.5);
+      color: oklch(96% 0 0);
+      background-color: oklch(0% 0 0 / 0.3);
+    }
+    #main-nav:not(.scrolling) #theme-dropdown-trigger:hover,
+    #main-nav:not(.scrolling) .ttg-trigger:hover,
+    #main-nav:not(.scrolling) .lang-trigger:hover,
+    #main-nav:not(.scrolling) [aria-expanded='true'] {
+      border-color: oklch(98% 0 0 / 0.8);
+      color: oklch(100% 0 0);
+      background-color: oklch(0% 0 0 / 0.5);
+    }
     #main-nav.scrolling {
       background-color: color-mix(in oklch, var(--color-background-secondary) 90%, transparent);
       border-color: var(--color-border);
