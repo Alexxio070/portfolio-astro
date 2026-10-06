@@ -508,77 +508,21 @@
       },
       "hero": {
         "badge": "Beschikbaar voor nieuwe projecten",
-        "titleLine1": "Astro Rocket —",
-        "titleLine2": "Webdesigner",
-        "titleLine3": "& Ontwikkelaar",
-        "description": "Een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen: 40 ontworpen componenten, 8 kleurthema's en donkere modus.",
-        "descriptionMobile": "Een gratis, razendsnel Astro 7 starter-thema om alles op te bouwen: 40 ontworpen componenten en 8 kleurthema's.",
-        "github": "Bekijk op GitHub",
-        "getStarted": "Aan de slag"
+        "titleLine1": "Software",
+        "titleLine2": "Developer",
+        "description": "Ik maak van ideeën snelle, toegankelijke websites. Dit is voorbeeldtekst: vervang hem door een korte introductie over jou en het werk dat je doet.",
+        "email": "E-mail"
       },
-      "services": {
-        "badge": "Wat ik doe",
-        "heading": "Ontwerpen, bouwen, optimaliseren",
-        "lead": "Elk project krijgt alle drie de diensten.",
-        "learnMore": "Meer weten",
-        "cards": [
-          { "icon": "layout", "title": "Webdesign", "description": "Interfaces die vanzelfsprekend aanvoelen. Lay-outs gevormd rond je content, je merk en hoe mensen echt lezen op een scherm." },
-          { "icon": "code", "title": "Webdevelopment", "description": "Sites gebouwd om lang mee te gaan. Astro, Tailwind en een schone architectuur: snel op dag één, eenvoudig te onderhouden op dag 500." },
-          { "icon": "trending-up", "title": "Weboptimalisatie", "description": "SEO, Core Web Vitals en toegankelijkheid, vanaf dag één ingebouwd, zodat je site scoort, snel laadt en werkt voor elke bezoeker." }
-        ]
-      },
-      "workWithMe": {
-        "badge": "Samenwerken",
-        "heading": "Laten we jouw website bouwen",
-        "lead": "Wat je krijgt als we samenwerken.",
-        "cards": [
-          { "icon": "palette", "title": "Custom design", "description": "Ontworpen rond je bedrijf, je content en je klanten." },
-          { "icon": "zap", "title": "Een razendsnelle website", "description": "Pagina's die direct openen, op elke telefoon en elke verbinding." },
-          { "icon": "search", "title": "Gevonden door Google en AI", "description": "Elke pagina zo gebouwd dat zoekmachines en AI-assistenten hem goed lezen en klanten je vinden." },
-          { "icon": "shield-check", "title": "Geen onderhoud", "description": "Bijgehouden en beveiligd met het onderhoudsplan, zodat jij je op je bedrijf kunt richten." }
-        ],
-        "cta": "Lees mijn dienstenpagina"
-      },
-      "portfolio": {
+      "projects": {
         "badge": "Geselecteerd werk",
-        "heading": "Projecten die ik heb gebouwd",
-        "lead": "Een selectie van recent werk.",
-        "viewAll": "Bekijk alle projecten"
+        "heading": "Projecten",
+        "lead": "Een selectie van recent werk."
       },
-      "testimonials": {
-        "badge": "Aanbevelingen",
-        "heading": "Wat klanten zeggen",
-        "lead": "Echte woorden uit afgeronde projecten.",
-        "items": [
-          { "quote": "De nieuwe site werd op tijd gelanceerd en haalde elk doel dat we stelden. De prestaties verbeterden enorm — laadtijden daalden en de reacties van onze klanten zijn overweldigend positief.", "name": "Alex Morgan", "role": "Oprichter, Bright Studio" },
-          { "quote": "Helder van het eerste gesprek tot de uiteindelijke oplevering. De juiste vragen werden gesteld, we werden overal bij betrokken en het eindresultaat overtrof wat we ons hadden voorgesteld. Een aanrader zonder twijfel.", "name": "Sarah Chen", "role": "CEO, Luma Agency" }
-        ]
-      },
-      "aboutTeaser": {
-        "badge": "Over mij",
-        "headingLine1": "Designer, ontwikkelaar,",
-        "headingLine2": "en blogger.",
-        "para1WithLocation": "Zestien jaar praktijkervaring, gevestigd in {location} en beschikbaar voor klanten wereldwijd. Ik bouw met Astro omdat het aansluit bij hoe ik over het web denk: compact, doelgericht en gebouwd om lang mee te gaan.",
-        "para1NoLocation": "Zestien jaar praktijkervaring en beschikbaar voor klanten wereldwijd. Ik bouw met Astro omdat het aansluit bij hoe ik over het web denk: compact, doelgericht en gebouwd om lang mee te gaan.",
-        "para2": "Op de blog deel ik de ideeën en keuzes die mijn werk vormgeven.",
-        "moreAboutMe": "Meer over mij",
-        "statsIntro": "Een paar dingen over mij.",
-        "stat1": "16 jaar ervaring",
-        "stat2": "Bouwen met Astro",
-        "stat3": "Wereldwijd werkzaam",
-        "basedIn": "Gevestigd in"
-      },
-      "blog": {
-        "badge": "Van de blog",
-        "heading": "Uitgelicht",
-        "viewAll": "Bekijk alle berichten"
-      },
-      "cta": {
+      "contact": {
         "badge": "Laten we praten",
-        "heading": "Laten we het over jouw wensen hebben",
-        "description": "Het eerste gesprek is gratis en informatief, geheel vrijblijvend. En van het eerste gesprek tot de uiteindelijke oplevering: je werkt met mij.",
-        "primary": "Stuur een bericht",
-        "secondary": "Meer over mij"
+        "heading": "Contact",
+        "description": "Heb je een vraag of een project in gedachten? Neem gerust contact op.",
+        "cta": "Stuur me een e-mail"
       }
     }
   }

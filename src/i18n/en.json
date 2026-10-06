@@ -508,77 +508,21 @@
       },
       "hero": {
         "badge": "Available for new projects",
-        "titleLine1": "Astro Rocket —",
-        "titleLine2": "Web Designer",
-        "titleLine3": "& Developer",
-        "description": "A free, lightning-fast Astro 7 starter theme to build anything on: 40 designed components, 8 colour themes, and dark mode.",
-        "descriptionMobile": "A free, lightning-fast Astro 7 starter theme to build anything on: 40 designed components and 8 colour themes.",
-        "github": "Get it on GitHub",
-        "getStarted": "Get started"
+        "titleLine1": "Software",
+        "titleLine2": "Developer",
+        "description": "I turn ideas into fast, accessible websites. This is example copy: replace it with a short introduction about you and the kind of work you do.",
+        "email": "Email"
       },
-      "services": {
-        "badge": "What I do",
-        "heading": "Design, build, optimise",
-        "lead": "Every project gets all three services.",
-        "learnMore": "Learn more",
-        "cards": [
-          { "icon": "layout", "title": "Web Design", "description": "Interfaces that feel obvious. Layouts shaped around your content, your brand, and how people actually read on a screen." },
-          { "icon": "code", "title": "Web Development", "description": "Sites built to last. Astro, Tailwind, and a clean architecture: fast on day one, easy to maintain on day 500." },
-          { "icon": "trending-up", "title": "Web Optimisation", "description": "SEO, Core Web Vitals, and accessibility, built in from day one so your site ranks, loads well, and works for every visitor." }
-        ]
-      },
-      "workWithMe": {
-        "badge": "Work with me",
-        "heading": "Let's build your website",
-        "lead": "What you get when we work together.",
-        "cards": [
-          { "icon": "palette", "title": "Custom design", "description": "Designed around your business, your content, and your customers." },
-          { "icon": "zap", "title": "A lightning-fast website", "description": "Pages that open instantly, on every phone and every connection." },
-          { "icon": "search", "title": "Found by Google and AI", "description": "Every page built so search engines and AI assistants read it cleanly and customers can find you." },
-          { "icon": "shield-check", "title": "Zero maintenance", "description": "Kept up to date and secure with the care plan, so you can focus on your business." }
-        ],
-        "cta": "Read my services page"
-      },
-      "portfolio": {
+      "projects": {
         "badge": "Selected work",
-        "heading": "Projects I've built",
-        "lead": "A selection of recent work.",
-        "viewAll": "View all projects"
+        "heading": "Projects",
+        "lead": "A selection of recent work."
       },
-      "testimonials": {
-        "badge": "Testimonials",
-        "heading": "What clients say",
-        "lead": "Real words from finished projects.",
-        "items": [
-          { "quote": "The new site launched on time and hit every goal we set. Performance improved dramatically — load times dropped and the feedback from our customers has been overwhelmingly positive.", "name": "Alex Morgan", "role": "Founder, Bright Studio" },
-          { "quote": "Straightforward from first conversation to final handover. The right questions were asked, we were kept in the loop throughout, and the end result exceeded what we imagined. Would recommend without hesitation.", "name": "Sarah Chen", "role": "CEO, Luma Agency" }
-        ]
-      },
-      "aboutTeaser": {
-        "badge": "About me",
-        "headingLine1": "Designer, developer,",
-        "headingLine2": "and blogger.",
-        "para1WithLocation": "Sixteen years of hands-on experience, based in {location} and available for clients worldwide. I build with Astro because it aligns with how I think about the web: lean, purposeful, and built to last.",
-        "para1NoLocation": "Sixteen years of hands-on experience and available for clients worldwide. I build with Astro because it aligns with how I think about the web: lean, purposeful, and built to last.",
-        "para2": "On the blog, I share the ideas and decisions that shape my work.",
-        "moreAboutMe": "More about me",
-        "statsIntro": "A few things about me.",
-        "stat1": "16 Years Experience",
-        "stat2": "Building with Astro",
-        "stat3": "Working worldwide",
-        "basedIn": "Based in"
-      },
-      "blog": {
-        "badge": "From the blog",
-        "heading": "Featured",
-        "viewAll": "View all posts"
-      },
-      "cta": {
+      "contact": {
         "badge": "Let's talk",
-        "heading": "Let's talk about what you need",
-        "description": "The first talk is free and informative, with no obligations. And from the first conversation to the final delivery, it's me.",
-        "primary": "Send a message",
-        "secondary": "More about me"
+        "heading": "Contact",
+        "description": "Have a question or a project in mind? Feel free to reach out.",
+        "cta": "Send me an email"
       }
     }
   }

@@ -259,7 +259,7 @@ const siteConfig: SiteConfig = {
   // (PNG or JPEG): social platforms don't render SVG share images.
   ogImage: '/og/default.png',
   author: 'Hans Martens',
-  email: 'hello@hansmartens.dev',
+  email: 'tu-correo@example.com',
   address: {
     street: '',
     city: 'Amsterdam',
@@ -268,10 +268,10 @@ const siteConfig: SiteConfig = {
     country: 'the Netherlands',
   },
   socialLinks: [
-    'https://github.com/hansmartensdev',
-    'https://x.com/hansmartens_dev',
-    'https://www.linkedin.com/in/hansmartensdev',
-    'https://bsky.app/profile/hansmartensdev.bsky.social',
+    'https://github.com/tu-usuario',
+    'https://x.com/tu-usuario',
+    'https://www.linkedin.com/in/tu-usuario',
+    'https://bsky.app/profile/tu-usuario.bsky.social',
   ],
   header: {
     // Flip to `true` to show the social icons (incl. GitHub) in the header.
