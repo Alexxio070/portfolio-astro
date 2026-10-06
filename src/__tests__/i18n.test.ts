@@ -69,16 +69,15 @@ describe('i18n tData() helper', () => {
 });
 
 describe('i18n getSecondaryLocales()', () => {
-  it('returns an empty list when i18n is disabled (single locale)', () => {
-    // Default config: enabled is false and locales is ['en'], so there are no
-    // extra locales to generate prefixed routes for.
-    expect(getSecondaryLocales()).toEqual([]);
+  it('returns the configured locales other than the default', () => {
+    // Shipped config: locales is ['en', 'es'], so es gets prefixed routes.
+    expect(getSecondaryLocales()).toEqual(['es']);
   });
 });
 
 describe('i18n localizedPath()', () => {
-  it('returns the path unchanged when i18n is disabled (single locale)', () => {
-    // With default config (locales: ['en']), i18n is effectively off
+  it('returns the path unchanged for the default locale', () => {
+    // The default locale is served at the site root, with no prefix
     expect(localizedPath('/about')).toBe('/about');
     expect(localizedPath('/')).toBe('/');
     expect(localizedPath('blog/hello')).toBe('/blog/hello');
@@ -116,7 +115,7 @@ describe('i18n getLocaleFromPath()', () => {
   });
 
   it('returns the default locale when the first segment is not a configured locale', () => {
-    // Default config only has 'en' active — 'nl' is not recognized
+    // Only 'en' and 'es' are active — 'nl' is not recognized
     expect(getLocaleFromPath('/nl/about')).toBe('en');
     expect(getLocaleFromPath('/zh-cn/blog')).toBe('en');
   });
@@ -142,9 +141,9 @@ describe('i18n swapLocaleInPath()', () => {
     expect(swapLocaleInPath('/about', 'en')).toBe('/about');
   });
 
-  it('returns the same path when i18n is disabled, regardless of target', () => {
-    // With default config (single locale), localizedPath is a no-op
-    expect(swapLocaleInPath('/about', 'nl')).toBe('/about');
+  it('prefixes the path when targeting a secondary locale', () => {
+    expect(swapLocaleInPath('/about', 'es')).toBe('/es/about');
+    expect(swapLocaleInPath('/es/about', 'en')).toBe('/about');
   });
 });
 

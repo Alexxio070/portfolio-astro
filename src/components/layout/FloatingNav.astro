@@ -1,0 +1,311 @@
+---
+/**
+ * FloatingNav
+ * Navigation bar for the single-page home.
+ *
+ * Desktop: a centred bar fixed at the top. It starts at 80% of the viewport and,
+ * once the page scrolls, becomes a filled capsule that narrows towards a
+ * minimum width as the scroll position grows. The theme, colour-mode and
+ * language controls sit at its end and open downwards.
+ *
+ * Mobile (< 768px): a full-width bar fixed at the bottom, rounded on top, with
+ * the icon above each label. The controls collapse into one button that opens a
+ * panel upwards, so nothing opens off the bottom edge of the screen.
+ *
+ * The link marked current is the section crossing the middle of the viewport.
+ */
+import { cn } from '@/lib/cn';
+import { getHomeNavItems } from '@/config/nav.config';
+import { t, getLocaleFromPath, getLocales, getLocaleName, swapLocaleInPath, isEnabled as i18nIsEnabled } from '@/i18n';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import ThemeSelector from '@/components/layout/ThemeSelector.astro';
+import ThemeSelectorDropdown from '@/components/layout/ThemeSelectorDropdown.astro';
+import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
+import ThemeToggle from '@/components/layout/ThemeToggle.astro';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
+
+const currentPath = Astro.url.pathname;
+const locale = getLocaleFromPath(currentPath);
+const items = getHomeNavItems(locale);
+const icons: Record<string, string> = {
+  '#home': 'house',
+  '#about': 'user',
+  '#projects': 'folder',
+  '#contact': 'mail',
+};
+
+const languagesEnabled = i18nIsEnabled();
+const languages = languagesEnabled
+  ? getLocales().map((code) => ({
+      code,
+      name: getLocaleName(code),
+      href: swapLocaleInPath(currentPath, code),
+      active: code === locale,
+    }))
+  : [];
+---
+
+<nav
+  id="main-nav"
+  aria-label={t('nav.mainNav', locale)}
+  class={cn(
+    'fixed left-1/2 z-[100] -translate-x-1/2 border border-transparent backdrop-blur-xl',
+    'bottom-0 w-full rounded-t-2xl border-border bg-background-secondary/90',
+    'md:bottom-auto md:top-6 md:w-[80%] md:rounded-none md:border-transparent md:bg-transparent'
+  )}
+>
+  <div class="flex items-center justify-between gap-2 p-3 md:justify-center md:gap-8 md:px-6">
+    <ul class="flex flex-1 items-center justify-between gap-2 md:flex-none md:gap-8">
+      {
+        items.map((item) => (
+          <li class="flex-1 md:flex-none">
+            <a
+              href={item.href}
+              class="nav-link relative flex flex-col items-center gap-1 text-xs md:flex-row md:gap-2 md:text-sm"
+            >
+              <span class="nav-dot hidden md:block" aria-hidden="true"></span>
+              <Icon name={icons[item.href] ?? 'circle'} size="md" class="md:hidden" />
+              <span>{item.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="hidden items-center gap-2 md:flex">
+      <ThemeSelectorDropdown />
+      <ThemeModeDropdown />
+      <LanguageSwitcher />
+    </div>
+
+    <button
+      type="button"
+      id="nav-settings-trigger"
+      class="nav-link flex flex-col items-center gap-1 px-2 text-xs md:hidden"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="nav-settings"
+    >
+      <Icon name="palette" size="md" />
+      <span>{t('nav.sectionTheme', locale)}</span>
+    </button>
+  </div>
+</nav>
+
+<div
+  id="nav-settings"
+  role="dialog"
+  aria-label={t('nav.sectionTheme', locale)}
+  hidden
+  class="fixed inset-x-3 z-[99] rounded-2xl border border-border bg-background p-4 shadow-lg md:hidden"
+>
+  <p class="mb-2 text-xs font-medium text-foreground-muted">{t('theme.colourTheme', locale)}</p>
+  <ThemeSelector />
+
+  <div class="mt-4 flex items-center justify-between">
+    <span class="text-xs font-medium text-foreground-muted">{t('theme.colourMode', locale)}</span>
+    <ThemeToggle />
+  </div>
+
+  {
+    languages.length > 0 && (
+      <div class="mt-4">
+        <p class="mb-2 text-xs font-medium text-foreground-muted">{t('nav.sectionLanguage', locale)}</p>
+        <div class="flex flex-wrap gap-2">
+          {languages.map((language) => (
+            <a
+              href={language.href}
+              hreflang={language.code}
+              lang={language.code}
+              aria-current={language.active ? 'true' : undefined}
+              class="nav-language rounded-full border border-border-strong px-3 py-1.5 text-sm text-foreground-muted"
+            >
+              {language.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<style is:global>
+  #main-nav {
+    min-width: max-content;
+  }
+  #main-nav .nav-link {
+    color: var(--color-foreground-muted);
+    transition: color 0.2s ease;
+  }
+  #main-nav .nav-link:hover,
+  #main-nav .nav-link[aria-current] {
+    color: var(--color-foreground);
+  }
+  #main-nav .nav-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--color-brand-500);
+    transform: scale(0);
+    opacity: 0;
+  }
+  #main-nav .nav-link[aria-current] .nav-dot {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .nav-language[aria-current] {
+    border-color: var(--color-brand-500);
+    color: var(--color-foreground);
+  }
+
+  /* Over the hero the bar has no fill. The hero is dark in both colour modes,
+     so the text is light until the bar becomes a capsule. */
+  @media (min-width: 768px) {
+    #main-nav:not(.scrolling) {
+      backdrop-filter: none;
+    }
+    #main-nav:not(.scrolling) .nav-link {
+      color: oklch(90% 0 0 / 0.75);
+    }
+    #main-nav:not(.scrolling) .nav-link:hover,
+    #main-nav:not(.scrolling) .nav-link[aria-current] {
+      color: oklch(98% 0 0);
+    }
+    #main-nav.scrolling {
+      background-color: color-mix(in oklch, var(--color-background-secondary) 90%, transparent);
+      border-color: var(--color-border);
+      border-radius: 9999px;
+    }
+  }
+
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    #main-nav {
+      transition:
+        background-color 0.3s ease,
+        border-radius 0.3s ease,
+        border-color 0.3s ease;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    #main-nav .nav-dot {
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+    }
+  }
+
+  /* The settings panel sits above the bottom bar; the body keeps room for both. */
+  #nav-settings {
+    bottom: 5.25rem;
+  }
+  #nav-settings .theme-selector {
+    gap: 0.75rem;
+  }
+  #nav-settings .theme-swatch {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  @media (max-width: 767px) {
+    body {
+      padding-bottom: 4.5rem;
+    }
+    #back-to-top {
+      bottom: 5.5rem;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  const trigger = document.getElementById('nav-settings-trigger');
+  const panel = document.getElementById('nav-settings');
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('#main-nav a[href^="#"]'));
+
+  const FULL_WIDTH_RATIO = 0.8;
+  const MIN_WIDTH = 528;
+  const MAX_SCROLL = 1000;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const desktop = window.matchMedia('(min-width: 768px)');
+
+  let frame: number | null = null;
+
+  function updateBar() {
+    frame = null;
+    if (!nav) return;
+    if (window.scrollY > 0) {
+      nav.classList.add('scrolling');
+      if (!desktop.matches) return;
+      const maxWidth = window.innerWidth * FULL_WIDTH_RATIO;
+      const progress = reducedMotion.matches ? 1 : Math.min(window.scrollY / MAX_SCROLL, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      nav.style.setProperty('width', `${maxWidth - (maxWidth - MIN_WIDTH) * eased}px`);
+    } else {
+      nav.classList.remove('scrolling');
+      nav.style.removeProperty('width');
+    }
+  }
+
+  // The last section can be too short to reach the middle of the viewport, so
+  // the end of the page counts as being in it.
+  function markLastAtBottom() {
+    const last = sections[sections.length - 1];
+    if (last && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      setCurrent(last.id);
+    }
+  }
+
+  function requestUpdate() {
+    if (frame === null) frame = requestAnimationFrame(updateBar);
+  }
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('scroll', markLastAtBottom, { passive: true });
+  window.addEventListener('resize', () => {
+    nav?.style.removeProperty('width');
+    requestUpdate();
+  });
+  updateBar();
+
+  // The section crossing the middle of the viewport is the current one. A
+  // visible-ratio threshold would never fire for a section taller than the
+  // screen, which the projects list is on a phone.
+  const sections = links
+    .map((link) => document.getElementById(link.getAttribute('href')!.slice(1)))
+    .filter((section): section is HTMLElement => section !== null);
+  function setCurrent(id: string) {
+    for (const link of links) {
+      if (link.getAttribute('href') === `#${id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    }
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) setCurrent(entry.target.id);
+      }
+    },
+    { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+  );
+  sections.forEach((section) => observer.observe(section));
+
+  function setPanel(open: boolean) {
+    if (!trigger || !panel) return;
+    panel.hidden = !open;
+    trigger.setAttribute('aria-expanded', String(open));
+  }
+
+  trigger?.addEventListener('click', () => setPanel(panel?.hidden ?? false));
+  document.addEventListener('click', (event) => {
+    if (!panel || panel.hidden) return;
+    const target = event.target as Node;
+    if (!panel.contains(target) && !trigger?.contains(target)) setPanel(false);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && panel && !panel.hidden) {
+      setPanel(false);
+      trigger?.focus();
+    }
+  });
+  links.forEach((link) => link.addEventListener('click', () => setPanel(false)));
+</script>

@@ -1,12 +1,13 @@
 ---
 /**
  * LandingLayout
- * Layout wrapper for the single-page home. It renders no header or footer.
+ * Layout wrapper for the single-page home: the floating navigation bar and no footer.
  *
  * This layout is part of the "demo" layer - it can be optionally installed
  * via CLI for users who want the full landing page experience.
  */
 import BaseLayout from './BaseLayout.astro';
+import FloatingNav from '@/components/layout/FloatingNav.astro';
 
 interface Props {
   title?: string;
@@ -44,5 +45,7 @@ const {
   includePersonSchema={includePersonSchema}
   includeProfessionalServiceSchema={includeProfessionalServiceSchema}
 >
+  <FloatingNav slot="header" />
+
   <slot />
 </BaseLayout>

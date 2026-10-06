@@ -89,6 +89,14 @@ export const navItems: NavItem[] = [
   { label: 'Contact', href: '/contact', order: 5, labelKey: 'nav.items.contact' },
 ];
 
+/** Anchors of the single-page home, used by `FloatingNav`. */
+export const homeNavItems: NavItem[] = [
+  { label: 'Home', href: '#home', order: 0, labelKey: 'nav.items.home' },
+  { label: 'About', href: '#about', order: 1, labelKey: 'nav.items.about' },
+  { label: 'Projects', href: '#projects', order: 2, labelKey: 'nav.items.projects' },
+  { label: 'Contact', href: '#contact', order: 3, labelKey: 'nav.items.contact' },
+];
+
 export const footerNavItems: NavItem[] = [
   { label: 'Home', href: '/', order: 0, labelKey: 'nav.items.home' },
   { label: 'Projects', href: '/projects', order: 2, labelKey: 'nav.items.projects' },
@@ -162,6 +170,13 @@ export function resolveNavItem(item: NavItem | LegalLink, locale: Locale): Resol
  */
 export function getNavItems(locale: Locale = defaultLocale): ResolvedNavItem[] {
   return [...navItems]
+    .sort((a, b) => a.order - b.order)
+    .map((item) => resolveNavItem(item, locale));
+}
+
+/** Get the single-page home anchors sorted by order, localized for `locale`. */
+export function getHomeNavItems(locale: Locale = defaultLocale): ResolvedNavItem[] {
+  return [...homeNavItems]
     .sort((a, b) => a.order - b.order)
     .map((item) => resolveNavItem(item, locale));
 }
