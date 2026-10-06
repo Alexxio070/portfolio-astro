@@ -536,11 +536,20 @@
           },
           {
             "icon": "code-xml",
-            "title": "My stack",
+            "title": "Hard skills",
             "points": [
               "Astro, TypeScript and Tailwind CSS",
               "React",
               "Git and GitHub"
+            ]
+          },
+          {
+            "icon": "users",
+            "title": "Soft skills",
+            "points": [
+              "Example: teamwork and communication.",
+              "Example: problem solving.",
+              "Example: adaptability and time management."
             ]
           },
           {

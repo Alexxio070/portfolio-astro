@@ -536,11 +536,20 @@
           },
           {
             "icon": "code-xml",
-            "title": "Mi stack",
+            "title": "Habilidades técnicas",
             "points": [
               "Astro, TypeScript y Tailwind CSS",
               "React",
               "Git y GitHub"
+            ]
+          },
+          {
+            "icon": "users",
+            "title": "Habilidades blandas",
+            "points": [
+              "Ejemplo: trabajo en equipo y comunicación.",
+              "Ejemplo: resolución de problemas.",
+              "Ejemplo: adaptabilidad y gestión del tiempo."
             ]
           },
           {
