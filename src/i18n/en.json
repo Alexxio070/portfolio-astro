@@ -513,6 +513,46 @@
         "description": "I turn ideas into fast, accessible websites. This is example copy: replace it with a short introduction about you and the kind of work you do.",
         "email": "Email"
       },
+      "about": {
+        "badge": "Get to know me",
+        "heading": "About me",
+        "items": [
+          {
+            "icon": "user",
+            "title": "Who am I",
+            "points": [
+              "Example: your name and what you do.",
+              "Example: where you are based.",
+              "Example: what drives you."
+            ]
+          },
+          {
+            "icon": "graduation-cap",
+            "title": "Studies",
+            "points": [
+              "Example: degree or course, institution and years.",
+              "Example: another course or training."
+            ]
+          },
+          {
+            "icon": "code-xml",
+            "title": "My stack",
+            "points": [
+              "Astro, TypeScript and Tailwind CSS",
+              "React",
+              "Git and GitHub"
+            ]
+          },
+          {
+            "icon": "award",
+            "title": "Certifications",
+            "points": [
+              "Example: certification name, issuer and year.",
+              "Example: another certification."
+            ]
+          }
+        ]
+      },
       "projects": {
         "badge": "Selected work",
         "heading": "Projects",

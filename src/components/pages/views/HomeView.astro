@@ -15,6 +15,8 @@ import Button from '@/components/ui/form/Button/Button.astro';
 import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import { accordionItemVariants, accordionTriggerVariants } from '@/components/ui/overlay/Accordion/accordion.variants';
+import { cn } from '@/lib/cn';
 import StackMarquee from '@/components/landing/StackMarquee.astro';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
 import { getCollection } from 'astro:content';
@@ -57,6 +59,13 @@ const hero = tData<{
   description: string;
   email: string;
 }>('pages.home.hero', locale)!;
+const about = tData<{ badge: string; heading: string; items: { icon: string; title: string; points: string[] }[] }>(
+  'pages.home.about',
+  locale
+)!;
+// Two columns up to six items (three rows of two); a seventh item opens a
+// third column. Items are entries of `pages.home.about.items` in the locale files.
+const aboutColumns = about.items.length > 6 ? 'md:grid-cols-3' : 'md:grid-cols-2';
 const projects = tData<{ badge: string; heading: string; lead: string }>('pages.home.projects', locale)!;
 const contact = tData<{ badge: string; heading: string; description: string; cta: string }>(
   'pages.home.contact',
@@ -123,6 +132,53 @@ const mailto = `mailto:${siteConfig.email}`;
     </div>
   </Hero>
 
+  <!-- About -->
+  <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
+      <div class="flex flex-col gap-4" data-reveal>
+        <Badge variant="brand" pill class="self-start">
+          <Icon name="user" size="sm" />
+          {about.badge}
+        </Badge>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+          {about.heading}
+        </h2>
+      </div>
+
+      <!-- items-start: each panel grows to fit its own content and never
+           stretches its neighbour. `name` makes the <details> exclusive, so
+           opening one closes the open one, and clicking an open panel closes it. -->
+      <div class={cn('grid grid-cols-1 items-start gap-4', aboutColumns)}>
+        {about.items.map((item, i) => (
+          <details
+            name="about-panels"
+            class={cn(accordionItemVariants({ variant: 'card' }), 'about-panel mb-0 rounded-2xl bg-background-secondary')}
+            data-reveal
+            data-reveal-delay={i % 2 || undefined}
+          >
+            <summary
+              class={cn(
+                accordionTriggerVariants({ size: 'lg' }),
+                'cursor-pointer list-none gap-3 [&::-webkit-details-marker]:hidden'
+              )}
+            >
+              <span class="flex min-w-0 items-center gap-3">
+                <Icon name={item.icon} class="text-brand-500" />
+                <span class="truncate">{item.title}</span>
+              </span>
+              <Icon name="chevron-down" size="sm" class="about-chevron text-foreground-muted" />
+            </summary>
+            <ul class="list-disc space-y-2 pb-4 pl-9 text-foreground-muted leading-relaxed">
+              {item.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Projects -->
   <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
@@ -173,6 +229,15 @@ const mailto = `mailto:${siteConfig.email}`;
   </section>
 
 <style is:global>
+  .about-panel[open] .about-chevron {
+    transform: rotate(180deg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .about-chevron {
+      transition: transform 200ms ease;
+    }
+  }
+
   /* Widen the homepage hero description from md upward so the paragraph
      reads on two lines instead of three on landscape phones, tablets,
      and all laptop/desktop sizes. Scoped via the unique

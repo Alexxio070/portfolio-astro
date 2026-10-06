@@ -384,7 +384,7 @@ For lists and structured sections (an array of FAQ items, feature cards, …) us
 
 ### Translating UI strings
 
-UI strings (button labels, "Read more", "Published on", etc.) live in `src/i18n/<locale>.json`. Astro Rocket ships English (`en.json`) and Dutch (`nl.json`) out of the box. Use the `t()` helper in any `.astro` file:
+UI strings (button labels, "Read more", "Published on", etc.) live in `src/i18n/<locale>.json`. Astro Rocket ships English (`en.json`) out of the box. Use the `t()` helper in any `.astro` file:
 
 ```astro
 ---

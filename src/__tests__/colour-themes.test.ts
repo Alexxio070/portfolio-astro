@@ -20,7 +20,7 @@ import { join } from 'node:path';
 
 import { colourThemes, selectorThemes } from '../lib/themes';
 import en from '../i18n/en.json';
-import nl from '../i18n/nl.json';
+import es from '../i18n/es.json';
 import siteConfig from '../config/site.config';
 
 const COUNT = colourThemes.length;
@@ -109,10 +109,10 @@ describe('colour themes', () => {
     }
   });
 
-  it('site.config and both locales quote the count', () => {
+  it('site.config and the locale quote the count', () => {
     expect(siteConfig.description).toContain(`${COUNT} colour themes`);
     expect(JSON.stringify(en)).toContain(`${COUNT} colour themes`);
-    expect(JSON.stringify(nl)).toContain(`${COUNT} kleurthema's`);
+    expect(JSON.stringify(es)).toContain(`${COUNT} temas de color`);
   });
 
   it('the README and the docs quote the count', () => {
@@ -129,7 +129,7 @@ describe('colour themes', () => {
       'AGENTS.md',
       'src/config/site.config.ts',
       'src/i18n/en.json',
-      'src/i18n/nl.json',
+      'src/i18n/es.json',
       'src/content/projects/en/astro-rocket.mdx',
     ]) {
       expect(read(file), file).not.toMatch(/\btwelve\b/i);

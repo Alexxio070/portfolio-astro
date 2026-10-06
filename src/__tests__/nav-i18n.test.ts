@@ -28,12 +28,6 @@ describe('nav config — locale resolution (en default, nl secondary)', () => {
     expect(items.map((i) => i.href)).toEqual(['/nl', '/nl/projects', '/nl/contact']);
   });
 
-  it('translates labels via the dictionary (labelKey)', () => {
-    const nl = getNavItems('nl');
-    // nl.json: nav.items.projects = "Projecten"
-    expect(nl.find((i) => i.href === '/nl/projects')?.label).toBe('Projecten');
-  });
-
   it('points the logo at the locale home', () => {
     expect(getLogoHref('en')).toBe('/');
     expect(getLogoHref('nl')).toBe('/nl');

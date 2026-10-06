@@ -18,7 +18,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 import en from '../i18n/en.json';
-import nl from '../i18n/nl.json';
+import es from '../i18n/es.json';
 
 const ROOT = process.cwd();
 const SCANNED = ['src/components', 'src/layouts'];
@@ -103,21 +103,26 @@ describe('interface text lives in the locale files', () => {
 });
 
 describe('every locale carries every key', () => {
-  const locales = { nl };
+  // Add each secondary dictionary here.
+  const locales: Record<string, unknown> = { es };
 
-  for (const [name, dictionary] of Object.entries(locales)) {
-    it(`${name}.json has no key missing against en.json`, () => {
-      const expected = flatten(en);
-      const actual = new Set(flatten(dictionary));
+  it('no secondary dictionary is missing a key from en.json or adds one', () => {
+    const expected = flatten(en);
+    const expectedSet = new Set(expected);
+    for (const [name, dictionary] of Object.entries(locales)) {
+      const actual = flatten(dictionary);
+      const actualSet = new Set(actual);
       // A missing key falls back to the default locale silently, so the page
       // renders the default language in place of the translation and nothing
       // reports it.
-      expect(expected.filter((key) => !actual.has(key))).toEqual([]);
-    });
-
-    it(`${name}.json has no key that en.json does not`, () => {
-      const expected = new Set(flatten(en));
-      expect(flatten(dictionary).filter((key) => !expected.has(key))).toEqual([]);
-    });
-  }
+      expect(
+        expected.filter((key) => !actualSet.has(key)),
+        `${name}.json is missing keys`
+      ).toEqual([]);
+      expect(
+        actual.filter((key) => !expectedSet.has(key)),
+        `${name}.json has keys en.json does not`
+      ).toEqual([]);
+    }
+  });
 });

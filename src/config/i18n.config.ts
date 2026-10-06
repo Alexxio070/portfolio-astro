@@ -37,7 +37,6 @@ const i18nConfig: I18nConfig = {
   locales: ['en'],
   localeNames: {
     en: 'English',
-    nl: 'Nederlands',
     de: 'Deutsch',
     fr: 'Français',
     es: 'Español',
