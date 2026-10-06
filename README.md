@@ -81,7 +81,7 @@ Use all of it or only the parts you need. The site you build on it is yours.
 | **8 Colour Themes** | All 8 colour swatches are shown in the header dropdown — click one and the logo badge, blog image gradients, and every brand color update live instantly. No file edits, no rebuilds. The selector can be removed from the header once you've settled on a color. |
 | **Scroll Progress Bar** | A thin 2px brand-coloured bar on the header edge that fills as you scroll. Enabled on the homepage (above the floating header), blog index, and post pages (below the solid header). Controlled via `showScrollProgress` and `scrollProgressPosition` props on the Header component. |
 | **Design Tokens** | Three-tier token architecture (reference → semantic → component) |
-| **40 Components** | 32 UI, 5 patterns, 2 layout, 1 hero — every entry in `component-registry.json`, all accessible with TypeScript |
+| **40 Components** | 32 UI, 5 patterns, 2 layout, 1 hero — all accessible with TypeScript |
 | **Auto Logo & Favicon** | First letter of your site name on brand color — generated automatically from `site.config.ts`, no design tools needed. Prefer your own logo? Set `branding.logo.image` to a file in `public/`. |
 | **Icon System** | Unified `Icon` component (Astro + React) — 350+ [Lucide](https://lucide.dev) UI icons and 3000+ [Simple Icons](https://simpleicons.org) brand icons via Iconify |
 | **Typing Effect** | Animated typing effect in the hero section |
@@ -663,7 +663,7 @@ Astro Rocket includes 40 components across four categories. All UI components us
 | Layout | 2 | Header (with scroll progress bar), Footer |
 | Hero | 1 | Hero section with centered/split layouts, grid pattern, and typing effect |
 
-`src/components/` also holds components built for this site's own pages — blog, landing, SEO and theme-switching pieces, the `YouTube` embed for MDX, and the `Callout`, `CtaBand` and `LetterGlitchBand` patterns. They are outside the 42 that `component-registry.json` counts.
+`src/components/` also holds components built for this site's own pages — blog, landing, SEO and theme-switching pieces, the `YouTube` embed for MDX, and the `Callout`, `CtaBand` and `LetterGlitchBand` patterns.
 
 ### Usage Example
 
