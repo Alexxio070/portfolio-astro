@@ -53,7 +53,6 @@ const heroStackItems = (await getCollection('stack'))
   }));
 
 const hero = tData<{
-  badge: string;
   titleLine1: string;
   titleLine2: string;
   description: string;
@@ -74,6 +73,25 @@ const contact = tData<{ badge: string; heading: string; description: string; cta
 
 const socialLinks = resolveSocialLinks(siteConfig.socialLinks).filter((l) => ['github', 'linkedin'].includes(l.key));
 const mailto = `mailto:${siteConfig.email}`;
+
+// Splits a word into groups of two or three letters, never leaving a lone letter.
+function letterGroups(word: string): string[] {
+  const letters = Array.from(word);
+  const groups: string[] = [];
+  let rest = letters.length;
+  let at = 0;
+  while (rest > 0) {
+    const size = rest <= 3 ? rest : rest === 4 ? 2 : 3;
+    groups.push(letters.slice(at, at + size).join(''));
+    at += size;
+    rest -= size;
+  }
+  return groups;
+}
+const heroTitleLines = [hero.titleLine1, hero.titleLine2].map((line) =>
+  line.split(' ').map((word) => letterGroups(word))
+);
+const heroDescriptionWords = hero.description.split(' ').map((word) => letterGroups(word));
 ---
 
 <LandingLayout title={t('pages.home.meta.title', locale)} description={t('pages.home.meta.description', locale)}>
@@ -82,6 +100,12 @@ const mailto = `mailto:${siteConfig.email}`;
        background. This hero is dark in both colour modes, so the theme script
        paints the body this colour while the hero covers that edge. Same value
        as --bar-color in global.css. See `paintBody` in BaseLayout.astro. -->
+  <script is:inline>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('hero-scatter');
+    }
+  </script>
+  <div class="hero-scroll-track" data-hero-track>
   <Hero
     id="home"
     layout="split"
@@ -91,11 +115,24 @@ const mailto = `mailto:${siteConfig.email}`;
     data-header-flip-anchor
     data-bar-color="#000"
   >
-    <Badge slot="badge" variant="brand" pill pulse class="dark:text-brand-200">{hero.badge}</Badge>
-
-    <h1 slot="title" class="!text-[clamp(2.25rem,12vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl text-left">
-      <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">{hero.titleLine1}</span><br />
-      <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">{hero.titleLine2}</span>
+    <h1 slot="title" class="relative !text-[clamp(2.25rem,12vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl text-left" data-scatter-text>
+      <span class="sr-only">{hero.titleLine1} {hero.titleLine2}</span>
+      <span aria-hidden="true" class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">
+        {heroTitleLines.map((words) => (
+          <span class="block">
+            {words.map((groups, w) => (
+              <Fragment>
+                {w > 0 && ' '}
+                <span class="scatter-word">
+                  {groups.map((group) => (
+                    <span class="scatter-group">{group}</span>
+                  ))}
+                </span>
+              </Fragment>
+            ))}
+          </span>
+        ))}
+      </span>
     </h1>
 
     <Fragment slot="actions">
@@ -111,8 +148,20 @@ const mailto = `mailto:${siteConfig.email}`;
       </div>
     </Fragment>
 
-    <p slot="aside" class="text-lg md:text-xl leading-relaxed text-foreground-muted text-balance">
-      {hero.description}
+    <p slot="aside" class="relative text-lg md:text-xl leading-relaxed text-foreground-muted text-balance" data-scatter-text>
+      <span class="sr-only">{hero.description}</span>
+      <span aria-hidden="true">
+        {heroDescriptionWords.map((groups, w) => (
+          <Fragment>
+            {w > 0 && ' '}
+            <span class="scatter-word">
+              {groups.map((group) => (
+                <span class="scatter-group">{group}</span>
+              ))}
+            </span>
+          </Fragment>
+        ))}
+      </span>
     </p>
 
     <!-- Tech-stack marquee floored into the hero. Decorative and hidden on
@@ -131,9 +180,10 @@ const mailto = `mailto:${siteConfig.email}`;
       </div>
     </div>
   </Hero>
+  </div>
 
   <!-- About -->
-  <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+  <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
         <Badge variant="brand" pill class="self-start">
@@ -152,7 +202,7 @@ const mailto = `mailto:${siteConfig.email}`;
         {about.items.map((item, i) => (
           <details
             name="about-panels"
-            class={cn(accordionItemVariants({ variant: 'card' }), 'about-panel mb-0 rounded-2xl bg-background-secondary')}
+            class={cn(accordionItemVariants({ variant: 'card' }), 'about-panel mb-0 rounded-2xl bg-background')}
             data-reveal
             data-reveal-delay={i % 2 || undefined}
           >
@@ -204,7 +254,7 @@ const mailto = `mailto:${siteConfig.email}`;
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+  <section id="contact" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto max-w-6xl px-6 grid gap-8 md:grid-cols-2 md:items-center">
       <div class="flex flex-col gap-4" data-reveal>
         <Badge variant="brand" pill class="self-start">
@@ -229,6 +279,29 @@ const mailto = `mailto:${siteConfig.email}`;
   </section>
 
 <style is:global>
+  /* The hero title and paragraph start as letter groups scattered over the hero
+     and come together as the page scrolls. While they do, the hero stays pinned
+     for an extra stretch of scroll, so the whole text is on screen until it is whole.
+     Only when motion is allowed: the class is added by the inline script above,
+     and visitors who ask for reduced motion get a plain hero and a plain title. */
+  .scatter-word {
+    white-space: nowrap;
+  }
+  .scatter-group {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+  .hero-scatter .scatter-group {
+    opacity: 0;
+  }
+  .hero-scatter .hero-scroll-track {
+    height: calc(100svh + 70svh);
+  }
+  .hero-scatter .hero-scroll-track > section {
+    position: sticky;
+    top: 0;
+  }
+
   .about-panel[open] .about-chevron {
     transform: rotate(180deg);
   }
@@ -339,5 +412,100 @@ const mailto = `mailto:${siteConfig.email}`;
     }
   }
 </style>
+
+<script>
+  // Scatters the letter groups of the hero title and paragraph across the hero
+  // and brings them together as the pinned hero is scrolled through.
+  const track = document.querySelector<HTMLElement>('[data-hero-track]');
+  const hero = track?.querySelector<HTMLElement>('section');
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('.scatter-group'));
+
+  if (track && hero && groups.length > 0 && document.documentElement.classList.contains('hero-scatter')) {
+    interface Offset {
+      dx: number;
+      dy: number;
+      rotate: number;
+      delay: number;
+    }
+    const STAGGER = 0.3;
+    let offsets: Offset[] = [];
+    let frame: number | null = null;
+
+    // Small seeded generator: the same scatter on every load and resize.
+    function random(seed: number) {
+      return () => {
+        seed = (seed + 0x6d2b79f5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function layout() {
+      const next = random(7);
+      const width = hero!.clientWidth;
+      const height = Math.min(hero!.offsetHeight, window.innerHeight);
+      const margin = { x: 16, top: 104, bottom: 112 };
+      const heroRect = hero!.getBoundingClientRect();
+
+      // One cell of a grid per group, in shuffled order, so the groups end up
+      // spread over the whole hero instead of clumping.
+      const cols = Math.max(2, Math.round(Math.sqrt((groups.length * width) / height)));
+      const rows = Math.ceil(groups.length / cols);
+      const cells = Array.from({ length: cols * rows }, (_, i) => i);
+      for (let i = cells.length - 1; i > 0; i--) {
+        const j = Math.floor(next() * (i + 1));
+        [cells[i], cells[j]] = [cells[j], cells[i]];
+      }
+      const cellW = (width - margin.x * 2) / cols;
+      const cellH = (height - margin.top - margin.bottom) / rows;
+
+      offsets = groups.map((group, i) => {
+        const cell = cells[i];
+        const targetX = margin.x + (cell % cols) * cellW + cellW * (0.2 + next() * 0.6);
+        const targetY = margin.top + Math.floor(cell / cols) * cellH + cellH * (0.2 + next() * 0.6);
+        // offsetLeft/offsetTop are relative to the text block (it is positioned),
+        // which is itself placed in the hero.
+        const owner = group.closest<HTMLElement>('[data-scatter-text]')!.getBoundingClientRect();
+        const centerX = owner.left - heroRect.left + group.offsetLeft + group.offsetWidth / 2;
+        const centerY = owner.top - heroRect.top + group.offsetTop + group.offsetHeight / 2;
+        return {
+          dx: targetX - centerX,
+          dy: targetY - centerY,
+          rotate: (next() - 0.5) * 50,
+          delay: (i / groups.length) * STAGGER * 0.85 + next() * STAGGER * 0.15,
+        };
+      });
+    }
+
+    function render() {
+      frame = null;
+      const range = track!.offsetHeight - window.innerHeight;
+      const progress = range > 0 ? Math.min(Math.max(-track!.getBoundingClientRect().top / range, 0), 1) : 1;
+      groups.forEach((group, i) => {
+        const { dx, dy, rotate, delay } = offsets[i];
+        const local = Math.min(Math.max((progress - delay) / (1 - STAGGER), 0), 1);
+        const eased = 1 - Math.pow(1 - local, 3);
+        group.style.opacity = String(0.3 + 0.7 * eased);
+        group.style.transform =
+          eased === 1 ? 'none' : `translate3d(${dx * (1 - eased)}px, ${dy * (1 - eased)}px, 0) rotate(${rotate * (1 - eased)}deg)`;
+      });
+    }
+
+    function requestRender() {
+      if (frame === null) frame = requestAnimationFrame(render);
+    }
+
+    function init() {
+      layout();
+      render();
+    }
+
+    init();
+    document.fonts?.ready.then(init);
+    window.addEventListener('scroll', requestRender, { passive: true });
+    window.addEventListener('resize', init);
+  }
+</script>
 
 </LandingLayout>

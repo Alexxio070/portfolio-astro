@@ -507,7 +507,6 @@
         "description": "Un tema inicial gratuito y rápido para Astro 7 sobre el que construir lo que quieras: 40 componentes diseñados, 8 temas de color, modo oscuro e i18n integrado."
       },
       "hero": {
-        "badge": "Disponible para nuevos proyectos",
         "titleLine1": "Desarrollador",
         "titleLine2": "de software",
         "description": "Convierto ideas en sitios web rápidos y accesibles. Este es un texto de ejemplo: sustitúyelo por una breve presentación sobre ti y el tipo de trabajo que haces.",
