@@ -27,11 +27,11 @@ describe('i18n t() helper', () => {
   });
 
   it('interpolates {placeholder} variables', () => {
-    expect(t('blog.readingTime', 'en', { minutes: 5 })).toBe('5 min read');
+    expect(t('common.themeMode', 'en', { mode: 'dark' })).toBe('Theme: dark');
   });
 
   it('leaves unknown placeholders untouched', () => {
-    expect(t('blog.readingTime', 'en', {})).toBe('{minutes} min read');
+    expect(t('common.themeMode', 'en', {})).toBe('Theme: {mode}');
   });
 });
 
@@ -41,8 +41,8 @@ describe('i18n tData() helper', () => {
     // `pages.about.intro.facts` and checked for the literal "Astro 7"; the
     // about page was later restructured, `intro` stopped existing, and the
     // test failed for a reason that had nothing to do with tData().
-    const items = tData<{ icon: string; title: string; description: string }[]>(
-      'pages.about.principles.items',
+    const items = tData<{ icon: string; title: string; points: string[] }[]>(
+      'pages.home.about.items',
       'en'
     );
     expect(Array.isArray(items)).toBe(true);
@@ -51,16 +51,17 @@ describe('i18n tData() helper', () => {
       expect.objectContaining({
         icon: expect.any(String),
         title: expect.any(String),
-        description: expect.any(String),
+        points: expect.any(Array),
       })
     );
   });
 
   it('falls back to the default-locale value when the locale has no entry', () => {
     // 'de' has no dictionary loaded yet — should fall back to the English data
-    const cards = tData<unknown[]>('pages.about.faq.cards', 'de');
-    expect(Array.isArray(cards)).toBe(true);
-    expect(cards?.length).toBe(2);
+    const items = tData<unknown[]>('pages.home.about.items', 'de');
+    const english = tData<unknown[]>('pages.home.about.items', 'en');
+    expect(Array.isArray(items)).toBe(true);
+    expect(items?.length).toBe(english?.length);
   });
 
   it('returns undefined when the key is absent in every dictionary', () => {
@@ -150,28 +151,21 @@ describe('i18n swapLocaleInPath()', () => {
 describe('i18n meta titles never embed the site name', () => {
   // SEO.astro renders the document <title> as `${title} — ${siteConfig.name}`,
   // so any meta-title dictionary value that already contains the site name
-  // would render it twice (e.g. "Blog — Astro Rocket — Astro Rocket"). Every
+  // would render it twice (e.g. "Alejandro Vizán — Alejandro Vizán"). Every
   // key below feeds that `title` prop and must therefore stay brand-free.
   //
-  // The shipped brand is checked as a literal on purpose: importing
-  // site.config.ts here would pull in `astro:env/server` (see i18n.config.ts),
-  // and this guards the theme's own default dictionaries against a regression.
-  const SITE_NAME = 'Astro Rocket';
+  // The name is checked as a literal on purpose: importing site.config.ts here
+  // would pull in `astro:env/server` (see i18n.config.ts).
+  const SITE_NAME = 'Alejandro Vizán';
   const METATITLE_KEYS = [
-    'blog.metaTitle',
-    'blog.pageMetaTitle',
-    'blog.tagMetaTitle',
     'projects.metaTitle',
     'projects.pageMetaTitle',
     'projects.tagMetaTitle',
     'errors.metaTitle',
     'pages.home.meta.title',
-    'pages.about.meta.title',
-    'pages.services.meta.title',
-    'pages.contact.meta.title',
   ];
 
-  const cases = ['en'].flatMap((locale) =>
+  const cases = ['en', 'es'].flatMap((locale) =>
     METATITLE_KEYS.map((key) => [locale, key] as [string, string])
   );
 

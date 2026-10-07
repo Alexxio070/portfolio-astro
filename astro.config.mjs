@@ -4,7 +4,6 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, envField } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import i18nConfig from './src/config/i18n.config.ts';
@@ -326,7 +325,6 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
     mdx(),
     sitemap(),
     icon(),
