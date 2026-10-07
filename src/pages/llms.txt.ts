@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import siteConfig from '@/config/site.config';
 import { defaultLocale } from '@/i18n';
-import { getVisibleProjects, getProjectUrl } from '@/lib/projects';
 import { getNavItems } from '@/config/nav.config';
 
 /**
@@ -47,17 +46,9 @@ const hasComponentsPage = Object.keys(componentsPage).length > 0;
 export const GET: APIRoute = async ({ site }) => {
   const base = (site?.toString() || siteConfig.url).replace(/\/$/, '');
 
-  const projects = await getVisibleProjects(defaultLocale);
 
   const line = (title: string, url: string, description?: string) =>
     description ? `- [${title}](${url}): ${description}` : `- [${title}](${url})`;
-
-  const projectLines = [...projects]
-    .sort((a, b) => a.data.order - b.data.order)
-    .map((project) =>
-      line(project.data.title, `${base}${getProjectUrl(project.id, defaultLocale)}`, project.data.description)
-    )
-    .join('\n');
 
   const pageLines = getNavItems(defaultLocale)
     .filter((item) => !item.external)
@@ -82,10 +73,6 @@ export const GET: APIRoute = async ({ site }) => {
     ``,
     ...pageLines,
   ];
-
-  if (projectLines) {
-    sections.push(``, `## Projects`, ``, projectLines);
-  }
 
   sections.push(
     ``,

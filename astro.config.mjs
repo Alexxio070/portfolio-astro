@@ -4,7 +4,6 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, envField } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import i18nConfig from './src/config/i18n.config.ts';
@@ -74,34 +73,6 @@ function siteUrlCheck() {
 }
 
 /**
- * Pagefind static search index, generated after every `astro build`.
- *
- * Runs in the `astro:build:done` hook so it indexes the *actual* output
- * directory — the Vercel adapter writes to `.vercel/output/static`, Netlify,
- * Cloudflare, and plain static builds to `dist/` — without the build command
- * needing to know which. The index is served from `/pagefind/` and loaded lazily by
- * `src/components/layout/SearchModal.astro`; `astro dev` has no index, and
- * the search modal explains that instead of erroring.
- */
-function pagefind() {
-  return {
-    name: 'pagefind',
-    hooks: {
-      'astro:build:done': async ({ dir, logger }) => {
-        const sitePath = fileURLToPath(dir);
-        const outputPath = join(sitePath, 'pagefind');
-        const { createIndex, close } = await import('pagefind');
-        const { index } = await createIndex();
-        const { page_count } = await index.addDirectory({ path: sitePath });
-        await index.writeFiles({ outputPath });
-        await close();
-        logger.info(`indexed ${page_count} pages into ${outputPath}`);
-      },
-    },
-  };
-}
-
-/**
  * Favicon PNG/ICO files, written after every `astro build`.
  *
  * These used to be prerendered endpoints under `src/pages/`. That worked on
@@ -136,9 +107,8 @@ function faviconAssets() {
     name: 'favicon-assets',
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
-        // Imported here rather than at the top of this file: a static import
-        // of the sharp-backed module makes pagefind's own dynamic import above
-        // fail with "Vite module runner has been closed" (#600).
+        // Imported here rather than at the top of this file so the
+        // sharp-backed module only loads once the build has finished.
         const { buildFaviconSvg } = await import('./src/lib/favicon/svg.ts');
         const { renderFaviconPng, renderFaviconIco } = await import('./src/lib/favicon/raster.ts');
         const out = fileURLToPath(dir);
@@ -345,22 +315,8 @@ export default defineConfig({
   env: {
     schema: {
       SITE_URL: envField.string({ context: 'server', access: 'public', optional: true }),
-      PUBLIC_GA_MEASUREMENT_ID: envField.string({ context: 'client', access: 'public', optional: true }),
-      PUBLIC_GTM_ID: envField.string({ context: 'client', access: 'public', optional: true }),
-      // Umami — privacy-friendly, cookieless analytics. Set the website ID to
-      // enable it; the src defaults to Umami Cloud, override it when self-hosting.
-      PUBLIC_UMAMI_WEBSITE_ID: envField.string({ context: 'client', access: 'public', optional: true }),
-      PUBLIC_UMAMI_SRC: envField.string({
-        context: 'client',
-        access: 'public',
-        optional: true,
-        default: 'https://cloud.umami.is/script.js',
-      }),
       GOOGLE_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
       BING_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
-      PUBLIC_GOOGLE_MAPS_API_KEY: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),
-      PUBLIC_CONSENT_ENABLED: envField.boolean({ context: 'client', access: 'public', optional: true, default: false }),
-      PUBLIC_PRIVACY_POLICY_URL: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),
     },
   },
 
@@ -369,12 +325,10 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
     mdx(),
     sitemap(),
     icon(),
     siteUrlCheck(),
-    pagefind(),
     faviconAssets(),
     ogCards(),
     verifySiteUrl(),

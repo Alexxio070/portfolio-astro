@@ -1,15 +1,13 @@
 ---
 /**
  * LandingLayout
- * Layout wrapper for landing-style pages (marketing, demo, showcase)
- * Uses Header + Footer with landing-specific configuration
+ * Layout wrapper for the single-page home: the floating navigation bar and no footer.
  *
  * This layout is part of the "demo" layer - it can be optionally installed
  * via CLI for users who want the full landing page experience.
  */
 import BaseLayout from './BaseLayout.astro';
-import Header from '@/components/layout/Header.astro';
-import Footer from '@/components/layout/Footer.astro';
+import FloatingNav from '@/components/layout/FloatingNav.astro';
 
 interface Props {
   title?: string;
@@ -47,23 +45,7 @@ const {
   includePersonSchema={includePersonSchema}
   includeProfessionalServiceSchema={includeProfessionalServiceSchema}
 >
-  <Header
-    slot="header"
-    position="fixed"
-    shape="floating"
-    variant="transparent"
-    colorScheme="default"
-    size="lg"
-    showCta={false}
-    cta={{ label: 'Astro Rocket', href: 'https://github.com/hansmartensdev/Astro-Rocket', icon: 'rocket', trailingIcon: 'download' }}
-    showThemeSelector
-    autoHide={false}
-    scrollProgressPosition="top"
-    invertOnReturn={false}
-  />
+  <FloatingNav slot="header" />
 
   <slot />
-
-  <!-- Footer is `background` so it alternates with the `secondary` CTA section above it. -->
-  <Footer slot="footer" layout="columns" background="default" />
 </BaseLayout>

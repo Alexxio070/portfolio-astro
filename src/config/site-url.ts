@@ -9,8 +9,8 @@
  * constant the two drift, and a site ends up serving canonical URLs for one
  * domain while telling crawlers it lives at another.
  *
- * Set `SITE_URL` in your host's environment and this is never used. It stays a
- * placeholder on purpose: a site that ships without `SITE_URL` should be
- * obviously unconfigured rather than quietly claim someone else's domain.
+ * Set `SITE_URL` in your host's environment to override it — on a preview
+ * deployment, for instance, where the site does not live at its own domain
+ * yet.
  */
-export const SITE_URL_FALLBACK = 'https://example.com';
+export const SITE_URL_FALLBACK = 'https://alexxio.dev';

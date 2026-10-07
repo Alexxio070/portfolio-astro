@@ -17,10 +17,6 @@ describe('i18n t() helper', () => {
     expect(t('common.readMore', 'en')).toBe('Read more');
   });
 
-  it('returns the Dutch translation when locale is nl', () => {
-    expect(t('common.readMore', 'nl')).toBe('Lees meer');
-  });
-
   it('falls back to the default-locale string when the locale has no entry', () => {
     // 'de' has no dictionary loaded yet — should fall back to English
     expect(t('common.readMore', 'de')).toBe('Read more');
@@ -31,12 +27,11 @@ describe('i18n t() helper', () => {
   });
 
   it('interpolates {placeholder} variables', () => {
-    expect(t('blog.readingTime', 'en', { minutes: 5 })).toBe('5 min read');
-    expect(t('blog.readingTime', 'nl', { minutes: 5 })).toBe('5 min leestijd');
+    expect(t('common.themeMode', 'en', { mode: 'dark' })).toBe('Theme: dark');
   });
 
   it('leaves unknown placeholders untouched', () => {
-    expect(t('blog.readingTime', 'en', {})).toBe('{minutes} min read');
+    expect(t('common.themeMode', 'en', {})).toBe('Theme: {mode}');
   });
 });
 
@@ -46,8 +41,8 @@ describe('i18n tData() helper', () => {
     // `pages.about.intro.facts` and checked for the literal "Astro 7"; the
     // about page was later restructured, `intro` stopped existing, and the
     // test failed for a reason that had nothing to do with tData().
-    const items = tData<{ icon: string; title: string; description: string }[]>(
-      'pages.about.principles.items',
+    const items = tData<{ icon: string; title: string; points: string[] }[]>(
+      'pages.home.about.items',
       'en'
     );
     expect(Array.isArray(items)).toBe(true);
@@ -56,21 +51,17 @@ describe('i18n tData() helper', () => {
       expect.objectContaining({
         icon: expect.any(String),
         title: expect.any(String),
-        description: expect.any(String),
+        points: expect.any(Array),
       })
     );
   });
 
-  it('returns the Dutch structured value when locale is nl', () => {
-    const hero = tData<{ badge: string }>('pages.about.hero', 'nl');
-    expect(hero?.badge).toBe('Over');
-  });
-
   it('falls back to the default-locale value when the locale has no entry', () => {
     // 'de' has no dictionary loaded yet — should fall back to the English data
-    const cards = tData<unknown[]>('pages.about.faq.cards', 'de');
-    expect(Array.isArray(cards)).toBe(true);
-    expect(cards?.length).toBe(2);
+    const items = tData<unknown[]>('pages.home.about.items', 'de');
+    const english = tData<unknown[]>('pages.home.about.items', 'en');
+    expect(Array.isArray(items)).toBe(true);
+    expect(items?.length).toBe(english?.length);
   });
 
   it('returns undefined when the key is absent in every dictionary', () => {
@@ -79,16 +70,15 @@ describe('i18n tData() helper', () => {
 });
 
 describe('i18n getSecondaryLocales()', () => {
-  it('returns an empty list when i18n is disabled (single locale)', () => {
-    // Default config: enabled is false and locales is ['en'], so there are no
-    // extra locales to generate prefixed routes for.
-    expect(getSecondaryLocales()).toEqual([]);
+  it('returns the configured locales other than the default', () => {
+    // Shipped config: locales is ['en', 'es'], so es gets prefixed routes.
+    expect(getSecondaryLocales()).toEqual(['es']);
   });
 });
 
 describe('i18n localizedPath()', () => {
-  it('returns the path unchanged when i18n is disabled (single locale)', () => {
-    // With default config (locales: ['en']), i18n is effectively off
+  it('returns the path unchanged for the default locale', () => {
+    // The default locale is served at the site root, with no prefix
     expect(localizedPath('/about')).toBe('/about');
     expect(localizedPath('/')).toBe('/');
     expect(localizedPath('blog/hello')).toBe('/blog/hello');
@@ -109,8 +99,8 @@ describe('i18n locale helpers', () => {
 
   it('returns the display name when configured, otherwise the code', () => {
     expect(getLocaleName('en')).toBe('English');
-    // 'nl' is in localeNames even though it's not in the active locales list
-    expect(getLocaleName('nl')).toBe('Nederlands');
+    // 'de' is in localeNames even though it's not in the active locales list
+    expect(getLocaleName('de')).toBe('Deutsch');
     expect(getLocaleName('xx')).toBe('xx');
   });
 });
@@ -126,7 +116,7 @@ describe('i18n getLocaleFromPath()', () => {
   });
 
   it('returns the default locale when the first segment is not a configured locale', () => {
-    // Default config only has 'en' active — 'nl' is not recognized
+    // Only 'en' and 'es' are active — 'nl' is not recognized
     expect(getLocaleFromPath('/nl/about')).toBe('en');
     expect(getLocaleFromPath('/zh-cn/blog')).toBe('en');
   });
@@ -152,37 +142,30 @@ describe('i18n swapLocaleInPath()', () => {
     expect(swapLocaleInPath('/about', 'en')).toBe('/about');
   });
 
-  it('returns the same path when i18n is disabled, regardless of target', () => {
-    // With default config (single locale), localizedPath is a no-op
-    expect(swapLocaleInPath('/about', 'nl')).toBe('/about');
+  it('prefixes the path when targeting a secondary locale', () => {
+    expect(swapLocaleInPath('/about', 'es')).toBe('/es/about');
+    expect(swapLocaleInPath('/es/about', 'en')).toBe('/about');
   });
 });
 
 describe('i18n meta titles never embed the site name', () => {
   // SEO.astro renders the document <title> as `${title} — ${siteConfig.name}`,
   // so any meta-title dictionary value that already contains the site name
-  // would render it twice (e.g. "Blog — Astro Rocket — Astro Rocket"). Every
+  // would render it twice (e.g. "Alejandro Vizán — Alejandro Vizán"). Every
   // key below feeds that `title` prop and must therefore stay brand-free.
   //
-  // The shipped brand is checked as a literal on purpose: importing
-  // site.config.ts here would pull in `astro:env/server` (see i18n.config.ts),
-  // and this guards the theme's own default dictionaries against a regression.
-  const SITE_NAME = 'Astro Rocket';
+  // The name is checked as a literal on purpose: importing site.config.ts here
+  // would pull in `astro:env/server` (see i18n.config.ts).
+  const SITE_NAME = 'Alejandro Vizán';
   const METATITLE_KEYS = [
-    'blog.metaTitle',
-    'blog.pageMetaTitle',
-    'blog.tagMetaTitle',
     'projects.metaTitle',
     'projects.pageMetaTitle',
     'projects.tagMetaTitle',
     'errors.metaTitle',
     'pages.home.meta.title',
-    'pages.about.meta.title',
-    'pages.services.meta.title',
-    'pages.contact.meta.title',
   ];
 
-  const cases = ['en', 'nl'].flatMap((locale) =>
+  const cases = ['en', 'es'].flatMap((locale) =>
     METATITLE_KEYS.map((key) => [locale, key] as [string, string])
   );
 

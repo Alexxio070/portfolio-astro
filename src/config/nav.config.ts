@@ -85,15 +85,23 @@ export interface ResolvedNavItem {
 
 export const navItems: NavItem[] = [
   { label: 'Home', href: '/', order: 0, labelKey: 'nav.items.home' },
-  { label: 'Projects', href: '/projects', order: 2, labelKey: 'nav.items.projects' },
-  { label: 'Contact', href: '/contact', order: 5, labelKey: 'nav.items.contact' },
+  { label: 'Projects', href: '/#projects', order: 2, labelKey: 'nav.items.projects' },
+  { label: 'Contact', href: '/#contact', order: 5, labelKey: 'nav.items.contact' },
+];
+
+/** Anchors of the single-page home, used by `FloatingNav`. */
+export const homeNavItems: NavItem[] = [
+  { label: 'Home', href: '#home', order: 0, labelKey: 'nav.items.home' },
+  { label: 'About', href: '#about', order: 1, labelKey: 'nav.items.about' },
+  { label: 'Projects', href: '#projects', order: 2, labelKey: 'nav.items.projects' },
+  { label: 'Contact', href: '#contact', order: 3, labelKey: 'nav.items.contact' },
 ];
 
 export const footerNavItems: NavItem[] = [
   { label: 'Home', href: '/', order: 0, labelKey: 'nav.items.home' },
-  { label: 'Projects', href: '/projects', order: 2, labelKey: 'nav.items.projects' },
-  { label: 'Contact', href: '/contact', order: 5, labelKey: 'nav.items.contact' },
-  { label: 'GitHub', href: 'https://github.com/hansmartensdev/Astro-Rocket', order: 6, external: true },
+  { label: 'Projects', href: '/#projects', order: 2, labelKey: 'nav.items.projects' },
+  { label: 'Contact', href: '/#contact', order: 5, labelKey: 'nav.items.contact' },
+  { label: 'GitHub', href: 'https://github.com/Alexxio070', order: 6, external: true },
 ];
 
 export const legalLinks: LegalLink[] = [];
@@ -120,10 +128,9 @@ export const footerLinkGroups: FooterLinkGroupConfig[] = [
     titleKey: 'footer.groups.questions',
     title: 'Got questions?',
     links: [
-      { label: 'Email', href: 'mailto:hello@hansmartens.dev' },
-      { label: 'GitHub', href: 'https://github.com/hansmartensdev/Astro-Rocket', external: true },
-      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/hansmartensdev', external: true },
-      { label: 'Bluesky', href: 'https://bsky.app/profile/hansmartensdev.bsky.social', external: true },
+      { label: 'Email', href: 'mailto:alejandrovizan415@gmail.com' },
+      { label: 'GitHub', href: 'https://github.com/Alexxio070', external: true },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/alex-vizan/', external: true },
     ],
   },
 ];
@@ -162,6 +169,13 @@ export function resolveNavItem(item: NavItem | LegalLink, locale: Locale): Resol
  */
 export function getNavItems(locale: Locale = defaultLocale): ResolvedNavItem[] {
   return [...navItems]
+    .sort((a, b) => a.order - b.order)
+    .map((item) => resolveNavItem(item, locale));
+}
+
+/** Get the single-page home anchors sorted by order, localized for `locale`. */
+export function getHomeNavItems(locale: Locale = defaultLocale): ResolvedNavItem[] {
+  return [...homeNavItems]
     .sort((a, b) => a.order - b.order)
     .map((item) => resolveNavItem(item, locale));
 }

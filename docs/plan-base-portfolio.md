@@ -1,7 +1,7 @@
 # Plan de acción: base del portfolio (Rocket con estética Darkminimal)
 
 Alcance: solo el diseño de la base. Quedan fuera los datos reales (antes fase 7) y la publicación (antes fase 8).
-Cada fase es un prompt para pegar en Claude Code, dentro del repo `portfolio-astro`. Se hacen en orden y un commit por fase.
+Cada fase es un prompt para pegar en Claude Code, dentro del repo `portfolio-astro`. Se hacen en orden y un commit por fase, salvo el orden de ejecución acordado: primero la 5, después la 4 y al final la 6.
 
 Lo que se sabe y lo que no (al 2026-10-05):
 - Verificado leyendo el código: Rocket usa Astro 7, Tailwind 4, tema de color con `html[data-theme]`, selector en `src/lib/themes.ts`, rutas de servidor solo en `/api/contact` y `/api/newsletter`. El header de Darkminimal está en un único archivo, `src/components/nav.astro`.
@@ -93,24 +93,32 @@ Criterio de fin: build sin errores, la portada sigue funcionando, el selector de
 
 ---
 
-## Fase 4: tema violeta propio dentro del selector de Rocket
+## Fase 4: header de Darkminimal
 
-Commit propuesto: `feat: tema violeta oscuro y fuente Montserrat`
+Commit propuesto: `feat: barra de navegación flotante con cápsula al hacer scroll`
 
 ```
-Fase 4: añadir un tema propio al selector de temas de Rocket, con la estética de Darkminimal, sin quitar los que ya existen.
+Fase 4: portar el header de Darkminimal (archivo src/components/nav.astro de la copia de referencia clonada en la fase 1, o https://github.com/Gothsec/dark-minimal) a la página.
 
-Entendimiento: Rocket define cada tema en src/styles/themes/*.css con html[data-theme="x"] y html.dark[data-theme="x"], lo importa en src/styles/tokens/colors.css y lo registra en src/lib/themes.ts. Quiero un tema nuevo con fondo casi negro (#101010), acento violeta (#a476ff) y texto claro (#dfdfdf), y la fuente Montserrat.
+Entendimiento: debe copiarse tal cual su comportamiento, adaptado a Tailwind 4 y a los tokens de Rocket.
+
+Comportamiento a reproducir (verificado en su código):
+- Barra fija arriba, centrada, ancho inicial del 80%.
+- Al bajar (scroll mayor que 0) añade la clase scrolling: fondo sólido, borde tenue y esquinas totalmente redondeadas.
+- El ancho se reduce de forma progresiva hasta 528px, con suavizado (1 menos (1 menos p) elevado a 4, con p entre 0 y 1) y requestAnimationFrame. maxScroll es 1000.
+- Enlaces #home, #projects, #contact con scroll suave.
+- IntersectionObserver con umbral 0.6 que marca el enlace activo con un punto indicador.
+- En menos de 768px: barra fija abajo, a todo el ancho, con esquinas redondeadas solo arriba, iconos sobre las etiquetas, y padding-bottom en el body para que no tape el contenido.
 
 Pasos a proponerme antes de ejecutar:
-1. Leer un tema existente (por ejemplo violet.css) y los tokens de superficie y texto, y explicarme qué variables define cada uno.
-2. Proponer el archivo del tema nuevo, con un id claro (por ejemplo darkviolet). Convertir los colores a OKLCH como hace Rocket y mostrarme la tabla hex a oklch.
-3. Proponer el registro en colors.css, themes.ts y la lista de permitidos de BaseLayout.astro, que el test de temas comprueba.
-4. Fuente: proponer cómo añadir @fontsource-variable/montserrat y cambiarla en los tokens de tipografía, sin tocar los componentes.
-5. Proponer si el tema nuevo debe ser el predeterminado y oscuro por defecto.
-6. Tras mi aprobación: implementarlo, ejecutar el build y los tests de temas.
+1. Mapear sus variables (--background, --component-bg, --white-icon, --sec) a los tokens de Rocket. --component-bg no la encuentro definida en su Layout; dime qué has comprobado y propón un valor.
+2. Comprobar si mi página usa ClientRouter. Si lo usa, adaptar el script a astro:page-load; si no, dejarlo simple.
+3. Respetar prefers-reduced-motion en la animación del ancho.
+4. Dar al enlace activo un indicador accesible (aria-current) además del punto.
+5. Selector de temas dentro de la barra: en escritorio, `ThemeSelectorDropdown` y `ThemeModeDropdown` al final de la cápsula; en móvil, un icono en la barra inferior que abre hacia arriba un panel con las muestras de `ThemeSelector` y el interruptor claro/oscuro. Los desplegables de Rocket se abren hacia abajo (`top-full`), así que en móvil el panel se invierte (`bottom-full`). Con `aria-label`, `aria-expanded`, cierre con Escape o al tocar fuera, y sin animación con `prefers-reduced-motion`.
+6. Tras mi aprobación: crear el componente, usarlo en la página y ejecutar el build.
 
-Criterio de fin: el tema aparece en el selector, se puede elegir y se mantiene al recargar, los otros temas siguen funcionando y los tests de temas pasan. Aviso: dime con claridad si algún componente tiene colores fijos que no respeten el tema.
+Criterio de fin, comprobado en dev: a 1280px la barra empieza al 80% y se hace cápsula al hacer scroll; a 375px queda abajo como barra con el selector de temas abriéndose hacia arriba; los enlaces saltan a sus secciones y marcan la activa; sin errores en la consola.
 ```
 
 ---
@@ -129,7 +137,7 @@ Pasos a proponerme antes de ejecutar:
 2. Hero: titular grande a la izquierda y párrafo a la derecha en escritorio, apilados en móvil, botones de icono (GitHub, LinkedIn, correo) con enlaces de ejemplo.
 3. Proyectos: rejilla de 1 a 2 columnas con cuatro tarjetas de ejemplo.
 4. Contacto: texto y enlace mailto, sin formulario.
-5. Eliminar la cabecera y el pie antiguos de la portada; la nueva barra llega en la fase 6.
+5. Eliminar la cabecera y el pie antiguos de la portada; la nueva barra llega en la fase 4.
 6. Tras mi aprobación: implementarlo, ejecutar el build y revisar en dev a 375px y a 1280px.
 
 Criterio de fin: una sola página, ids correctos en las secciones, sin enlaces rotos, responsive en móvil y escritorio.
@@ -137,31 +145,24 @@ Criterio de fin: una sola página, ids correctos en las secciones, sin enlaces r
 
 ---
 
-## Fase 6: header de Darkminimal
+## Fase 6: tema violeta propio dentro del selector de Rocket
 
-Commit propuesto: `feat: barra de navegación flotante con cápsula al hacer scroll`
+Commit propuesto: `feat: tema violeta oscuro y fuente Montserrat`
 
 ```
-Fase 6: portar el header de Darkminimal (archivo src/components/nav.astro de la copia de referencia clonada en la fase 1, o https://github.com/Gothsec/dark-minimal) a la página.
+Fase 6: añadir un tema propio al selector de temas de Rocket, con la estética de Darkminimal, sin quitar los que ya existen.
 
-Entendimiento: debe copiarse tal cual su comportamiento, adaptado a Tailwind 4 y a los tokens de Rocket.
-
-Comportamiento a reproducir (verificado en su código):
-- Barra fija arriba, centrada, ancho inicial del 80%.
-- Al bajar (scroll mayor que 0) añade la clase scrolling: fondo sólido, borde tenue y esquinas totalmente redondeadas.
-- El ancho se reduce de forma progresiva hasta 528px, con suavizado (1 menos (1 menos p) elevado a 4, con p entre 0 y 1) y requestAnimationFrame. maxScroll es 1000.
-- Enlaces #home, #projects, #contact con scroll suave.
-- IntersectionObserver con umbral 0.6 que marca el enlace activo con un punto indicador.
-- En menos de 768px: barra fija abajo, a todo el ancho, con esquinas redondeadas solo arriba, iconos sobre las etiquetas, y padding-bottom en el body para que no tape el contenido.
+Entendimiento: Rocket define cada tema en src/styles/themes/*.css con html[data-theme="x"] y html.dark[data-theme="x"], lo importa en src/styles/tokens/colors.css y lo registra en src/lib/themes.ts. Quiero un tema nuevo con fondo casi negro (#101010), acento violeta (#a476ff) y texto claro (#dfdfdf), y la fuente Montserrat.
 
 Pasos a proponerme antes de ejecutar:
-1. Mapear sus variables (--background, --component-bg, --white-icon, --sec) a los tokens de Rocket. --component-bg no la encuentro definida en su Layout; dime qué has comprobado y propón un valor.
-2. Comprobar si mi página usa ClientRouter. Si lo usa, adaptar el script a astro:page-load; si no, dejarlo simple.
-3. Respetar prefers-reduced-motion en la animación del ancho.
-4. Dar al enlace activo un indicador accesible (aria-current) además del punto.
-5. Tras mi aprobación: crear el componente, usarlo en la página y ejecutar el build.
+1. Leer un tema existente (por ejemplo violet.css) y los tokens de superficie y texto, y explicarme qué variables define cada uno.
+2. Proponer el archivo del tema nuevo, con un id claro (por ejemplo darkviolet). Convertir los colores a OKLCH como hace Rocket y mostrarme la tabla hex a oklch.
+3. Proponer el registro en colors.css, themes.ts y la lista de permitidos de BaseLayout.astro, que el test de temas comprueba.
+4. Fuente: proponer cómo añadir @fontsource-variable/montserrat y cambiarla en los tokens de tipografía, sin tocar los componentes.
+5. Proponer si el tema nuevo debe ser el predeterminado y oscuro por defecto.
+6. Tras mi aprobación: implementarlo, ejecutar el build y los tests de temas.
 
-Criterio de fin, comprobado en dev: a 1280px la barra empieza al 80% y se hace cápsula al hacer scroll; a 375px queda abajo como barra; los enlaces saltan a sus secciones y marcan la activa; sin errores en la consola.
+Criterio de fin: el tema aparece en el selector, se puede elegir y se mantiene al recargar, los otros temas siguen funcionando y los tests de temas pasan. Aviso: dime con claridad si algún componente tiene colores fijos que no respeten el tema.
 ```
 
 ---

@@ -10,7 +10,7 @@
  * a swatch that silently refuses to stick.
  *
  * The count was also quoted as 12 across the config, both locales, the project
- * page, three blog posts, the README and AGENTS.md, with nothing checking any
+ * page, three blog posts, with nothing checking any
  * of it. The same lesson as the component count, which is why this mirrors
  * that test.
  */
@@ -19,9 +19,6 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { colourThemes, selectorThemes } from '../lib/themes';
-import en from '../i18n/en.json';
-import nl from '../i18n/nl.json';
-import siteConfig from '../config/site.config';
 
 const COUNT = colourThemes.length;
 const IDS = colourThemes.map((t) => t.id);
@@ -109,48 +106,10 @@ describe('colour themes', () => {
     }
   });
 
-  it('site.config and both locales quote the count', () => {
-    expect(siteConfig.description).toContain(`${COUNT} colour themes`);
-    expect(JSON.stringify(en)).toContain(`${COUNT} colour themes`);
-    expect(JSON.stringify(nl)).toContain(`${COUNT} kleurthema's`);
-  });
-
-  it('the README and the docs quote the count', () => {
-    for (const file of [
-      'README.md',
-    ]) {
-      expect(read(file), file).toMatch(new RegExp(`${COUNT} (ready-to-use )?colour themes`));
-    }
-  });
-
   it('no shipped copy still claims twelve', () => {
-    for (const file of [
-      'README.md',
-      'AGENTS.md',
-      'src/config/site.config.ts',
-      'src/i18n/en.json',
-      'src/i18n/nl.json',
-      'src/content/projects/en/astro-rocket.mdx',
-    ]) {
+    for (const file of ['src/config/site.config.ts', 'src/i18n/en.json', 'src/i18n/es.json']) {
       expect(read(file), file).not.toMatch(/\btwelve\b/i);
       expect(read(file), file).not.toMatch(/\b12[- ](colour|color|swatch|theme)/i);
-    }
-  });
-
-  it('no shipped copy names a palette that was removed', () => {
-    const gone = ['orange', 'amber', 'lime', 'magenta'];
-    for (const file of [
-      'src/content/projects/en/astro-rocket.mdx',
-      'README.md',
-    ]) {
-      const prose = read(file)
-        // Tailwind's own palette is unrelated to the theme set
-        .replace(/\b(text|bg|border|from|via|to|ring|decoration)-[a-z]+-\d{2,3}\b/g, '')
-        // the OKLCH section names hues on the wheel, not themes
-        .replace(/Common hue landmarks:[^\n]*\n/g, '');
-      for (const name of gone) {
-        expect(prose, `${file} → ${name}`).not.toMatch(new RegExp(`\\b${name}\\b`, 'i'));
-      }
     }
   });
 
