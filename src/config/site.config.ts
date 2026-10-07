@@ -269,7 +269,6 @@ const siteConfig: SiteConfig = {
     google: GOOGLE_SITE_VERIFICATION,
     bing: BING_SITE_VERIFICATION,
   },
-  authorImage: '/avatar.svg',
   blogImageOverlay: true,
   effects: {
     cursorTrail: true,
