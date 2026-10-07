@@ -250,36 +250,20 @@ const siteConfig: SiteConfig = {
   // import this file, uses the same values. Change them there.
   name: SITE_NAME,
   description:
-    'A free, fast Astro 7 starter theme to build anything on: 40 designed components, 8 colour themes, dark mode, and built-in i18n.',
-  tagline: 'Astro 7 starter theme to build anything on',
-  footerNote: 'Free & open source · MIT licensed',
+    'Portfolio of Alejandro Vizán, Higher Technician in Multiplatform Application Development: desktop, Android and web apps.',
+  tagline: 'Multiplatform application developer',
+  footerNote: 'Desktop, Android and web',
   url: SITE_URL || SITE_URL_FALLBACK,
   // Generated at build time from `name`, `tagline` and the brand colour below.
   // Point this at a file in `public/` to use your own — it has to be a raster
   // (PNG or JPEG): social platforms don't render SVG share images.
   ogImage: '/og/default.png',
-  author: 'Hans Martens',
-  email: 'tu-correo@example.com',
-  address: {
-    street: '',
-    city: 'Amsterdam',
-    state: '',
-    zip: '',
-    country: 'the Netherlands',
-  },
-  socialLinks: [
-    'https://github.com/tu-usuario',
-    'https://x.com/tu-usuario',
-    'https://www.linkedin.com/in/tu-usuario',
-    'https://bsky.app/profile/tu-usuario.bsky.social',
-  ],
+  author: 'Alejandro Vizán',
+  email: 'alejandrovizan415@gmail.com',
+  socialLinks: ['https://github.com/Alexxio070', 'https://www.linkedin.com/in/alex-vizan/'],
   header: {
     // Flip to `true` to show the social icons (incl. GitHub) in the header.
     showSocialLinks: false,
-  },
-  twitter: {
-    site: 'https://x.com/hansmartens_dev',
-    creator: '@hansmartens_dev',
   },
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
@@ -353,7 +337,7 @@ const siteConfig: SiteConfig = {
   i18n: i18nConfig,
   branding: {
     logo: {
-      alt: 'Astro Rocket',
+      alt: 'Alejandro Vizán',
       // image: '/logo.svg', // Optional: set to a file in public/ to use a custom logo image instead of the letter monogram.
       imageUrl: '/favicon.svg',
     },

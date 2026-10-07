@@ -19,9 +19,6 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { colourThemes, selectorThemes } from '../lib/themes';
-import en from '../i18n/en.json';
-import es from '../i18n/es.json';
-import siteConfig from '../config/site.config';
 
 const COUNT = colourThemes.length;
 const IDS = colourThemes.map((t) => t.id);
@@ -109,18 +106,8 @@ describe('colour themes', () => {
     }
   });
 
-  it('site.config and the locale quote the count', () => {
-    expect(siteConfig.description).toContain(`${COUNT} colour themes`);
-    expect(JSON.stringify(en)).toContain(`${COUNT} colour themes`);
-    expect(JSON.stringify(es)).toContain(`${COUNT} temas de color`);
-  });
-
   it('no shipped copy still claims twelve', () => {
-    for (const file of [
-      'src/config/site.config.ts',
-      'src/i18n/en.json',
-      'src/i18n/es.json',
-    ]) {
+    for (const file of ['src/config/site.config.ts', 'src/i18n/en.json', 'src/i18n/es.json']) {
       expect(read(file), file).not.toMatch(/\btwelve\b/i);
       expect(read(file), file).not.toMatch(/\b12[- ](colour|color|swatch|theme)/i);
     }

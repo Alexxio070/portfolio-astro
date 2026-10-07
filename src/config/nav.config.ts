@@ -101,7 +101,7 @@ export const footerNavItems: NavItem[] = [
   { label: 'Home', href: '/', order: 0, labelKey: 'nav.items.home' },
   { label: 'Projects', href: '/#projects', order: 2, labelKey: 'nav.items.projects' },
   { label: 'Contact', href: '/#contact', order: 5, labelKey: 'nav.items.contact' },
-  { label: 'GitHub', href: 'https://github.com/hansmartensdev/Astro-Rocket', order: 6, external: true },
+  { label: 'GitHub', href: 'https://github.com/Alexxio070', order: 6, external: true },
 ];
 
 export const legalLinks: LegalLink[] = [];
@@ -128,10 +128,9 @@ export const footerLinkGroups: FooterLinkGroupConfig[] = [
     titleKey: 'footer.groups.questions',
     title: 'Got questions?',
     links: [
-      { label: 'Email', href: 'mailto:hello@hansmartens.dev' },
-      { label: 'GitHub', href: 'https://github.com/hansmartensdev/Astro-Rocket', external: true },
-      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/hansmartensdev', external: true },
-      { label: 'Bluesky', href: 'https://bsky.app/profile/hansmartensdev.bsky.social', external: true },
+      { label: 'Email', href: 'mailto:alejandrovizan415@gmail.com' },
+      { label: 'GitHub', href: 'https://github.com/Alexxio070', external: true },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/alex-vizan/', external: true },
     ],
   },
 ];
