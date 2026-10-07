@@ -67,13 +67,17 @@ const about = tData<{ badge: string; heading: string; items: { icon: string; tit
 // third column. Items are entries of `pages.home.about.items` in the locale files.
 const aboutColumns = about.items.length > 6 ? 'md:grid-cols-3' : 'md:grid-cols-2';
 const projects = tData<{ badge: string; heading: string; lead: string }>('pages.home.projects', locale)!;
-const contact = tData<{ badge: string; heading: string; description: string; cta: string }>(
+const contact = tData<{ badge: string; heading: string; description: string; cta: string; subject: string }>(
   'pages.home.contact',
   locale
 )!;
 
 const socialLinks = resolveSocialLinks(siteConfig.socialLinks).filter((l) => ['github', 'linkedin'].includes(l.key));
-const mailto = `mailto:${siteConfig.email}`;
+// Gmail's compose window rather than a `mailto:`, which needs a mail program
+// set up on the visitor's machine and does nothing at all when there is none.
+// `Button` spots the external URL and opens it in a new tab by itself. The
+// address is also printed in the contact card, for anyone not on Gmail.
+const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteConfig.email)}&su=${encodeURIComponent(contact.subject)}`;
 ---
 
 <LandingLayout title={t('pages.home.meta.title', locale)} description={t('pages.home.meta.description', locale)}>
