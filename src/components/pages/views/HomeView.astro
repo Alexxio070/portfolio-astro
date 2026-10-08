@@ -12,14 +12,11 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { Hero } from '@/components/hero';
 import Button from '@/components/ui/form/Button/Button.astro';
-import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import { accordionItemVariants, accordionTriggerVariants } from '@/components/ui/overlay/Accordion/accordion.variants';
 import { cn } from '@/lib/cn';
-import StackMarquee from '@/components/landing/StackMarquee.astro';
 import ProjectCard from '@/components/projects/ProjectCard.astro';
-import { getCollection } from 'astro:content';
 import siteConfig from '@/config/site.config';
 import { getVisibleProjects } from '@/lib/projects';
 import { resolveSocialLinks } from '@/lib/utils';
@@ -37,20 +34,6 @@ if (projectItems.length === 0 && locale !== defaultLocale) {
   projectItems = await getVisibleProjects(defaultLocale);
 }
 const shownProjects = projectItems.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
-
-// Hero marquee — a focused subset of the tech stack, in this order, pulled from
-// the same `stack` collection so icons and links stay single-sourced.
-const heroStackOrder = ['Astro', 'Tailwind CSS', 'TypeScript', 'React', 'GitHub', 'Vercel', 'Claude'];
-const heroStackItems = (await getCollection('stack'))
-  .filter((e) => heroStackOrder.includes(e.data.name))
-  .sort((a, b) => heroStackOrder.indexOf(a.data.name) - heroStackOrder.indexOf(b.data.name))
-  .map((e) => ({
-    name: e.data.name,
-    icon: e.data.icon,
-    url: e.data.url,
-    version: e.data.version,
-    colorOklch: e.data.colorOklch,
-  }));
 
 const hero = tData<{
   titleLine1: string;
@@ -70,7 +53,7 @@ const about = tData<{ badge: string; heading: string; items: { icon: string; tit
 // Two columns up to six items (three rows of two); a seventh item opens a
 // third column. Items are entries of `pages.home.about.items` in the locale files.
 const aboutColumns = about.items.length > 6 ? 'md:grid-cols-3' : 'md:grid-cols-2';
-const projects = tData<{ badge: string; heading: string; lead: string }>('pages.home.projects', locale)!;
+const projects = tData<{ heading: string; lead: string }>('pages.home.projects', locale)!;
 const contact = tData<{ badge: string; heading: string; description: string; cta: string; subject: string }>(
   'pages.home.contact',
   locale
@@ -121,32 +104,12 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     <p slot="aside" class="text-lg md:text-xl leading-relaxed text-foreground-muted text-balance">
       {descriptionHead}{' '}<span class="whitespace-nowrap">{descriptionTail}<span class="hero-caret" aria-hidden="true"></span></span>
     </p>
-
-    <!-- Tech-stack marquee floored into the hero. Decorative and hidden on
-         phones, where a static row of the first four logos stands in for it
-         so nothing loops on mobile. -->
-    <div slot="bottom" class="mx-auto w-full max-w-6xl px-6">
-      <div class="hp-hero-marquee" aria-hidden="true">
-        <StackMarquee items={heroStackItems} rows={1} duration={55} pauseOnHover={false} linked={false} cardWidth="auto" gap="1rem" />
-      </div>
-      <div class="hp-hero-logos" aria-hidden="true">
-        {heroStackItems.slice(0, 4).map((item) => (
-          <span class="hp-hero-logo">
-            <Icon name={item.icon} size="lg" />
-          </span>
-        ))}
-      </div>
-    </div>
   </Hero>
 
   <!-- About -->
   <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
-        <Badge variant="brand" pill class="self-start">
-          <Icon name="user" size="sm" />
-          {about.badge}
-        </Badge>
         <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
           {about.heading}
         </h2>
@@ -190,10 +153,6 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
-        <Badge variant="brand" pill class="self-start">
-          <Icon name="layers" size="sm" />
-          {projects.badge}
-        </Badge>
         <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
           {projects.heading}
         </h2>
@@ -211,13 +170,9 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
-    <div class="mx-auto max-w-6xl px-6 grid gap-8 md:grid-cols-2 md:items-center">
+  <section id="contact" class="relative z-10 flex min-h-[80svh] items-center py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
+    <div class="mx-auto w-full max-w-6xl px-6 grid gap-8 md:grid-cols-2 md:items-center">
       <div class="flex flex-col gap-4" data-reveal>
-        <Badge variant="brand" pill class="self-start">
-          <Icon name="mail" size="sm" />
-          {contact.badge}
-        </Badge>
         <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
           {contact.heading}
         </h2>
@@ -225,7 +180,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
           {contact.description}
         </p>
       </div>
-      <Card variant="elevated" padding="lg" class="contact-card flex flex-col items-start gap-4" data-reveal data-reveal-delay="1">
+      <Card variant="elevated" padding="md" class="contact-card flex w-full max-w-sm flex-col items-center gap-4 text-center md:justify-self-end" data-reveal data-reveal-delay="1">
         <p class="text-sm text-foreground-muted">{siteConfig.email}</p>
         <Button size="lg" href={mailto}>
           <Icon name="mail" size="sm" />
@@ -256,94 +211,15 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     }
   }
 
-  /* ── Homepage hero tech-stack marquee ──────────────────────────────────────
-     A decorative tech-stack strip floored into the hero in place of the scroll
-     indicator. It must stay secondary to the H1 / description / CTAs, so we strip
-     the card "box" (brand border, glow ring, panel surface) and let the
-     brand-coloured logos float on the hero gradient as light accents. The logos
-     keep their brand colour and soft chip; only the surrounding chrome is removed. */
-  .hp-hero-marquee .stack-marquee-item > * {
-    background: transparent;   /* drop the card panel */
-    border-color: transparent; /* drop the brand border */
-    box-shadow: none;          /* drop the brand glow ring */
-    padding-left: var(--space-3);  /* tighter now there's no box, so logos sit closer */
-    padding-right: var(--space-3);
-  }
-  /* Lighter, calmer tool names so the colourful logos lead the eye. */
-  .hp-hero-marquee .stack-marquee-item .font-display {
-    font-weight: 500;
-    color: var(--color-foreground-muted);
-  }
-
-  /* Floored into the hero: the marquee is the section's last flex child, pushed to
-     the floor (mt-auto, in Hero.astro). The CONTENT stays at the top and the
-     leftover hero height opens up BETWEEN the CTAs and the marquee — the roomy
-     "Chrome look". The section's column `gap` (--hero-floor-gap) is a GUARANTEED
-     MINIMUM gap, so on shorter windows the marquee can never crowd the buttons;
-     taller windows simply get more room. padding-bottom is the breathing room
-     beneath it. */
+  /* With nothing floored to the foot of the hero, its content would sit at the
+     top of the full-height section. A flex column centres it in the height. */
   section.hero-dark-gradient {
-    --hero-floor-gap: var(--space-16); /* 4rem — minimum gap above the marquee */
-    padding-bottom: var(--space-16); /* 4rem — breathing room below it */
-  }
-  .hp-hero-marquee {
-    pointer-events: none; /* decorative; never intercepts taps */
-  }
-
-  /* Entrance: the marquee sits outside the content stagger container, so it fades
-     in on its own once the hero has settled (a vertical slide would fight the
-     logos' horizontal scroll). */
-  @media (prefers-reduced-motion: no-preference) {
-    .hp-hero-marquee {
-      animation: hp-hero-marquee-fade 0.6s ease-out 1.2s backwards;
-    }
-  }
-  @keyframes hp-hero-marquee-fade {
-    from { opacity: 0.01; }
-    to   { opacity: 1; }
-  }
-
-  /* Hidden on phones — portrait (width) and landscape (short + coarse pointer),
-     matching the tech-stack section's behaviour. Shown from tablet up. */
-  @media (max-width: 767px) {
-    .hp-hero-marquee { display: none; }
-  }
-  @media (orientation: landscape) and (max-height: 500px) and (pointer: coarse) {
-    .hp-hero-marquee { display: none; }
-  }
-
-  /* Portrait-phone static stack logos — the lightweight counterpart to the
-     marquee. Hidden by default and shown only on portrait phones, exactly where
-     the marquee is hidden. A centered, non-interactive row: no links and no
-     animation loop, so it costs nothing after paint. */
-  .hp-hero-logos {
-    display: none;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 1rem;
-    pointer-events: none;
   }
-  @media (max-width: 767px) and (orientation: portrait) {
-    .hp-hero-logos { display: flex; padding-bottom: 2rem; }
-  }
-
-  .hp-hero-logo {
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 9999px;
-    color: var(--color-brand-500);
-    background: color-mix(in oklch, var(--color-brand-500) 12%, transparent);
-  }
-
-  /* One-time fade-in only (reuses the marquee's keyframe); nothing loops. */
-  @media (prefers-reduced-motion: no-preference) {
-    .hp-hero-logos {
-      animation: hp-hero-marquee-fade 0.6s ease-out 1.2s backwards;
-    }
+  section.hero-dark-gradient > div.grid {
+    width: 100%;
   }
 
   /* ── Hero details ──────────────────────────────────────────────────────────

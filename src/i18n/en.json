@@ -137,7 +137,6 @@
         "email": "Email"
       },
       "about": {
-        "badge": "Get to know me",
         "heading": "About me",
         "items": [
           {
@@ -195,12 +194,10 @@
         ]
       },
       "projects": {
-        "badge": "Selected work",
         "heading": "Projects",
         "lead": "A selection of recent work."
       },
       "contact": {
-        "badge": "Let's talk",
         "heading": "Contact",
         "description": "Have a question or a project in mind? Feel free to reach out.",
         "cta": "Send me an email",

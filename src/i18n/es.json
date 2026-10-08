@@ -137,7 +137,6 @@
         "email": "Correo electrónico"
       },
       "about": {
-        "badge": "Conóceme",
         "heading": "Sobre mí",
         "items": [
           {
@@ -195,12 +194,10 @@
         ]
       },
       "projects": {
-        "badge": "Trabajos seleccionados",
         "heading": "Proyectos",
         "lead": "Una selección de trabajos recientes."
       },
       "contact": {
-        "badge": "Hablemos",
         "heading": "Contacto",
         "description": "¿Tienes una pregunta o un proyecto en mente? No dudes en escribirme.",
         "cta": "Enviarme un correo",
