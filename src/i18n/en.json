@@ -123,13 +123,13 @@
   "pages": {
     "home": {
       "meta": {
-        "title": "Multiplatform application developer",
-        "description": "Portfolio of Alejandro Vizán, Higher Technician in Multiplatform Application Development: desktop, Android and web apps."
+        "title": "Cross-platform application developer",
+        "description": "Alejandro Vizán's portfolio: cross-platform application developer building desktop, Android and web apps."
       },
       "hero": {
         "titleLine1": "Alejandro",
         "titleLine2": "Vizán",
-        "description": "Higher Technician in Multiplatform Application Development.",
+        "description": "Cross-platform application development student.",
         "email": "Email"
       },
       "about": {
@@ -137,26 +137,26 @@
         "items": [
           {
             "icon": "user",
-            "title": "Who am I",
+            "title": "Who I am",
             "points": [
-              "I am a developer who has just finished training in multiplatform application development, and I can build desktop, Android and web apps.",
-              "I am teaching myself a range of technologies.",
-              "I lean towards interface and mobile development, but I can adapt to anything."
+              "I'm a developer finishing my training in cross-platform application development, and I can build desktop, Android and web apps.",
+              "I keep learning new technologies on my own.",
+              "I'm drawn to UI and mobile development, but I can adapt to whatever a project needs."
             ]
           },
           {
             "icon": "graduation-cap",
-            "title": "Studies",
+            "title": "Education",
             "points": [
-              "Digitech — Technician in Computer Systems and Networks (2023–2025)",
-              "Digitech — Technician in Computer Systems and Networks (2023–2025)"
+              "Digitech — Intermediate Vocational Diploma in Computer Systems and Networks (2023–2025)",
+              "Digitech — Higher Vocational Diploma in Cross-Platform Application Development (2025–2027)"
             ]
           },
           {
             "icon": "briefcase",
             "title": "Work experience",
             "points": [
-              "Málaga Inclusiva — Student intern (April 2026 – July 2026)"
+              "Málaga Inclusiva — Intern (April – July 2026)"
             ]
           },
           {
@@ -175,7 +175,7 @@
             "points": [
               "Problem solving",
               "Analytical thinking",
-              "Self-taught"
+              "Self-taught learner"
             ]
           },
           {

@@ -250,8 +250,8 @@ const siteConfig: SiteConfig = {
   // import this file, uses the same values. Change them there.
   name: SITE_NAME,
   description:
-    'Portfolio of Alejandro Vizán, Higher Technician in Multiplatform Application Development: desktop, Android and web apps.',
-  tagline: 'Multiplatform application developer',
+    "Alejandro Vizán's portfolio: cross-platform application developer building desktop, Android and web apps.",
+  tagline: 'Cross-platform application developer',
   footerNote: 'Desktop, Android and web',
   url: SITE_URL || SITE_URL_FALLBACK,
   // Generated at build time from `name`, `tagline` and the brand colour below.

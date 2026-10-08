@@ -124,12 +124,12 @@
     "home": {
       "meta": {
         "title": "Desarrollador de aplicaciones multiplataformas",
-        "description": "Portfolio de Alejandro Vizán, técnico superior en desarrollo de aplicaciones multiplataformas: apps de escritorio, Android y web."
+        "description": "Portfolio de Alejandro Vizán, estudiante de desarrollo de aplicaciones multiplataformas: apps de escritorio, Android y web."
       },
       "hero": {
         "titleLine1": "Alejandro",
         "titleLine2": "Vizán",
-        "description": "Técnico superior en desarrollo de aplicaciones multiplataformas.",
+        "description": "Estudiante de desarrollo de aplicaciones multiplataformas.",
         "email": "Correo electrónico"
       },
       "about": {
@@ -139,7 +139,7 @@
             "icon": "user",
             "title": "Quién soy",
             "points": [
-              "Soy un desarrollador que acaba de terminar de formarse en desarrollo de aplicaciones multiplataformas, y soy capaz de desarrollar apps para escritorio, Android y web.",
+              "Soy un desarrollador que está terminando su formación en desarrollo de aplicaciones multiplataformas, y soy capaz de desarrollar apps para escritorio, Android y web.",
               "Me estoy formando de forma autodidacta en diversas tecnologías.",
               "Tengo preferencia por el desarrollo de interfaces y aplicaciones móviles, pero me puedo adaptar a todo."
             ]
@@ -149,7 +149,7 @@
             "title": "Estudios",
             "points": [
               "Digitech — Técnico en sistemas informáticos y redes (2023–2025)",
-              "Digitech — Técnico en sistemas informáticos y redes (2023–2025)"
+              "Digitech — Técnico superior en desarrollo de aplicaciones multiplataformas (2025–2027)"
             ]
           },
           {
