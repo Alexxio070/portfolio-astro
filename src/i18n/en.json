@@ -1,8 +1,6 @@
 {
   "nav": {
     "skipToContent": "Skip to content",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
     "selectLanguage": "Select language",
     "currentLanguage": "Current language",
     "mainNav": "Main navigation",
@@ -14,7 +12,6 @@
     "sectionConnect": "Connect",
     "items": {
       "home": "Home",
-      "services": "Services",
       "projects": "Projects",
       "blog": "Blog",
       "about": "About",
@@ -22,71 +19,14 @@
     }
   },
   "common": {
-    "readMore": "Read more",
-    "loading": "Loading…",
     "backToTop": "Back to top",
-    "search": "Search",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "next": "Next",
-    "previous": "Previous",
-    "home": "Home",
     "themeModeTitle": "Theme: {mode} (click to switch)",
-    "progress": "Progress",
-    "themeMode": "Theme: {mode}",
-    "browseByTag": "Browse by tag",
-    "techStack": "Tech stack",
-    "togglePassword": "Toggle password visibility",
-    "breadcrumb": "Breadcrumb",
-    "copyCode": "Copy code to clipboard",
-    "dismiss": "Dismiss",
-    "notifications": "Notifications",
-    "closeDialog": "Close dialog",
-    "tabs": "Tabs",
-    "verticalTabs": "Vertical tabs"
+    "themeMode": "Theme: {mode}"
   },
   "projects": {
-    "title": "Projects",
-    "description": "Things I've built",
-    "viewProject": "View project",
-    "viewSource": "View source",
-    "noProjectsFound": "No projects found.",
-    "carouselChooseSlide": "Choose slide",
-    "carouselNextSlide": "Next slide",
-    "carouselPreviousSlide": "Previous slide",
-    "galleryLabel": "Media lightbox",
-    "galleryClose": "Close lightbox",
-    "galleryNextImage": "Next image",
-    "galleryPreviousImage": "Previous image",
-    "metaTitle": "Projects",
-    "metaDescription": "Selected work — websites, tools, and open-source projects built by Astro Rocket.",
-    "heroBadge": "Selected work",
-    "heroDescription": "Work I'm most proud of.",
-    "allProjects": "All projects",
-    "pageMetaTitle": "Projects — Page {page}",
-    "pageMetaDescription": "Page {page} of {total} — selected work, tools, and open-source projects by Astro Rocket.",
-    "pageBadge": "Page {page} of {total}",
-    "tagMetaTitle": "#{tag} — Projects",
-    "tagMetaDescription": "Projects tagged \"{tag}\".",
-    "tagBadge": "Tag",
-    "tagCountOne": "{count} project tagged \"{tag}\".",
-    "tagCountOther": "{count} projects tagged \"{tag}\".",
-    "tagEmpty": "No projects found for this tag.",
-    "tagBackToAll": "Back to all projects",
-    "backToProjects": "Back to Projects",
-    "moreProjects": "More projects",
-    "ctaBadge": "Let's talk",
-    "ctaHeading": "Let's talk about what you need",
-    "ctaLead": "Every website I build is its own custom design, made with the care you see here. Tell me what you have in mind.",
-    "ctaPrimary": "Send a message",
-    "ctaSecondary": "More about me",
-    "closingHeading": "Have a project in mind?",
-    "closingLead": "Whether it's a new build or something that needs a fresh perspective — I'd love to hear about it."
+    "title": "Projects"
   },
   "errors": {
-    "pageNotFound": "Page not found",
-    "pageNotFoundMessage": "The page you're looking for doesn't exist or has moved.",
-    "goHome": "Go to homepage",
     "metaTitle": "Page not found",
     "metaDescription": "This page has moved, been removed, or never existed in the first place.",
     "badge": "404 — page not found",
@@ -97,7 +37,6 @@
     "browseProjects": "Browse projects",
     "tryInstead": "Try one of these instead",
     "projectsDesc": "Selected work and case studies.",
-    "blogDesc": "Notes on design, code, and the craft.",
     "contactTitle": "Contact",
     "contactDesc": "Start a conversation about your project."
   },
@@ -111,14 +50,11 @@
   },
   "footer": {
     "copyright": "© {year} {siteName}",
-    "builtWith": "Built with Astro Rocket",
     "groups": {
       "site": "Site",
-      "topics": "Topics",
-      "projects": "Projects",
       "questions": "Got questions?"
     },
-    "followOn": "Follow us on {platform}"
+    "followOn": "Follow me on {platform}"
   },
   "pages": {
     "home": {

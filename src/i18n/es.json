@@ -1,8 +1,6 @@
 {
   "nav": {
     "skipToContent": "Saltar al contenido",
-    "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú",
     "selectLanguage": "Seleccionar idioma",
     "currentLanguage": "Idioma actual",
     "mainNav": "Navegación principal",
@@ -14,7 +12,6 @@
     "sectionConnect": "Conectar",
     "items": {
       "home": "Inicio",
-      "services": "Servicios",
       "projects": "Proyectos",
       "blog": "Blog",
       "about": "Sobre mí",
@@ -22,71 +19,14 @@
     }
   },
   "common": {
-    "readMore": "Leer más",
-    "loading": "Cargando…",
     "backToTop": "Volver arriba",
-    "search": "Buscar",
-    "submit": "Enviar",
-    "cancel": "Cancelar",
-    "next": "Siguiente",
-    "previous": "Anterior",
-    "home": "Inicio",
     "themeModeTitle": "Tema: {mode} (haz clic para cambiar)",
-    "progress": "Progreso",
-    "themeMode": "Tema: {mode}",
-    "browseByTag": "Explorar por etiqueta",
-    "techStack": "Tecnologías",
-    "togglePassword": "Mostrar u ocultar la contraseña",
-    "breadcrumb": "Ruta de navegación",
-    "copyCode": "Copiar el código al portapapeles",
-    "dismiss": "Descartar",
-    "notifications": "Notificaciones",
-    "closeDialog": "Cerrar el diálogo",
-    "tabs": "Pestañas",
-    "verticalTabs": "Pestañas verticales"
+    "themeMode": "Tema: {mode}"
   },
   "projects": {
-    "title": "Proyectos",
-    "description": "Cosas que he construido",
-    "viewProject": "Ver proyecto",
-    "viewSource": "Ver código",
-    "noProjectsFound": "No se han encontrado proyectos.",
-    "carouselChooseSlide": "Elegir diapositiva",
-    "carouselNextSlide": "Diapositiva siguiente",
-    "carouselPreviousSlide": "Diapositiva anterior",
-    "galleryLabel": "Visor de contenido multimedia",
-    "galleryClose": "Cerrar el visor",
-    "galleryNextImage": "Imagen siguiente",
-    "galleryPreviousImage": "Imagen anterior",
-    "metaTitle": "Proyectos",
-    "metaDescription": "Trabajos seleccionados: sitios web, herramientas y proyectos de código abierto creados por Astro Rocket.",
-    "heroBadge": "Trabajos seleccionados",
-    "heroDescription": "El trabajo del que me siento más orgulloso.",
-    "allProjects": "Todos los proyectos",
-    "pageMetaTitle": "Proyectos — Página {page}",
-    "pageMetaDescription": "Página {page} de {total} — trabajos seleccionados, herramientas y proyectos de código abierto de Astro Rocket.",
-    "pageBadge": "Página {page} de {total}",
-    "tagMetaTitle": "#{tag} — Proyectos",
-    "tagMetaDescription": "Proyectos con la etiqueta \"{tag}\".",
-    "tagBadge": "Etiqueta",
-    "tagCountOne": "{count} proyecto con la etiqueta \"{tag}\".",
-    "tagCountOther": "{count} proyectos con la etiqueta \"{tag}\".",
-    "tagEmpty": "No hay proyectos con esta etiqueta.",
-    "tagBackToAll": "Volver a todos los proyectos",
-    "backToProjects": "Volver a Proyectos",
-    "moreProjects": "Más proyectos",
-    "ctaBadge": "Hablemos",
-    "ctaHeading": "Hablemos de lo que necesitas",
-    "ctaLead": "Cada sitio web que construyo es un diseño a medida, hecho con el cuidado que ves aquí. Cuéntame qué tienes en mente.",
-    "ctaPrimary": "Enviar un mensaje",
-    "ctaSecondary": "Más sobre mí",
-    "closingHeading": "¿Tienes un proyecto en mente?",
-    "closingLead": "Ya sea algo nuevo o algo que necesita una mirada fresca, me encantará conocerlo."
+    "title": "Proyectos"
   },
   "errors": {
-    "pageNotFound": "Página no encontrada",
-    "pageNotFoundMessage": "La página que buscas no existe o se ha movido.",
-    "goHome": "Ir a la página de inicio",
     "metaTitle": "Página no encontrada",
     "metaDescription": "Esta página se ha movido, se ha eliminado o nunca ha existido.",
     "badge": "404 — página no encontrada",
@@ -97,7 +37,6 @@
     "browseProjects": "Ver proyectos",
     "tryInstead": "Prueba alguna de estas opciones",
     "projectsDesc": "Trabajos seleccionados y casos de estudio.",
-    "blogDesc": "Notas sobre diseño, código y el oficio.",
     "contactTitle": "Contacto",
     "contactDesc": "Empieza una conversación sobre tu proyecto."
   },
@@ -111,14 +50,11 @@
   },
   "footer": {
     "copyright": "© {year} {siteName}",
-    "builtWith": "Hecho con Astro Rocket",
     "groups": {
       "site": "Sitio",
-      "topics": "Temas",
-      "projects": "Proyectos",
       "questions": "¿Tienes preguntas?"
     },
-    "followOn": "Síguenos en {platform}"
+    "followOn": "Sígueme en {platform}"
   },
   "pages": {
     "home": {

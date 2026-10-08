@@ -24,27 +24,17 @@ export function createWebsiteSchema(): WithContext<WebSite> {
 }
 
 /**
- * Create Person schema for Astro Rocket
+ * Create the Person schema for the site's author
  */
 export function createPersonSchema(): WithContext<Person> {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Astro Rocket',
-    jobTitle: 'Web Designer & Developer',
+    name: siteConfig.author,
+    jobTitle: siteConfig.tagline,
     url: siteConfig.url,
     email: siteConfig.email,
     ...(siteConfig.authorImage ? { image: `${siteConfig.url}${siteConfig.authorImage}` } : {}),
-    ...(siteConfig.address?.city
-      ? {
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: siteConfig.address.city,
-            addressRegion: 'Noord-Brabant',
-            addressCountry: 'NL',
-          },
-        }
-      : {}),
     sameAs: siteConfig.socialLinks,
   };
 }

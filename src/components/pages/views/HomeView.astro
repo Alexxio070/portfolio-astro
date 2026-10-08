@@ -68,7 +68,11 @@ const socialLinks = resolveSocialLinks(siteConfig.socialLinks).filter((l) => ['g
 const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteConfig.email)}&su=${encodeURIComponent(contact.subject)}`;
 ---
 
-<LandingLayout title={t('pages.home.meta.title', locale)} description={t('pages.home.meta.description', locale)}>
+<LandingLayout
+  title={t('pages.home.meta.title', locale)}
+  description={t('pages.home.meta.description', locale)}
+  includePersonSchema
+>
   <!-- Home -->
   <!-- data-bar-color: Safari on iOS tints its bottom toolbar from the BODY's
        background. This hero is dark in both colour modes, so the theme script
