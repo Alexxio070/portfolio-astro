@@ -12,6 +12,7 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import { Hero } from '@/components/hero';
 import Button from '@/components/ui/form/Button/Button.astro';
+import SectionTitle from '@/components/pages/SectionTitle.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import { accordionItemVariants, accordionTriggerVariants } from '@/components/ui/overlay/Accordion/accordion.variants';
@@ -110,9 +111,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-          {about.heading}
-        </h2>
+        <SectionTitle title={about.heading} class="font-display text-3xl md:text-4xl font-bold text-foreground" />
       </div>
 
       <!-- items-start: each panel grows to fit its own content and never
@@ -153,9 +152,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-          {projects.heading}
-        </h2>
+        <SectionTitle title={projects.heading} class="font-display text-3xl md:text-4xl font-bold text-foreground" />
         <p class="text-lg text-foreground-muted max-w-2xl">
           {projects.lead}
         </p>
@@ -173,9 +170,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   <section id="contact" class="relative z-10 flex min-h-[80svh] items-center py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto w-full max-w-6xl px-6 grid gap-8 md:grid-cols-2 md:items-center">
       <div class="flex flex-col gap-4" data-reveal>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-          {contact.heading}
-        </h2>
+        <SectionTitle title={contact.heading} class="font-display text-3xl md:text-4xl font-bold text-foreground" />
         <p class="text-lg text-foreground-muted max-w-xl">
           {contact.description}
         </p>
