@@ -134,6 +134,9 @@
         "description": "Have a question or a project in mind? Feel free to reach out.",
         "cta": "Send me an email",
         "subject": "Hello Alejandro"
+      },
+      "console": {
+        "greeting": "Hi, I'm Alejandro. If you're reading this, let's talk:"
       }
     }
   }

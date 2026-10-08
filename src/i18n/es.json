@@ -134,6 +134,9 @@
         "description": "¿Tienes una pregunta o un proyecto en mente? No dudes en escribirme.",
         "cta": "Enviarme un correo",
         "subject": "Hola Alejandro"
+      },
+      "console": {
+        "greeting": "Hola, soy Alejandro. Si estás leyendo esto, hablemos:"
       }
     }
   }

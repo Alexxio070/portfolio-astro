@@ -12,6 +12,11 @@
  * from assistive technology. The slug is made from the title, so it follows
  * the language: "Sobre mí" gives `sobre-mi`, "About me" gives `about-me`.
  *
+ * The browser tab follows along: while a section is current, the tab reads
+ * `~/alex/<section> — <name>`, and goes back to the page's own title above the
+ * first section. Only the live tab changes; the title in the HTML, which is
+ * what search engines read, stays as the page set it.
+ *
  * Without JavaScript the title simply stays plain. With reduced motion the
  * path appears at once, without typing.
  */
@@ -122,6 +127,10 @@ const length = prefix.length + slug.length;
   const titles = Array.from(document.querySelectorAll<HTMLElement>('.sec-title'));
   const sections = titles.map((title) => title.closest('section'));
   if (titles.length) {
+    // The page title is "<page> — <name>"; the tab keeps the name and swaps the rest.
+    const pageTitle = document.title;
+    const siteName = pageTitle.includes(' — ') ? pageTitle.split(' — ').pop() : pageTitle;
+    let shown = -2;
     let queued = false;
     const update = () => {
       queued = false;
@@ -136,6 +145,11 @@ const length = prefix.length + slug.length;
       // A last section too short to ever reach the line is current at the foot.
       if (atBottom) active = titles.length - 1;
       titles.forEach((title, i) => title.classList.toggle('is-path', i === active));
+      if (active !== shown) {
+        shown = active;
+        const path = active >= 0 ? titles[active].querySelector('.sec-path')?.textContent?.trim() : '';
+        document.title = path ? `${path} — ${siteName}` : pageTitle;
+      }
     };
     const queue = () => {
       if (queued) return;

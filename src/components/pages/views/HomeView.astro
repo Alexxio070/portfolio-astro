@@ -54,6 +54,7 @@ const about = tData<{ badge: string; heading: string; items: { icon: string; tit
 // Two columns up to six items (three rows of two); a seventh item opens a
 // third column. Items are entries of `pages.home.about.items` in the locale files.
 const aboutColumns = about.items.length > 6 ? 'md:grid-cols-3' : 'md:grid-cols-2';
+const consoleGreeting = t('pages.home.console.greeting', locale);
 const projects = tData<{ heading: string; lead: string }>('pages.home.projects', locale)!;
 const contact = tData<{ badge: string; heading: string; description: string; cta: string; subject: string }>(
   'pages.home.contact',
@@ -348,6 +349,12 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     box-shadow: 0 16px 40px -20px color-mix(in oklch, var(--color-brand-500) 60%, transparent);
   }
 </style>
+
+<!-- For whoever opens the browser's developer tools. -->
+<script is:inline define:vars={{ greeting: consoleGreeting, email: siteConfig.email }}>
+  // eslint-disable-next-line no-console
+  console.log('%c' + greeting + '\n%c' + email, 'font: 600 15px monospace; color: #0083fe', 'font: 13px monospace');
+</script>
 
 <script>
   // Light over the hero name: eases towards the cursor and fades in and out,
