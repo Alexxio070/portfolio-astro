@@ -31,7 +31,7 @@
     "next": "Next",
     "previous": "Previous",
     "home": "Home",
-    "themeModeTitle": "Theme: {mode} (click to cycle)",
+    "themeModeTitle": "Theme: {mode} (click to switch)",
     "progress": "Progress",
     "themeMode": "Theme: {mode}",
     "browseByTag": "Browse by tag",
@@ -105,12 +105,8 @@
     "selectColourTheme": "Select colour theme",
     "colourTheme": "Colour theme",
     "colourMode": "Colour mode",
-    "modeTrigger": "Theme: {mode}. Click to change.",
-    "system": "System",
     "light": "Light",
     "dark": "Dark",
-    "currentlyLight": "Currently light",
-    "currentlyDark": "Currently dark",
     "swatchLabel": "{name} theme"
   },
   "footer": {

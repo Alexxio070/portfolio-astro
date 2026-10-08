@@ -20,7 +20,6 @@ import { t, getLocaleFromPath, getLocales, getLocaleName, swapLocaleInPath, isEn
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import ThemeSelector from '@/components/layout/ThemeSelector.astro';
 import ThemeSelectorDropdown from '@/components/layout/ThemeSelectorDropdown.astro';
-import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
 import ThemeToggle from '@/components/layout/ThemeToggle.astro';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
 
@@ -74,7 +73,7 @@ const languages = languagesEnabled
 
     <div class="hidden items-center gap-2 md:flex">
       <ThemeSelectorDropdown />
-      <ThemeModeDropdown />
+      <ThemeToggle variant="pill" />
       <LanguageSwitcher />
     </div>
 

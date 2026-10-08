@@ -105,12 +105,8 @@
     "selectColourTheme": "Seleccionar tema de color",
     "colourTheme": "Tema de color",
     "colourMode": "Modo de color",
-    "modeTrigger": "Tema: {mode}. Haz clic para cambiar.",
-    "system": "Sistema",
     "light": "Claro",
     "dark": "Oscuro",
-    "currentlyLight": "Ahora en claro",
-    "currentlyDark": "Ahora en oscuro",
     "swatchLabel": "Tema {name}"
   },
   "footer": {
