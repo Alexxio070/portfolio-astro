@@ -391,6 +391,28 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     -webkit-text-fill-color: transparent;
   }
 
+  /* One edge for the page's outlined pieces: hero buttons, about panels and the
+     contact card. Two pixels thick, in the active theme's brand colour taken a
+     step darker, so it follows the theme with nothing else to change. */
+  .hero-actions,
+  .about-panel,
+  .contact-card {
+    --edge-width: 2px;
+    --edge: color-mix(in oklch, var(--color-brand-500) 78%, black);
+    --edge-hover: color-mix(in oklch, var(--color-brand-500) 92%, black);
+  }
+  .hero-actions > a,
+  .about-panel,
+  .contact-card {
+    border-width: var(--edge-width);
+    border-style: solid;
+    border-color: var(--edge);
+  }
+  .hero-actions > a:hover,
+  .contact-card:hover {
+    border-color: var(--edge-hover);
+  }
+
   /* Hero buttons rise a touch and pick up a brand glow. `translate` is its own
      property, so it does not fight the press-down scale on :active. */
   .hero-actions > a {
@@ -405,7 +427,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     box-shadow: 0 10px 24px -10px color-mix(in oklch, var(--color-brand-400) 70%, transparent);
   }
 
-  /* About panels: the border warms to the brand colour on hover, and the
+  /* About panels: the edge brightens a little on hover, and the
      content opens with a short slide where the browser can animate it. The
      transition lists the reveal's own properties too, so scrolling in is
      unchanged. */
@@ -417,7 +439,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
       box-shadow 200ms ease-out;
   }
   .about-panel:hover {
-    border-color: color-mix(in oklch, var(--color-brand-500) 55%, var(--color-border));
+    border-color: var(--edge-hover);
   }
   .about-panel[open] {
     box-shadow: 0 8px 28px -16px color-mix(in oklch, var(--color-brand-500) 55%, transparent);
@@ -444,6 +466,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     transition:
       opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
       transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 200ms ease-out,
       box-shadow 200ms ease-out;
   }
   .contact-card:hover {
