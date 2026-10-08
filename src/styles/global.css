@@ -225,7 +225,14 @@
     outline-offset: 2px;
   }
 
-  /* Scrollbar */
+  /* Scrollbar, in the theme's colour. `scrollbar-color` is the standard and
+     reaches Firefox; the -webkit rules below cover Safari releases that
+     predate it. Where both apply, the standard wins and the colours match. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklch, var(--color-brand-500) 60%, transparent) transparent;
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -236,12 +243,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-border-strong);
+    background: color-mix(in oklch, var(--color-brand-500) 60%, transparent);
     border-radius: var(--radius-full);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-foreground-muted);
+    background: var(--color-brand-500);
   }
 }
 

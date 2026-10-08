@@ -130,8 +130,16 @@ const modeNames = { light: t('theme.light', locale), dark: t('theme.dark', local
         } catch {
           /* private mode */
         }
-        applyMode(next);
-        document.querySelectorAll<HTMLElement>('.theme-toggle').forEach((other) => syncLabel(other, next));
+        const swap = () => {
+          applyMode(next);
+          document.querySelectorAll<HTMLElement>('.theme-toggle').forEach((other) => syncLabel(other, next));
+        };
+        // Where the browser can crossfade the whole page, use it, so the
+        // change is a dissolve rather than a flash. Elsewhere, or with reduced
+        // motion, the mode simply changes.
+        const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!calm && typeof document.startViewTransition === 'function') document.startViewTransition(swap);
+        else swap();
       });
     });
   }
