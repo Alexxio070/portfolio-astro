@@ -267,6 +267,50 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     .home-content > section#contact .contact-card {
       justify-self: start;
     }
+
+    /* A grid of dots behind the sections, so the plain page has some depth.
+       Two layers: faint dots everywhere, and the same dots in the theme's
+       colour showing only near the cursor, where --da (how much, 0 to 1)
+       and --dx, --dy (where) are set from the script below. The sections sit
+       above it (z-index 10) and their cards are opaque, so it only shows in
+       the gaps. */
+    .home-content {
+      position: relative;
+      isolation: isolate;
+      --dot-gap: 30px;
+      --dx: -999px;
+      --dy: -999px;
+      --da: 0;
+    }
+    .home-content::before,
+    .home-content::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-size: var(--dot-gap) var(--dot-gap);
+      background-position: calc(var(--dot-gap) / 2) calc(var(--dot-gap) / 2);
+    }
+    .home-content::before {
+      background-image: radial-gradient(
+        circle at center,
+        color-mix(in oklch, var(--color-foreground) 16%, transparent) 1.1px,
+        transparent 1.6px
+      );
+      /* Fades out towards the panel on the left. */
+      -webkit-mask-image: linear-gradient(to right, transparent 0, black 140px);
+      mask-image: linear-gradient(to right, transparent 0, black 140px);
+    }
+    .home-content::after {
+      background-image: radial-gradient(
+        circle at center,
+        color-mix(in oklch, var(--color-brand-400) 85%, transparent) 1.4px,
+        transparent 2px
+      );
+      -webkit-mask-image: radial-gradient(circle 240px at var(--dx) var(--dy), rgb(0 0 0 / var(--da)) 0%, transparent 100%);
+      mask-image: radial-gradient(circle 240px at var(--dx) var(--dy), rgb(0 0 0 / var(--da)) 0%, transparent 100%);
+    }
   }
 
   .about-panel[open] .about-chevron {
@@ -480,6 +524,59 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
       goal.on = 0;
       wake();
     });
+  }
+</script>
+
+<script>
+  // Light over the dot texture in the content column: eases towards the cursor
+  // and fades in and out. Mouse and pen only, and only where the texture is
+  // drawn (1280px and up); skipped for reduced motion.
+  const content = document.querySelector<HTMLElement>('.home-content');
+  const wide = window.matchMedia('(min-width: 1280px)');
+  const calm = window.matchMedia('(prefers-reduced-motion: no-preference)');
+  if (content) {
+    const goal = { x: 0, y: 0, on: 0 };
+    const now = { x: 0, y: 0, on: 0 };
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      const box = content.getBoundingClientRect();
+      now.x += (goal.x - now.x) * 0.18;
+      now.y += (goal.y - now.y) * 0.18;
+      now.on += (goal.on - now.on) * 0.1;
+      content.style.setProperty('--dx', `${now.x - box.left}px`);
+      content.style.setProperty('--dy', `${now.y - box.top}px`);
+      content.style.setProperty('--da', now.on.toFixed(3));
+      const settled = Math.abs(goal.x - now.x) + Math.abs(goal.y - now.y) < 0.5 && Math.abs(goal.on - now.on) < 0.005;
+      if (settled && goal.on === 0) content.style.setProperty('--da', '0');
+      else raf = requestAnimationFrame(tick);
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    content.addEventListener('pointermove', (e) => {
+      if (!wide.matches || !calm.matches || e.pointerType === 'touch') return;
+      if (goal.on === 0) {
+        now.x = e.clientX;
+        now.y = e.clientY;
+      }
+      goal.x = e.clientX;
+      goal.y = e.clientY;
+      goal.on = 1;
+      wake();
+    });
+    content.addEventListener('pointerleave', () => {
+      goal.on = 0;
+      wake();
+    });
+    // The page moves under a resting cursor, so the light has to follow the scroll.
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (goal.on) wake();
+      },
+      { passive: true }
+    );
   }
 </script>
 
