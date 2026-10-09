@@ -75,11 +75,11 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   includePersonSchema
 >
   <div class="home-split">
-  <!-- Home -->
-  <!-- data-bar-color: Safari on iOS tints its bottom toolbar from the BODY's
+  {/* Home */}
+  {/* data-bar-color: Safari on iOS tints its bottom toolbar from the BODY's
        background. This hero is dark in both colour modes, so the theme script
        paints the body this colour while the hero covers that edge. Same value
-       as --bar-color in global.css. See `paintBody` in BaseLayout.astro. -->
+       as --bar-color in global.css. See `paintBody` in BaseLayout.astro. */}
   <Hero
     id="home"
     layout="split"
@@ -114,16 +114,16 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   </Hero>
 
   <div class="home-content">
-  <!-- About -->
+  {/* About */}
   <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
         <SectionTitle title={about.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
       </div>
 
-      <!-- items-start: each panel grows to fit its own content and never
+      {/* items-start: each panel grows to fit its own content and never
            stretches its neighbour. `name` makes the <details> exclusive, so
-           opening one closes the open one, and clicking an open panel closes it. -->
+           opening one closes the open one, and clicking an open panel closes it. */}
       <div class={cn('grid grid-cols-1 items-start gap-4', aboutColumns)}>
         {about.items.map((item, i) => (
           <details
@@ -155,7 +155,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     </div>
   </section>
 
-  <!-- Projects -->
+  {/* Projects */}
   <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
@@ -167,13 +167,13 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
 
       <div class="grid gap-6 md:grid-cols-2">
         {shownProjects.map((project, i) => (
-          <ProjectCard project={project} index={i} locale={project.data.locale} />
+          <ProjectCard project={project} index={i} />
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
+  {/* Contact */}
   <section id="contact" class="relative z-10 flex min-h-[80svh] items-center py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto w-full max-w-6xl px-6 grid gap-8 lg:grid-cols-2 lg:items-center">
       <div class="flex flex-col gap-4" data-reveal>
@@ -472,7 +472,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   }
 </style>
 
-<!-- For whoever opens the browser's developer tools. -->
+{/* For whoever opens the browser's developer tools. */}
 <script is:inline define:vars={{ greeting: consoleGreeting, email: siteConfig.email }}>
   // eslint-disable-next-line no-console
   console.log('%c' + greeting + '\n%c' + email, 'font: 600 15px monospace; color: #0083fe', 'font: 13px monospace');
