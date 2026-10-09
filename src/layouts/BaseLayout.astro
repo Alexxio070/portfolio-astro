@@ -199,6 +199,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           const rect = el.getBoundingClientRect();
           const edge = viewportBottom();
           if (!(rect.height > 0 && rect.top <= edge && rect.bottom >= edge)) return null;
+          // A section that is only a panel beside the page (the home page's hero
+          // on a wide screen) does not sit under the toolbar.
+          if (rect.width < window.innerWidth * 0.9) return null;
 
           return (el.getAttribute('data-bar-color') || '').trim() || null;
         }

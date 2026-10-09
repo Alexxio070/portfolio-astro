@@ -74,6 +74,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   description={t('pages.home.meta.description', locale)}
   includePersonSchema
 >
+  <div class="home-split">
   <!-- Home -->
   <!-- data-bar-color: Safari on iOS tints its bottom toolbar from the BODY's
        background. This hero is dark in both colour modes, so the theme script
@@ -89,7 +90,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     data-bar-color="#000"
     data-cursor-calm
   >
-    <h1 slot="title" class="hero-name !text-[clamp(2.25rem,12vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl text-left">
+    <h1 slot="title" class="hero-name !text-[clamp(2.25rem,12vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl xl:!text-[clamp(2.75rem,3.4vw,4.25rem)] text-left">
       <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">{hero.titleLine1}</span><br />
       <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">{hero.titleLine2}</span>
     </h1>
@@ -112,11 +113,12 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     </p>
   </Hero>
 
+  <div class="home-content">
   <!-- About -->
   <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
-        <SectionTitle title={about.heading} class="font-display text-3xl md:text-4xl font-bold text-foreground" />
+        <SectionTitle title={about.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
       </div>
 
       <!-- items-start: each panel grows to fit its own content and never
@@ -157,7 +159,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
-        <SectionTitle title={projects.heading} class="font-display text-3xl md:text-4xl font-bold text-foreground" />
+        <SectionTitle title={projects.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
         <p class="text-lg text-foreground-muted max-w-2xl">
           {projects.lead}
         </p>
@@ -175,7 +177,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   <section id="contact" class="relative z-10 flex min-h-[80svh] items-center py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
     <div class="mx-auto w-full max-w-6xl px-6 grid gap-8 md:grid-cols-2 md:items-center">
       <div class="flex flex-col gap-4" data-reveal>
-        <SectionTitle title={contact.heading} class="font-display text-3xl md:text-4xl font-bold text-foreground" />
+        <SectionTitle title={contact.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
         <p class="text-lg text-foreground-muted max-w-xl">
           {contact.description}
         </p>
@@ -189,8 +191,75 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
       </Card>
     </div>
   </section>
+  </div>
+  </div>
 
 <style is:global>
+  /* ── Side-panel layout, from xl (1280px) up ───────────────────────────────
+     The hero stops being a banner above the page and becomes a panel pinned to
+     the left for the whole scroll: name, introduction and links. The sections
+     scroll beside it. Below xl nothing here applies and the page is the single
+     column it always was. */
+  @media (min-width: 1280px) {
+    .home-split {
+      display: grid;
+      grid-template-columns: clamp(380px, 28vw, 540px) minmax(0, 1fr);
+      align-items: start;
+    }
+    .home-split > section.hero-dark-gradient {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      min-height: 0;
+      justify-content: flex-start;
+      padding: clamp(5rem, 14vh, 9rem) clamp(2rem, 3vw, 4rem) 0;
+    }
+    .home-split > section.hero-dark-gradient > div.grid {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      align-items: start;
+      gap: 1.75rem;
+    }
+    .hero-dark-gradient .hero-title-slot + div {
+      max-width: none;
+    }
+    /* The panel reads name, introduction, links. The hero builds a content
+       column (name and links) and a separate aside (the introduction), so the
+       column steps aside and its pieces are ordered with the aside between. */
+    .home-split > section.hero-dark-gradient > div.grid > div.animate-hero-stagger {
+      display: contents;
+    }
+    .home-split > section.hero-dark-gradient .hero-title-slot {
+      order: 1;
+      margin-bottom: 0;
+    }
+    .home-split > section.hero-dark-gradient > div.grid > div:not(.animate-hero-stagger) {
+      order: 2;
+    }
+    .home-split > section.hero-dark-gradient div:has(> .hero-actions) {
+      order: 3;
+    }
+    .home-split > section.hero-dark-gradient .text-lg {
+      font-size: 1.05rem;
+    }
+    /* The sections sit in the right-hand column, centred in it, on the page's
+       own background rather than as full-width bands. */
+    .home-content > section {
+      background: transparent;
+      min-height: 0;
+    }
+    .home-content > section > div {
+      max-width: 64rem;
+      margin-inline: auto;
+      padding-inline: clamp(2rem, 4vw, 5rem);
+    }
+    .home-content > section#contact {
+      min-height: 70svh;
+    }
+  }
+
   .about-panel[open] .about-chevron {
     transform: rotate(180deg);
   }
