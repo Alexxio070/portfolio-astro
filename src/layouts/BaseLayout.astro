@@ -33,7 +33,7 @@ const {
 } = Astro.props;
 
 // Build JSON-LD schemas
-const schemas: WithContext<Thing>[] = [createWebsiteSchema()];
+const schemas: WithContext<Thing>[] = [createWebsiteSchema(description)];
 if (includePersonSchema) {
   schemas.push(createPersonSchema());
 }
