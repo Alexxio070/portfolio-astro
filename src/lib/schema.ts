@@ -4,13 +4,13 @@ import siteConfig from '@/config/site.config';
 /**
  * Create WebSite schema for homepage
  */
-export function createWebsiteSchema(): WithContext<WebSite> {
+export function createWebsiteSchema(description: string = siteConfig.description): WithContext<WebSite> {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteConfig.name,
     url: siteConfig.url,
-    description: siteConfig.description,
+    description,
   };
 }
 

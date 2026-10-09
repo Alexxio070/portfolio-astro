@@ -45,7 +45,17 @@
     "colourMode": "Colour mode",
     "light": "Light",
     "dark": "Dark",
-    "swatchLabel": "{name} theme"
+    "swatchLabel": "{name} theme",
+    "names": {
+      "purple": "Purple",
+      "violet": "Violet",
+      "indigo": "Indigo",
+      "blue": "Blue",
+      "sky": "Sky",
+      "cyan": "Cyan",
+      "teal": "Teal",
+      "emerald": "Emerald"
+    }
   },
   "footer": {
     "copyright": "© {year} {siteName}",

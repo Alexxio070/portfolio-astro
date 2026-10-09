@@ -104,9 +104,9 @@ const siteConfig: SiteConfig = {
   // import this file, uses the same values. Change them there.
   name: SITE_NAME,
   description:
-    'Portfolio of Alejandro Vizán, a cross-platform application development student: desktop, Android and web apps.',
-  tagline: 'Cross-platform application developer',
-  footerNote: 'Desktop, Android and web',
+    'Portfolio de Alejandro Vizán, estudiante de desarrollo de aplicaciones multiplataformas: apps de escritorio, Android y web.',
+  tagline: 'Desarrollador de aplicaciones multiplataformas',
+  footerNote: 'Escritorio, Android y web',
   url: SITE_URL || SITE_URL_FALLBACK,
   // Generated at build time from `name`, `tagline` and the brand colour below.
   // Point this at a file in `public/` to use your own — it has to be a raster

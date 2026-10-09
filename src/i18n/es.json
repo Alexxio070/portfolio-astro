@@ -45,7 +45,17 @@
     "colourMode": "Modo de color",
     "light": "Claro",
     "dark": "Oscuro",
-    "swatchLabel": "Tema {name}"
+    "swatchLabel": "Tema {name}",
+    "names": {
+      "purple": "Morado",
+      "violet": "Violeta",
+      "indigo": "Índigo",
+      "blue": "Azul",
+      "sky": "Cielo",
+      "cyan": "Cian",
+      "teal": "Verde azulado",
+      "emerald": "Esmeralda"
+    }
   },
   "footer": {
     "copyright": "© {year} {siteName}",

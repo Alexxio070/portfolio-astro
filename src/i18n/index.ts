@@ -145,11 +145,15 @@ export function stripLocaleFromPath(path: string): string {
 /**
  * Replace the locale segment of a path with a different locale.
  * Used by the LanguageSwitcher to build "same page, other language"
- * links. When the target is the default locale, no prefix is added.
+ * links. When the target is the default locale, no prefix is added. A
+ * trailing slash on the input is kept, because that is how the pages are built
+ * (`/en/`), and the link should name the page's own URL rather than rely on a
+ * redirect.
  */
 export function swapLocaleInPath(path: string, targetLocale: Locale): string {
   const base = stripLocaleFromPath(path);
-  return localizedPath(base, targetLocale);
+  const swapped = localizedPath(base, targetLocale);
+  return path.endsWith('/') && !swapped.endsWith('/') ? `${swapped}/` : swapped;
 }
 
 /**

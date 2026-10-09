@@ -19,7 +19,7 @@ ${links}
 
 /* SITE */
 Last build: ${built}
-Languages: English, Spanish
+Languages: Spanish, English
 Standards: HTML5, CSS3
 Components: Astro, Tailwind CSS, TypeScript
 Static site: no backend, no cookies, no tracking
