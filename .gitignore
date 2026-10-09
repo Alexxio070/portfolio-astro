@@ -51,3 +51,6 @@ coverage/
 
 # referencia local (nunca se comitea)
 referencias/
+
+# Project documentation: kept on this machine only
+docs/
