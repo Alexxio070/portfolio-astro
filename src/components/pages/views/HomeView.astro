@@ -93,7 +93,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     data-bar-color="#000"
     data-cursor-calm
   >
-    <h1 slot="title" class="hero-name !text-[clamp(2.25rem,12vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl xl:!text-[clamp(2.75rem,3.4vw,4.25rem)] text-left">
+    <h1 slot="title" class="hero-name !text-[clamp(2.25rem,12vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-[clamp(2.75rem,3.4vw,4.25rem)] text-left">
       <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">{hero.titleLine1}</span><br />
       <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">{hero.titleLine2}</span>
     </h1>
@@ -118,7 +118,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
 
   <div class="home-content">
   {/* About */}
-  <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
+  <section id="about" class="relative z-10 py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))]">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
         <SectionTitle title={about.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
@@ -163,7 +163,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   </section>
 
   {/* Projects */}
-  <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+  <section id="projects" class="relative z-10 py-[var(--space-section-md)] bg-background">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col gap-4" data-reveal>
         <SectionTitle title={projects.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
@@ -181,7 +181,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   </section>
 
   {/* Contact */}
-  <section id="contact" class="relative z-10 flex min-h-[80svh] items-center py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))] border-t border-border">
+  <section id="contact" class="relative z-10 flex min-h-[80svh] items-center py-[var(--space-section-md)] bg-[color-mix(in_oklch,var(--color-brand-500)_7%,var(--color-background-secondary))]">
     <div class="mx-auto w-full max-w-6xl px-6 grid gap-8 lg:grid-cols-2 lg:items-center">
       <div class="flex flex-col gap-4" data-reveal>
         <SectionTitle title={contact.heading} class="font-display text-3xl md:text-4xl xl:text-5xl font-bold text-foreground" />
@@ -202,15 +202,15 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
   </div>
 
 <style is:global>
-  /* ── Side-panel layout, from xl (1280px) up ───────────────────────────────
+  /* ── Side-panel layout, from lg (1024px) up ───────────────────────────────
      The hero stops being a banner above the page and becomes a panel pinned to
      the left for the whole scroll: name, introduction and links. The sections
-     scroll beside it. Below xl nothing here applies and the page is the single
+     scroll beside it. Below lg nothing here applies and the page is the single
      column it always was. */
-  @media (min-width: 1280px) {
+  @media (min-width: 1024px) {
     .home-split {
       display: grid;
-      grid-template-columns: clamp(380px, 28vw, 540px) minmax(0, 1fr);
+      grid-template-columns: clamp(320px, 28vw, 540px) minmax(0, 1fr);
       align-items: start;
     }
     .home-split > section.hero-dark-gradient {
@@ -251,10 +251,8 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     .home-split > section.hero-dark-gradient .text-lg {
       font-size: 1.05rem;
     }
-    /* The sections sit in the right-hand column, centred in it, on the page's
-       own background rather than as full-width bands. */
+    /* The sections sit in the right-hand column, centred in it. */
     .home-content > section {
-      background: transparent;
       min-height: 0;
     }
     .home-content > section > div {
@@ -274,49 +272,59 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     .home-content > section#contact .contact-card {
       justify-self: start;
     }
+  }
 
-    /* A grid of dots behind the sections, so the plain page has some depth.
-       Two layers: faint dots everywhere, and the same dots in the theme's
-       colour showing only near the cursor, where --da (how much, 0 to 1)
-       and --dx, --dy (where) are set from the script below. The sections sit
-       above it (z-index 10) and their cards are opaque, so it only shows in
-       the gaps. */
-    .home-content {
-      position: relative;
-      isolation: isolate;
-      --dot-gap: 30px;
-      --dx: -999px;
-      --dy: -999px;
-      --da: 0;
-    }
-    .home-content::before,
-    .home-content::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-size: var(--dot-gap) var(--dot-gap);
-      background-position: calc(var(--dot-gap) / 2) calc(var(--dot-gap) / 2);
-    }
+  /* The sections sit on the page's own background rather than as tinted bands. */
+  .home-content > section {
+    background: transparent;
+  }
+
+  /* A grid of dots behind the sections, so the plain page has some depth.
+     Two layers: faint dots everywhere, and the same dots in the theme's
+     colour showing only near the cursor, where --da (how much, 0 to 1)
+     and --dx, --dy (where) are set from the script below. The sections sit
+     above it (z-index 10) and their cards are opaque, so it only shows in
+     the gaps. */
+  .home-content {
+    position: relative;
+    isolation: isolate;
+    --dot-gap: 30px;
+    --dx: -999px;
+    --dy: -999px;
+    --da: 0;
+  }
+  .home-content::before,
+  .home-content::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-size: var(--dot-gap) var(--dot-gap);
+    background-position: calc(var(--dot-gap) / 2) calc(var(--dot-gap) / 2);
+  }
+  .home-content::before {
+    background-image: radial-gradient(
+      circle at center,
+      color-mix(in oklch, var(--color-foreground) 16%, transparent) 1.1px,
+      transparent 1.6px
+    );
+  }
+  .home-content::after {
+    background-image: radial-gradient(
+      circle at center,
+      color-mix(in oklch, var(--color-brand-400) 85%, transparent) 1.4px,
+      transparent 2px
+    );
+    -webkit-mask-image: radial-gradient(circle 240px at var(--dx) var(--dy), rgb(0 0 0 / var(--da)) 0%, transparent 100%);
+    mask-image: radial-gradient(circle 240px at var(--dx) var(--dy), rgb(0 0 0 / var(--da)) 0%, transparent 100%);
+  }
+
+  /* Beside the side panel, the dots fade out towards it. */
+  @media (min-width: 1024px) {
     .home-content::before {
-      background-image: radial-gradient(
-        circle at center,
-        color-mix(in oklch, var(--color-foreground) 16%, transparent) 1.1px,
-        transparent 1.6px
-      );
-      /* Fades out towards the panel on the left. */
       -webkit-mask-image: linear-gradient(to right, transparent 0, black 140px);
       mask-image: linear-gradient(to right, transparent 0, black 140px);
-    }
-    .home-content::after {
-      background-image: radial-gradient(
-        circle at center,
-        color-mix(in oklch, var(--color-brand-400) 85%, transparent) 1.4px,
-        transparent 2px
-      );
-      -webkit-mask-image: radial-gradient(circle 240px at var(--dx) var(--dy), rgb(0 0 0 / var(--da)) 0%, transparent 100%);
-      mask-image: radial-gradient(circle 240px at var(--dx) var(--dy), rgb(0 0 0 / var(--da)) 0%, transparent 100%);
     }
   }
 
@@ -541,10 +549,8 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
 
 <script>
   // Light over the dot texture in the content column: eases towards the cursor
-  // and fades in and out. Mouse and pen only, and only where the texture is
-  // drawn (1280px and up); skipped for reduced motion.
+  // and fades in and out. Mouse and pen only; skipped for reduced motion.
   const content = document.querySelector<HTMLElement>('.home-content');
-  const wide = window.matchMedia('(min-width: 1280px)');
   const calm = window.matchMedia('(prefers-reduced-motion: no-preference)');
   if (content) {
     const goal = { x: 0, y: 0, on: 0 };
@@ -567,7 +573,7 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
       if (!raf) raf = requestAnimationFrame(tick);
     };
     content.addEventListener('pointermove', (e) => {
-      if (!wide.matches || !calm.matches || e.pointerType === 'touch') return;
+      if (!calm.matches || e.pointerType === 'touch') return;
       if (goal.on === 0) {
         now.x = e.clientX;
         now.y = e.clientY;
