@@ -7,6 +7,10 @@ dist/
 # Astro
 .astro/
 
+# Cloudflare Wrangler: local cache and local secrets
+.wrangler/
+.dev.vars*
+
 # Environment variables
 .env
 .env.local

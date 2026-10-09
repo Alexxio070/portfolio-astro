@@ -7,6 +7,7 @@ Mapa de lo que hay en el repositorio y para qué sirve cada cosa. Si buscas **qu
 | Elemento | Qué es |
 |---|---|
 | `astro.config.mjs` | Configuración de Astro: modo estático, `site`, idiomas, integraciones y cuatro pequeños "plugins de build" propios (ver [03](03-como-funciona.md#el-build-y-lo-que-genera)) |
+| `wrangler.jsonc` | Configuración del despliegue en Cloudflare Workers: sirve la carpeta `dist/` como archivos estáticos, sin código de servidor |
 | `package.json`, `package-lock.json` | Dependencias y scripts (`npm run …`) |
 | `tsconfig.json` | TypeScript. Define el alias `@/` → `src/` |
 | `vitest.config.ts` | Configuración de los tests |

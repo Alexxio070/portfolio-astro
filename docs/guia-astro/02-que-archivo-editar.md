@@ -163,8 +163,10 @@ La tabla de consulta rápida. Busca lo que quieres lograr y ve al archivo.
 | Cambiar el contenido de `llms.txt` | `src/pages/llms.txt.ts` | |
 | Cambiar el contenido de `humans.txt` | `src/pages/humans.txt.ts` (usa los datos de `site.config.ts`) | |
 | Cambiar el manifiesto (nombre al instalar la web como app) | `src/pages/manifest.webmanifest.ts` | |
+| Cambiar el despliegue en Cloudflare (nombre del Worker, dominios, carpeta publicada) | `wrangler.jsonc` | [Publicar](03-recetas.md#publicar-con-un-dominio-propio) |
+| Que Cloudflare sirva mi `404.html` | `wrangler.jsonc` → `assets.not_found_handling: "404-page"` | [La 404](03-recetas.md#la-página-404) |
 | Verificar la propiedad del sitio en Google o Bing | Variables de entorno `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` en el anfitrión | |
-| Definir el dominio al publicar | Variable `SITE_URL` en el anfitrión (`.env.example` muestra el formato) | [Publicar](03-recetas.md#publicar-con-un-dominio-propio) |
+| Definir el dominio al publicar | Variable `SITE_URL` en el entorno donde se compila (`.env.example` muestra el formato) | [Publicar](03-recetas.md#publicar-con-un-dominio-propio) |
 
 ## Idiomas
 

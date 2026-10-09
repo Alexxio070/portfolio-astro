@@ -30,6 +30,8 @@ Los scripts están en `package.json`.
 | `npm run format:check` | Prettier: solo comprueba | Para ver qué cambiaría |
 | `npm test` | Tests en modo "vigilancia" (se repiten al guardar) | Mientras trabajas |
 | `npm run test:run` | Tests una sola vez | Para comprobar |
+| `npm run deploy:check` | Construye y simula el despliegue en Cloudflare **sin subir nada** | Para comprobar `wrangler.jsonc` |
+| **`npm run deploy`** | **Valida todo y, solo si pasa, publica `dist/` en Cloudflare** | Para publicar (requiere `npx wrangler@4 login` una vez) |
 | **`npm run validate`** | **Todo lo anterior encadenado:** lint → check → tests → build → verify | **Antes de cada commit importante y antes de publicar** |
 
 ## Qué comprueba `npm run validate`
@@ -116,7 +118,8 @@ git switch pruebas
 - [ ] Los enlaces de **GitHub** y **LinkedIn** abren los perfiles correctos.
 - [ ] Al **final de la página**, el bloque de contacto es visible (no queda en blanco).
 - [ ] No hay **secretos** en el repositorio: `git grep -nEi "api[_-]?key|secret|password"` no devuelve nada preocupante (los "tokens" de diseño del CSS no cuentan).
-- [ ] `SITE_URL` definida en el anfitrión si el dominio no es `alexxio.dev`.
+- [ ] `npm run deploy:check` termina bien, y hay sesión de Cloudflare (`npx wrangler@4 whoami`).
+- [ ] `SITE_URL` definida en el entorno donde compilas si el dominio no es `alexxio.dev`.
 - [ ] Tras publicar, comprueba `/sitemap-index.xml`, `/robots.txt` y `/llms.txt` en el dominio real.
 
 ## Variables de entorno
@@ -125,7 +128,7 @@ Solo se usa una obligatoria en la práctica, y no es secreta.
 
 | Variable | Para qué | Dónde |
 |---|---|---|
-| `SITE_URL` | Dominio del sitio (URLs canónicas, sitemap, tarjetas). Por defecto `https://alexxio.dev` | El anfitrión; o un archivo `.env` local (ver `.env.example`) |
-| `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION` | Etiquetas de verificación de propiedad. Opcionales | El anfitrión |
+| `SITE_URL` | Dominio del sitio (URLs canónicas, sitemap, tarjetas). Por defecto `https://alexxio.dev` | El entorno donde se compila (tu máquina o el panel de Cloudflare); o un archivo `.env` local (ver `.env.example`) |
+| `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION` | Etiquetas de verificación de propiedad. Opcionales | El entorno donde se compila |
 
 > **El archivo `.env` está en `.gitignore` y no se sube.** No pongas nunca secretos en el código ni en los commits.

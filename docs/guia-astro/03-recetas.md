@@ -104,6 +104,7 @@ Los paneles son una **lista** dentro de los archivos de idioma. Añade un elemen
 `src/i18n/en.json`: lo mismo traducido (`"icon": "languages"`, `"title": "Languages"`, …).
 
 - El `icon` es un nombre de [Lucide](https://lucide.dev/icons).
+- Para **resaltar** una palabra dentro de un punto, enciérrala entre dobles asteriscos: `"Desarrollo web en **Astro**"`. Sale en negrita y con el color del texto principal. Solo funciona dentro de los puntos de este desplegable.
 - Con **más de 6 paneles** la rejilla pasa de 2 a 3 columnas (`aboutColumns` en `HomeView.astro`). Si no quieres eso, edita esa línea.
 - Para quitar un panel, bórralo **de los dos archivos**.
 
@@ -332,13 +333,87 @@ Las clases `font-sans`, `font-display` y `font-mono` de los componentes leen esa
 
 ## Publicar con un dominio propio
 
-El sitio ya usa `https://alexxio.dev` por defecto. Con ese dominio, **no hay que cambiar el código**.
+El sitio se publica en **Cloudflare Workers** como archivos estáticos: `wrangler.jsonc` le dice a Cloudflare que sirva la carpeta `dist/`, sin código de servidor. El sitio ya usa `https://alexxio.dev` por defecto, así que con ese dominio **no hay que cambiar el código**.
 
-1. **Compra el dominio** y conéctalo al anfitrión (los registros DNS los indica él).
-2. **Configura el anfitrión:**
+### 1. Comprobar que todo está listo
 
-   | Campo | Valor |
-   |---|---|
+```bash
+npm run deploy:check
+```
+
+Construye el sitio y simula el despliegue **sin subir nada** ni pedir sesión. Debe terminar sin errores y decir que lee los archivos de `dist/`.
+
+### 2. Iniciar sesión en Cloudflare (una sola vez)
+
+```bash
+npx wrangler@4 login
+```
+
+Se abre el navegador para autorizar tu cuenta de Cloudflare. Con `npx wrangler@4 whoami` compruebas si ya hay sesión.
+
+### 3. Desplegar
+
+```bash
+npm run deploy
+```
+
+Ejecuta toda la validación (`lint`, `check`, tests, build y verificación) y, **solo si pasa**, sube `dist/`. Al terminar muestra una dirección del tipo `https://portfolio-astro.<tu-subdominio>.workers.dev`.
+
+> Esa dirección sirve para ver el resultado real, pero sus páginas declaran como canónica `alexxio.dev`. No la compartas ni la enlaces desde otros sitios.
+
+### 4. Conectar el dominio
+
+1. **Compra el dominio.** Para usarlo como *custom domain* de un Worker, su DNS debe estar en Cloudflare (comprándolo allí o añadiéndolo como sitio).
+2. En el panel de Cloudflare: *Workers & Pages* → `portfolio-astro` → *Settings* → *Domains & Routes* → *Add* → *Custom domain* → `alexxio.dev` (y `www.alexxio.dev` si lo quieres). Los nombres exactos del panel pueden cambiar.
+3. Alternativa en código, dentro de `wrangler.jsonc` (solo cuando el dominio ya esté en tu cuenta, o el despliegue fallará):
+
+   ```jsonc
+   "routes": [{ "pattern": "alexxio.dev", "custom_domain": true }]
+   ```
+
+### 5. Si el dominio no es `alexxio.dev`
+
+Cambia `SITE_URL_FALLBACK` en `src/config/site-url.ts` **y** define `SITE_URL` en el entorno donde se compile. El build comprueba que la etiqueta canónica y el JSON-LD coinciden y **falla** si no.
+
+### 6. Despliegue automático desde GitHub (opcional)
+
+En el panel, *Workers & Pages* → `portfolio-astro` → *Settings* → *Builds* se puede conectar el repositorio (aunque sea privado). Valores a usar:
+
+| Campo | Valor |
+|---|---|
+| Comando de build | `npm run build` |
+| Comando de despliegue | `npx wrangler deploy` |
+| Rama de producción | `main` |
+| Versión de Node | 22 o superior (`.nvmrc`) |
+| Variable `SITE_URL` | solo si el dominio no es `alexxio.dev` |
+
+Con esto, cada subida a `main` publica sola. Sin esta conexión, el despliegue es siempre manual con `npm run deploy`.
+
+### 7. Publicar el código en `main`
+
+```bash
+git switch main
+git merge --squash pruebas
+git commit -m "feat: …"
+git push origin main
+git switch pruebas
+```
+
+### 8. Comprobar tras publicar
+
+`https://alexxio.dev/sitemap-index.xml`, `/robots.txt`, `/llms.txt`, que al compartir el enlace aparece la tarjeta, y que `/es/` carga.
+
+### La página 404
+
+Mientras no se configure otra cosa, las direcciones que no existen devuelven **la 404 genérica de Cloudflare**, no la de la web. Para usar `404.html`, añade `"not_found_handling": "404-page"` dentro de `assets` en `wrangler.jsonc`:
+
+```jsonc
+"assets": { "directory": "./dist", "not_found_handling": "404-page" }
+```
+
+> El repositorio puede seguir siendo **privado**; la web publicada es pública.
+
+---|---|
    | Comando de build | `npm run build` |
    | Carpeta de salida | `dist` |
    | Versión de Node | 22 o superior (ver `.nvmrc`) |

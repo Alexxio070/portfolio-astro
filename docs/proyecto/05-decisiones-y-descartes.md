@@ -9,6 +9,8 @@ Lo que se decidió, lo que se probó y se quitó, y **por qué**. Sirve para no 
 | **Una sola página con anclas**, no varias páginas | Es lo que necesita un portfolio de este tamaño y se navega rápido. Se eliminaron `/projects` y `/contact` cuando dejaron de tener enlaces |
 | **Estática, sin backend** | Más barata, rápida y segura. No hay formularios que mantener ni datos de visitantes |
 | **Conservar el sistema de idiomas** de Rocket | Para tener español e inglés. Es la única funcionalidad "grande" de la plantilla que se mantuvo |
+| **Despliegue en Cloudflare Workers, solo archivos estáticos** | `wrangler.jsonc` sirve `dist/` sin código de servidor ni adaptador de Astro. Se despliega con `npm run deploy`, que valida antes de subir |
+| **404 de Cloudflare por ahora** | La página 404 propia aún no está trabajada, así que no se activa en el despliegue (una línea en `wrangler.jsonc` lo hará) |
 | **Sin React** | Tras borrar la librería no quedó ningún componente que lo usara |
 | **Hero oscuro en los dos modos** | Es una decisión de estilo heredada de Rocket. La barra flotante tiene estilos propios sobre él |
 | **Tono sobrio y profesional** | El destino es una consultora de software. La personalidad va en detalles pequeños, no en efectos grandes |
@@ -65,7 +67,7 @@ El fondo del hero fue evolucionando hasta una de las partes más elaboradas del 
 | Servicios y página "sobre mí" separada | Se integraron en la portada |
 | Búsqueda (Pagefind), analítica, banner de cookies, mapa de Google | No se usan |
 | Formularios de contacto y newsletter, y la dependencia de Resend | Sin backend |
-| Docker, Netlify, Vercel, Cloudflare, GitHub Actions | El despliegue se decide aparte |
+| Docker, Netlify, Vercel, GitHub Actions y el adaptador de Cloudflare | Se decidió el despliegue aparte (ver arriba): Cloudflare Workers como archivos estáticos, sin adaptador |
 | pnpm | Se pasó a npm |
 | Proyectos de ejemplo, avatares y banners de demostración | Eran de Rocket |
 | `AGENTS.md`, `component-registry.json`, README, CHANGELOG, SECURITY | Describían piezas que ya no existen |

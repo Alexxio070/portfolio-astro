@@ -16,11 +16,15 @@ Foto del proyecto a **9 de octubre de 2026** (rama `pruebas`, tras el barrido de
 
 ## Pendiente antes de publicar
 
+El despliegue está **preparado** (`wrangler.jsonc`, `npm run deploy:check` y `npm run deploy`, validados con `--dry-run`). Falta lo que depende de ti y de tu cuenta de Cloudflare:
+
 | Tarea | Detalle |
 |---|---|
-| **Comprar el dominio `alexxio.dev`** | Es lo único que falta para publicar. El anfitrión (hosting) ya está decidido |
-| **Definir `SITE_URL` en el anfitrión** | El código ya usa `https://alexxio.dev` por defecto, así que si el dominio es ese **no hay que cambiar nada en el código**. La variable solo es necesaria para anular el valor (por ejemplo, en una vista previa con otra dirección). Sin ella, el build avisa pero funciona |
-| **Apuntar el dominio al anfitrión** | Registros DNS que indique el propio anfitrión |
+| **Iniciar sesión en Cloudflare** | `npx wrangler@4 login`, una sola vez. Hoy no hay sesión en esta máquina |
+| **Primer despliegue** | `npm run deploy`. Da una dirección `…workers.dev` para ver el resultado real |
+| **Comprar el dominio `alexxio.dev`** | Y dejar su DNS en Cloudflare para poder usarlo como *custom domain* del Worker |
+| **Conectar el dominio al Worker** | En el panel de Cloudflare o con `routes` en `wrangler.jsonc` (ver [la receta](../guia-astro/03-recetas.md#publicar-con-un-dominio-propio)) |
+| **Definir `SITE_URL` si el dominio es otro** | El código usa `https://alexxio.dev` por defecto: si el dominio es ese **no hay que cambiar nada en el código** |
 | **Subir `pruebas` a `main`** | `main` está en `c5c6f46`, muy por detrás de `pruebas`. Se hace con un *squash* para no arrastrar historial ni PRs |
 | **Revisar que las URLs de `llms.txt`, sitemap y tarjeta de redes usan el dominio final** | Se comprueba tras publicar: `https://alexxio.dev/sitemap-index.xml`, `/robots.txt`, `/llms.txt` |
 
@@ -74,6 +78,7 @@ Son funciones de la plantilla, completas y probadas, pero apagadas:
 |---|---|
 | **Descripción del sitio en un solo idioma** | `site.config.ts` tiene una única `description` (en inglés). La usan el JSON-LD (`WebSite`), el manifiesto y la tarjeta para redes, **también en `/es/`**. Las etiquetas `<title>` y `<meta description>` de cada página sí vienen de los archivos de idioma |
 | **La imagen para compartir en redes es una sola, en inglés** | `og/default.png` se dibuja con el título y la descripción de la portada en inglés y la comparten las dos versiones. Las páginas `noindex` (la 404) no se usan para dibujarla |
+| **La 404 publicada es la genérica de Cloudflare** | `wrangler.jsonc` no activa `not_found_handling`, así que `404.html` se genera pero no se sirve. Se activa con una línea (ver la receta de publicación) cuando se trabaje la 404 propia |
 | **La 404 solo tiene una versión** | Es una única página, que se genera una vez en el idioma por defecto (inglés) |
 | **El color del tema no se recuerda entre visitas** | Se guarda en `sessionStorage` (hasta cerrar la pestaña). El modo claro/oscuro sí es permanente |
 | **El diseño cambia a partir de 1280 px** | Desde ese ancho el hero es un panel fijo a la izquierda (nombre, presentación, enlaces y navegación en vertical) y las secciones se desplazan a su derecha. Por debajo es una sola columna, con la barra flotante. El panel tiene hueco libre entre la presentación y la navegación en pantallas altas |
@@ -93,4 +98,4 @@ Cosas que se propusieron y se dejaron para más adelante, si la portada resulta 
 
 ## Resumen de una línea
 
-El sitio está **completo y verificado**; para publicarlo solo falta **comprar el dominio**, subir `pruebas` a `main` y apuntar el dominio al anfitrión.
+El sitio está **completo y verificado**; para publicarlo falta **iniciar sesión en Cloudflare, comprar el dominio**, subir `pruebas` a `main` y conectar el dominio al Worker.

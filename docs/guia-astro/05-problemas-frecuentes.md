@@ -165,6 +165,20 @@ Comprueba por orden:
 
 ---
 
+## Despliegue
+
+### `npm run deploy` dice "You are not authenticated"
+
+**Causa:** no hay sesión de Cloudflare en esta máquina. **Solución:** `npx wrangler@4 login` (abre el navegador) y vuelve a lanzar `npm run deploy`. `npx wrangler@4 whoami` comprueba la sesión.
+
+### Entro a una dirección que no existe y sale una página de Cloudflare, no la mía
+
+**No es un fallo:** `wrangler.jsonc` no activa `not_found_handling`, así que se usa la 404 genérica de Cloudflare. Ver [la receta](03-recetas.md#la-página-404).
+
+### `npm run deploy` falla y no llega a subir nada
+
+**Causa:** el despliegue lanza antes `npm run validate`. Si el lint, `astro check`, un test, el build o la verificación fallan, se detiene a propósito. **Solución:** arregla lo que indique la salida (o, para probar solo la configuración, `npm run deploy:check`).
+
 ## Git
 
 ### Hice un commit en la rama equivocada (`main`)
