@@ -95,13 +95,13 @@
             ]
           },
           {
-            "icon": "code-xml",
-            "title": "Habilidades técnicas",
+            "icon": "award",
+            "title": "Cursos y certificaciones",
             "points": [
-              "Angular 21",
+              "Programación en Python y C#",
+              "Kotlin",
               "Flutter",
-              "Astro",
-              "PostgreSQL"
+              "Astro"
             ]
           },
           {
@@ -110,16 +110,25 @@
             "points": [
               "Resolución de problemas",
               "Capacidad de análisis",
-              "Autodidacta"
+              "Autodidacta",
+              "Trabajo en equipo",
+              "Adaptabilidad",
+              "Resiliente"
             ]
           },
           {
-            "icon": "award",
-            "title": "Cursos y certificaciones",
+            "icon": "code-xml",
+            "title": "Habilidades técnicas",
             "points": [
-              "Programación en Python y C#",
-              "Kotlin",
-              "Flutter"
+              "Desarrollo de aplicaciones multiplataformas en **Flutter**",
+              "Diseño de páginas web en **Astro**",
+              "Desarrollo de aplicaciones web en **Angular**",
+              "Creación y gestión de base de datos en **PostgreSQL**",
+              "Creación de aplicaciones de escritorio en **Java**",
+              "Prototipado y automatización con **Python**",
+              "Administración de sistema **Linux** y manejo de terminal",
+              "Creación de videojuegos con **Unity**",
+              "Creación de modelados 3D con **Blender**"
             ]
           }
         ]

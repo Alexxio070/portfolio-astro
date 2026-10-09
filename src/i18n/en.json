@@ -95,13 +95,13 @@
             ]
           },
           {
-            "icon": "code-xml",
-            "title": "Hard skills",
+            "icon": "award",
+            "title": "Courses and certifications",
             "points": [
-              "Angular 21",
+              "Python and C# programming",
+              "Kotlin",
               "Flutter",
-              "Astro",
-              "PostgreSQL"
+              "Astro"
             ]
           },
           {
@@ -110,16 +110,25 @@
             "points": [
               "Problem solving",
               "Analytical thinking",
-              "Self-taught learner"
+              "Self-taught learner",
+              "Teamwork",
+              "Adaptability",
+              "Resilient"
             ]
           },
           {
-            "icon": "award",
-            "title": "Courses and certifications",
+            "icon": "code-xml",
+            "title": "Hard skills",
             "points": [
-              "Python and C# programming",
-              "Kotlin",
-              "Flutter"
+              "Cross-platform application development with **Flutter**",
+              "Website design with **Astro**",
+              "Web application development with **Angular**",
+              "Database creation and management with **PostgreSQL**",
+              "Desktop application development with **Java**",
+              "Prototyping and automation with **Python**",
+              "**Linux** system administration and command-line use",
+              "Video game development with **Unity**",
+              "3D modelling with **Blender**"
             ]
           }
         ]

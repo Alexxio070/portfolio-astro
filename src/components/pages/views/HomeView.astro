@@ -55,6 +55,9 @@ const about = tData<{ badge: string; heading: string; items: { icon: string; tit
 // third column. Items are entries of `pages.home.about.items` in the locale files.
 const aboutColumns = about.items.length > 6 ? 'md:grid-cols-3' : 'md:grid-cols-2';
 const consoleGreeting = t('pages.home.console.greeting', locale);
+// A point may mark words with **double asterisks**; those come out highlighted.
+// Splitting on the markers leaves the marked words at the odd positions.
+const highlight = (text: string) => text.split(/\*\*(.+?)\*\*/g);
 const projects = tData<{ heading: string; lead: string }>('pages.home.projects', locale)!;
 const contact = tData<{ badge: string; heading: string; description: string; cta: string; subject: string }>(
   'pages.home.contact',
@@ -146,7 +149,11 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
             </summary>
             <ul class="list-disc space-y-2 pb-4 pl-9 text-foreground-muted leading-relaxed">
               {item.points.map((point) => (
-                <li>{point}</li>
+                <li>
+                  {highlight(point).map((part, k) =>
+                    k % 2 ? <strong class="font-semibold text-foreground">{part}</strong> : part
+                  )}
+                </li>
               ))}
             </ul>
           </details>
