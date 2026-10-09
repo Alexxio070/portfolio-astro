@@ -1,6 +1,6 @@
 # 04 · Historial de cambios
 
-Los 34 commits del repositorio, agrupados por etapas, con lo que hizo cada uno y por qué. Fechas de 2026, hora local.
+Los 40 commits del repositorio, agrupados por etapas, con lo que hizo cada uno y por qué. Fechas de 2026, hora local.
 
 **Cómo leerlo:**
 - Las ramas son `main` (publicable) y `pruebas` (trabajo). Hoy `main` tiene un único commit con todos los archivos (un *squash*) y `pruebas` guarda la historia detallada. Por eso aquí aparecen commits que **no están en `main`**.
@@ -19,6 +19,7 @@ Los 34 commits del repositorio, agrupados por etapas, con lo que hizo cada uno y
 | [5. Catálogo fuera y publicación en `main`](#5-catálogo-fuera-y-publicación-en-main) | 7 oct | De 200 a 86 archivos y squash a `main` |
 | [6. Segunda vuelta: pulido](#6-segunda-vuelta-pulido) | 8 oct | Cursor, espiral y su sustitución por detalles sutiles |
 | [7. Personalidad y limpieza final](#7-personalidad-y-limpieza-final) | 8 oct | Títulos como ruta de Linux, proyecto, tema, textos |
+| [8. Detalles finales y panel lateral](#8-detalles-finales-y-panel-lateral) | 8–9 oct | Documentación, pequeños detalles, limpieza de configuración y diseño con panel fijo |
 
 ---
 
@@ -82,7 +83,7 @@ Aquí se fijaron las reglas de trabajo: **solo en `pruebas`, commits cortos y pr
 
 ## 6. Segunda vuelta: pulido
 
-Solo en `pruebas`. Los dos primeros se hicieron fuera de la sesión de asistencia y llegaron con un `git pull`.
+Solo en `pruebas`. Los dos primeros se hicieron en la sesión de asistencia; los dos siguientes (`166e6af` y `a6c311b`) se hicieron fuera de ella y llegaron con un `git pull`.
 
 | Hash | Fecha | Commit | Qué hizo |
 |---|---|---|---|
@@ -102,16 +103,26 @@ Solo en `pruebas`. Los dos primeros se hicieron fuera de la sesión de asistenci
 | `7f83505` | 8 oct 22:04 | fix: mejora de textos | Traducción al inglés más natural (*Cross-platform application developer*, *Higher Vocational Diploma*…) y corrección de incoherencias: el grado superior pasa a "en curso" (2025–2027) |
 | `368538a` | 8 oct 22:17 | chore: elimina textos sin uso y actualiza el esquema de persona | Fuera **64 textos** sin uso en inglés y español, y la identidad de "Astro Rocket" del esquema de persona, que ahora usa tus datos y se activa en la portada |
 
+## 8. Detalles finales y panel lateral
+
+| Hash | Fecha | Commit | Qué hizo |
+|---|---|---|---|
+| `3dff1ca` | 8 oct 23:00 | docs: documentación del proyecto y guía de Astro | Esta documentación (`docs/proyecto/`) y la guía para trabajar con el proyecto (`docs/guia-astro/`). Mueve el plan original a `docs/proyecto/plan-original.md` |
+| `d8bfb26` | 8 oct 23:14 | feat: título de pestaña vivo, saludo en la consola y humans.txt | El título de la pestaña sigue a la sección que se está viendo, un saludo en la consola del navegador para quien la abra, y `humans.txt` |
+| `a4b80d5` | 8 oct 23:14 | style: barra de desplazamiento del color del tema y fundido claro/oscuro | La barra de desplazamiento toma el color del tema, y el cambio entre modo claro y oscuro se funde en vez de saltar |
+| `8a933a1` | 9 oct 12:18 | chore: limpia los restos del blog y de la plantilla en la configuración | `package.json` con los datos del portfolio; fuera la configuración del blog y de los comentarios de `site.config.ts`, `lib/tags.ts` y `lib/content-validation.ts` con su test, y `lib/projects.ts` reducido a lo que usa la portada. **Quedan 76 tests** |
+| `7ce0d33` | 9 oct 12:19 | feat: panel lateral fijo en pantallas anchas | A partir de 1280 px el hero pasa a ser un panel fijo a la izquierda y las secciones se desplazan a su derecha; la navegación se vuelve vertical. Por debajo de 1280 px no cambia nada. Corrige de paso el color de la barra de Safari, que pintaba de negro el fondo en modo claro |
+
 ## Cifras acumuladas
 
 | Medida | Rocket al llegar (`a7b6a06`) | Hoy |
 |---|---|---|
 | Archivos en el commit base | 424 | — |
 | Páginas generadas | 89 | 3 |
-| Archivos de código (`.astro .ts .css`) en `src/` | ~200 | 84 |
-| Tests | 103 (medidos en `738720d`) | 88 |
+| Archivos de código (`.astro .ts .css`) en `src/` | ~200 | 82 |
+| Tests | 103 (medidos en `738720d`) | 76 |
 | Paquetes de React (integración y dependencias) | 7 | 0 |
 
 ## Qué NO está en `main`
 
-`main` está en el commit `c5c6f46`. Todo lo de las etapas 6 y 7 (y los commits de documentación posteriores) **solo está en `pruebas`**. Para publicarlo hay que repetir el *squash* de `pruebas` a `main` y subirlo, cuando decidas.
+`main` está en el commit `c5c6f46`. Todo lo de las etapas 6, 7 y 8 **solo está en `pruebas`** (32 commits por delante de `main`). Para publicarlo hay que repetir el *squash* de `pruebas` a `main` y subirlo, cuando decidas.
