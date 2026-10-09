@@ -29,12 +29,11 @@ const link = data.url ?? data.repo;
 
 <Card
   variant="elevated"
-  hover={Boolean(link)}
   padding="none"
   href={link}
   target={link ? '_blank' : undefined}
   rel={link ? 'noopener noreferrer' : undefined}
-  class="group flex flex-col"
+  class="project-card group flex flex-col"
   data-reveal={reveal || undefined}
   data-reveal-delay={reveal ? index % 2 || undefined : undefined}
 >

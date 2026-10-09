@@ -401,21 +401,31 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
      step darker, so it follows the theme with nothing else to change. */
   .hero-actions,
   .about-panel,
-  .contact-card {
+  .contact-card,
+  .project-card {
     --edge-width: 2px;
     --edge: color-mix(in oklch, var(--color-brand-500) 78%, black);
     --edge-hover: color-mix(in oklch, var(--color-brand-500) 92%, black);
   }
   .hero-actions > a,
   .about-panel,
-  .contact-card {
+  .contact-card,
+  .project-card {
     border-width: var(--edge-width);
     border-style: solid;
     border-color: var(--edge);
   }
-  .hero-actions > a:hover,
-  .contact-card:hover {
+  .hero-actions > a:hover {
     border-color: var(--edge-hover);
+  }
+
+  /* Panels, project cards and the contact card share one hover: the edge
+     brightens and a brand glow appears. */
+  .about-panel:hover,
+  .contact-card:hover,
+  .project-card:hover {
+    border-color: var(--edge-hover);
+    box-shadow: 0 16px 40px -20px color-mix(in oklch, var(--color-brand-500) 60%, transparent);
   }
 
   /* Hero buttons rise a touch and pick up a brand glow. `translate` is its own
@@ -443,9 +453,6 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
       border-color 200ms ease-out,
       box-shadow 200ms ease-out;
   }
-  .about-panel:hover {
-    border-color: var(--edge-hover);
-  }
   .about-panel[open] {
     box-shadow: 0 8px 28px -16px color-mix(in oklch, var(--color-brand-500) 55%, transparent);
   }
@@ -465,17 +472,15 @@ const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURICompone
     }
   }
 
-  /* Contact card lifts slightly. It is a reveal target, so list the reveal's
-     transitions again here. */
-  [data-reveal].contact-card {
+  /* The contact card and project cards are reveal targets too, so list the
+     reveal's transitions again here. */
+  [data-reveal].contact-card,
+  [data-reveal].project-card {
     transition:
       opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
       transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
       border-color 200ms ease-out,
       box-shadow 200ms ease-out;
-  }
-  .contact-card:hover {
-    box-shadow: 0 16px 40px -20px color-mix(in oklch, var(--color-brand-500) 60%, transparent);
   }
 </style>
 
