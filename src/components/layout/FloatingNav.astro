@@ -211,13 +211,53 @@ const languages = languagesEnabled
     }
   }
 
-  /* ── Side-panel layout, from xl (1280px) up ───────────────────────────────
+  /* Below the side panel the bar keeps the panel's look: dark glass with light
+     text and outlined controls, whatever the colour mode. Between 768 and 1023
+     it has no fill until the page scrolls, as before. */
+  @media (max-width: 1023px) {
+    #main-nav .nav-link {
+      color: oklch(90% 0 0 / 0.75);
+    }
+    #main-nav .nav-link:hover,
+    #main-nav .nav-link[aria-current] {
+      color: oklch(98% 0 0);
+    }
+    #main-nav #theme-dropdown-trigger,
+    #main-nav .ttg-trigger,
+    #main-nav .lang-trigger {
+      border-color: oklch(98% 0 0 / 0.5);
+      color: oklch(96% 0 0);
+      background-color: oklch(0% 0 0 / 0.3);
+    }
+    #main-nav #theme-dropdown-trigger:hover,
+    #main-nav .ttg-trigger:hover,
+    #main-nav .lang-trigger:hover,
+    #main-nav [aria-expanded='true'] {
+      border-color: oklch(98% 0 0 / 0.8);
+      color: oklch(100% 0 0);
+      background-color: oklch(0% 0 0 / 0.5);
+    }
+  }
+  @media (max-width: 767px) {
+    #main-nav {
+      background-color: oklch(12% 0.02 260 / 0.88);
+      border-color: oklch(100% 0 0 / 0.12);
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    #main-nav.scrolling {
+      background-color: oklch(12% 0.02 260 / 0.88);
+      border-color: oklch(100% 0 0 / 0.12);
+    }
+  }
+
+  /* ── Side-panel layout, from lg (1024px) up ───────────────────────────────
      The bar stops being a capsule across the top and becomes a vertical list
      pinned to the foot of the left-hand panel, with the theme, mode and
      language controls under it. Its dropdowns open upwards, since there is no
      room below. The scroll script still sets a width and a class on it; both
      are overridden here. */
-  @media (min-width: 1280px) {
+  @media (min-width: 1024px) {
     #main-nav {
       left: clamp(2rem, 3vw, 4rem);
       top: auto;
