@@ -1,14 +1,14 @@
 /**
  * Internationalization (i18n) configuration.
  *
- * Off by default — when `enabled: false` or `locales` has a single entry,
- * Astro Rocket emits the same single-locale routes it always has and the
- * `LanguageSwitcher`/`hreflang` machinery is skipped, so there is no
- * runtime or bundle-size cost.
+ * On: English (the default) is served at the site root and Spanish under
+ * `/es/`. With `enabled: false`, or a single entry in `locales`, only one
+ * locale is emitted and the `LanguageSwitcher`/`hreflang` machinery is
+ * skipped, so there is no runtime or bundle-size cost.
  *
- * Turn on by setting `enabled: true` and listing at least two `locales`.
- * The default locale stays at the site root (`/about`); additional
- * locales live under a prefix (`/nl/about`).
+ * To add a language, list it in `locales` and add `src/i18n/<code>.json`.
+ * The default locale stays at the site root (`/`); additional locales live
+ * under a prefix (`/es/`).
  *
  * Lives in its own file (not `site.config.ts`) so the i18n module can
  * be imported by unit tests without pulling in `astro:env/server`.

@@ -8,15 +8,13 @@
  * globe icon in the SERP. The letter is outlined to a real vector `<path>`
  * against an embedded Outfit subset instead, so the SVG is self-contained.
  *
- * This file imports nothing native, but it is still not workerd-safe: it
- * decodes the embedded font with `Buffer` and parses it with fontkit, neither
- * of which exists there without `nodejs_compat`. So it belongs in the build
- * hook alongside `raster.ts`, not in a route — as a route it emitted a 0-byte
- * favicon on Cloudflare while the build reported success.
+ * This file imports nothing native, but it decodes the embedded font with
+ * `Buffer` and parses it with fontkit, so it belongs in the build hook
+ * alongside `raster.ts`, not in a page.
  *
- * `sharp` still lives in `raster.ts` and must stay there. Keeping the halves
- * apart — with no barrel re-exporting both — is what stops a layout pulling a
- * native module into every page, which is how #600 happened.
+ * `sharp` lives in `raster.ts` and must stay there. Keeping the halves apart,
+ * with no barrel re-exporting both, stops a layout pulling a native module
+ * into every page.
  */
 // fontkit ships no type declarations; declare the minimal surface we use.
 // @ts-expect-error - no types published for fontkit

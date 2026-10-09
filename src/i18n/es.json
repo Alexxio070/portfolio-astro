@@ -13,7 +13,6 @@
     "items": {
       "home": "Inicio",
       "projects": "Proyectos",
-      "blog": "Blog",
       "about": "Sobre mí",
       "contact": "Contacto"
     }
@@ -32,11 +31,11 @@
     "badge": "404 — página no encontrada",
     "titleLead": "Página no",
     "titleHighlight": "encontrada.",
-    "description": "Esta página se ha movido, se ha eliminado o nunca ha existido. Volvamos al camino.",
+    "description": "Esta página se ha movido, se ha eliminado o nunca ha existido. Vuelve al inicio para seguir explorando.",
     "backHome": "Volver al inicio",
     "browseProjects": "Ver proyectos",
     "tryInstead": "Prueba alguna de estas opciones",
-    "projectsDesc": "Trabajos seleccionados y casos de estudio.",
+    "projectsDesc": "Trabajos seleccionados.",
     "contactTitle": "Contacto",
     "contactDesc": "Empieza una conversación sobre tu proyecto."
   },

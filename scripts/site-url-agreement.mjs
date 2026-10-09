@@ -1,21 +1,20 @@
 /**
  * Do a built page's two claims about the site's own address agree?
  *
- * The theme reads that address from two places, and it has to, because
- * neither can do the other's job. `astro.config.mjs` sets `site` — which
- * writes every canonical tag, `og:url`, RSS link and sitemap entry — and it
- * runs before `astro:env` exists, so it can only read `process.env`.
- * `site.config.ts` sets `url` — which the JSON-LD, the share cards and the
- * footer read — and it uses `astro:env/server`, because Cloudflare Workers
- * have no `process.env` at runtime.
+ * The site reads that address from two places, and it has to, because neither
+ * can do the other's job. `astro.config.mjs` sets `site`, which writes every
+ * canonical tag, `og:url` and sitemap entry, and runs before `astro:env`
+ * exists, so it can only read `process.env`. `site.config.ts` sets `url`,
+ * which the JSON-LD, the share cards and the footer read, through
+ * `astro:env/server`.
  *
- * Those two do not see the same values. `astro:env` loads `.env` files;
- * `process.env` in the config does not. A user who puts `SITE_URL` in `.env`,
- * as `.env.example` tells them to, configures one of the two — and ships
- * canonical tags pointing at the fallback domain while the JSON-LD names
- * their own. Reported as #643.
+ * Those two can see different values: `astro:env` loads `.env` files and
+ * `process.env` in the config does not, unless the config loads them itself
+ * (it loads `.env.local` and `.env`; mode-specific files such as
+ * `.env.production` are still missed). A mismatch ships canonical tags
+ * pointing at the fallback domain while the JSON-LD names the real one.
  *
- * Nothing about that build fails or looks wrong. Search engines follow
+ * * Nothing about that build fails or looks wrong. Search engines follow
  * canonical tags, so a site can lose its own pages to a domain nobody owns
  * while its author sees a green deploy.
  *

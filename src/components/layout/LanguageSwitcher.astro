@@ -28,7 +28,7 @@ interface Props {
   compact?: boolean;
   /**
    * Optional map of `locale -> URL` for "same content, other language" links.
-   * When provided (e.g. by a blog post that knows its real per-locale URLs),
+   * When provided (e.g. by a page whose translation lives at a different URL),
    * it overrides the default behaviour of swapping the locale segment of the
    * current path — which is wrong when a translation lives at a different slug.
    * Locales missing from the map fall back to the path swap.

@@ -1,10 +1,9 @@
 /**
  * OG card rasterising — the Node-only half.
  *
- * `sharp` is a native module and cannot load in workerd, so nothing here may
- * be reachable from a page or a prerendered endpoint. The `og-cards`
- * integration in `astro.config.mjs` calls this from `astro:build:done`, which
- * always runs in Node whichever adapter is active.
+ * `sharp` is a native module, so nothing here may be reachable from a page.
+ * The `og-cards` integration in `astro.config.mjs` calls this from
+ * `astro:build:done`, which always runs in Node.
  */
 import sharp from 'sharp';
 import { renderOgSvg, type OgImageOptions } from './svg.ts';
@@ -37,9 +36,8 @@ export async function renderOgPng(options: OgImageOptions): Promise<Buffer> {
  * The card's type is drawn by sharp through the system font stack, so a build
  * environment with an empty font set — a bare `node:*-slim` container is the
  * usual case — produces a card with its background and rules but no words, and
- * does so silently. Hosted builders (Vercel, Netlify, Cloudflare Pages, GitHub
- * Actions) and every desktop OS ship fonts, so this only ever fires on setups
- * that need telling.
+ * does so silently. Hosted builders and every desktop OS ship fonts, so this
+ * only ever fires on setups that need telling.
  */
 let fontProbe: Promise<boolean> | null = null;
 let fontWarningShown = false;

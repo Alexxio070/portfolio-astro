@@ -69,8 +69,9 @@ interface Props extends HTMLAttributes<'header'> {
   showLanguageSwitcher?: boolean;
   /**
    * Optional `locale -> URL` map forwarded to the LanguageSwitcher so it can
-   * link to the same content in each locale (e.g. a blog post's real
-   * per-locale URLs) instead of swapping the current path's locale segment.
+   * link to the same content in each locale (e.g. a page whose translation
+   * lives at a different URL) instead of swapping the current path's locale
+   * segment.
    */
   languageAlternates?: Record<string, string>;
   showSocialLinks?: boolean;
@@ -193,9 +194,7 @@ function getSocialIconData(url: string): { icon: string; label: string } {
 
 function getNavIcon(href: string): string {
   if (href === '/' || href === '') return 'home';
-  if (href.startsWith('/blog'))     return 'pen-line';
   if (href.startsWith('/projects')) return 'layers';
-  if (href.startsWith('/services')) return 'sparkles';
   if (href.startsWith('/about'))    return 'user';
   if (href.startsWith('/contact'))  return 'mail';
   if (href.startsWith('#'))         return 'hash';

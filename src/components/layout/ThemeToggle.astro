@@ -21,11 +21,11 @@ const titleTemplate = t('common.themeModeTitle', locale, { mode: '{mode}' });
 const modeNames = { light: t('theme.light', locale), dark: t('theme.dark', locale) };
 ---
 
-<!-- Colour-mode switch. Each click flips between light and dark. The first
+{/* Colour-mode switch. Each click flips between light and dark. The first
      visit follows the visitor's system setting (resolved by the inline
      bootstrap in BaseLayout); from then on the choice is theirs. The visible
      icon is driven by <html data-theme-mode="…"> so it stays in sync with
-     that bootstrap (no flash of the wrong icon). -->
+     that bootstrap (no flash of the wrong icon). */}
 <button
   type="button"
   id="theme-toggle"
@@ -45,7 +45,7 @@ const modeNames = { light: t('theme.light', locale), dark: t('theme.dark', local
   data-name-light={modeNames.light}
   data-name-dark={modeNames.dark}
 >
-  <!-- Sun icon — shown when mode === 'light' -->
+  {/* Sun icon — shown when mode === 'light' */}
   <svg
     class="theme-toggle__icon theme-toggle__icon--light h-5 w-5"
     xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@ const modeNames = { light: t('theme.light', locale), dark: t('theme.dark', local
     />
   </svg>
 
-  <!-- Moon icon — shown when mode === 'dark' -->
+  {/* Moon icon — shown when mode === 'dark' */}
   <svg
     class="theme-toggle__icon theme-toggle__icon--dark h-5 w-5"
     xmlns="http://www.w3.org/2000/svg"

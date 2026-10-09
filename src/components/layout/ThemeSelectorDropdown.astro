@@ -18,7 +18,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 ---
 
 <div class={cn('relative theme-dropdown-wrapper', className)}>
-  <!-- Trigger button -->
+  {/* Trigger button */}
   <button
     type="button"
     id="theme-dropdown-trigger"
@@ -33,7 +33,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
     )}
   >
-    <!-- Active theme dot — the live colour swatch IS the icon -->
+    {/* Active theme dot — the live colour swatch IS the icon */}
     <span
       class="h-4 w-4 rounded-full block flex-shrink-0"
       style="background-color: var(--color-brand-500)"
@@ -41,7 +41,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     />
   </button>
 
-  <!-- Dropdown panel -->
+  {/* Dropdown panel */}
   <div
     id="theme-dropdown-panel"
     role="dialog"

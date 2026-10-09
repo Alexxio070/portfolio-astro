@@ -66,9 +66,9 @@ export interface SiteConfig {
    */
   i18n?: I18nConfig;
   /**
-   * Branding configuration
-   * Logo files: Replace SVGs in src/assets/branding/
-   * Favicon: Replace in public/favicon.svg
+   * Branding configuration. The favicon files are generated at build time from
+   * the site name and theme colour in `./branding`; a custom logo image goes in
+   * `public/` and is set under `logo.image` below.
    */
   branding: {
     /** Logo alt text for accessibility */
@@ -104,7 +104,7 @@ const siteConfig: SiteConfig = {
   // import this file, uses the same values. Change them there.
   name: SITE_NAME,
   description:
-    "Alejandro Vizán's portfolio: cross-platform application developer building desktop, Android and web apps.",
+    'Portfolio of Alejandro Vizán, a cross-platform application development student: desktop, Android and web apps.',
   tagline: 'Cross-platform application developer',
   footerNote: 'Desktop, Android and web',
   url: SITE_URL || SITE_URL_FALLBACK,

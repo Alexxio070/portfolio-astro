@@ -13,7 +13,6 @@
     "items": {
       "home": "Home",
       "projects": "Projects",
-      "blog": "Blog",
       "about": "About",
       "contact": "Contact"
     }
@@ -36,7 +35,7 @@
     "backHome": "Back to home",
     "browseProjects": "Browse projects",
     "tryInstead": "Try one of these instead",
-    "projectsDesc": "Selected work and case studies.",
+    "projectsDesc": "Selected work.",
     "contactTitle": "Contact",
     "contactDesc": "Start a conversation about your project."
   },
@@ -60,7 +59,7 @@
     "home": {
       "meta": {
         "title": "Cross-platform application developer",
-        "description": "Alejandro Vizán's portfolio: cross-platform application developer building desktop, Android and web apps."
+        "description": "Portfolio of Alejandro Vizán, a cross-platform application development student: desktop, Android and web apps."
       },
       "hero": {
         "titleLine1": "Alejandro",

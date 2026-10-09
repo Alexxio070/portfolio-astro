@@ -6,17 +6,11 @@
  *
  * `og:image` has to point at a raster file: Facebook, X, LinkedIn, WhatsApp
  * and Slack all document JPEG/PNG/GIF/WEBP and none of them render SVG, so an
- * SVG `og:image` shows up as a blank or missing preview. The blog's cover SVGs
- * are worse still — they take their colours from CSS custom properties, which
- * only exist on the page, so fetched on their own every fill resolves to
- * nothing and the file is fully transparent.
+ * SVG `og:image` shows up as a blank or missing preview.
  *
- * This file imports nothing native and nothing from `astro:*`, so it is safe
- * in any runtime and can be loaded from `astro.config.mjs`. `sharp` lives in
- * `raster.ts` and must stay there: the Cloudflare adapter prerenders inside
- * workerd, where a native module cannot load. The layouts import the path
- * helpers below, so if those pulled in `sharp` every page would break on
- * Cloudflare — which is exactly what happened before #600.
+ * This file imports nothing native and nothing from `astro:*`, so it can be
+ * loaded from `astro.config.mjs`. `sharp` lives in `raster.ts` and must stay
+ * there, out of reach of the pages.
  *
  * The brand colour, domain and site name are parameters rather than defaults
  * read from `site.config.ts`: that file reads `astro:env/server`, which does
@@ -110,8 +104,6 @@ function layoutTitle(title: string): { lines: string[]; fontSize: number } {
 export interface OgImageOptions {
   /** Title shown large in the centre. */
   title: string;
-  /** Small uppercase label (e.g. "BLOG", "PROJECTS"). */
-  kind?: string;
   /** Optional subtitle line under the title (truncated to one line). */
   subtitle?: string;
   /** Hex brand colour filling the card. */
@@ -124,7 +116,6 @@ export interface OgImageOptions {
 
 export function renderOgSvg({
   title,
-  kind,
   subtitle,
   brandColor,
   domain,
@@ -148,10 +139,6 @@ export function renderOgSvg({
     ? `<text x="80" y="${baseTitleY + blockHeight + 24}" font-size="28" fill="#ffffff" fill-opacity="0.82" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="500">${escapeXml(truncate(subtitle, Math.floor(CONTENT_WIDTH / (28 * AVERAGE_GLYPH_WIDTH))))}</text>`
     : '';
 
-  const kindEl = kind
-    ? `<text x="80" y="98" font-size="22" letter-spacing="6" fill="#ffffff" fill-opacity="0.78" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="700">${escapeXml(kind.toUpperCase())}</text>`
-    : '';
-
   // The site-wide card puts the site name in the title, where the wordmark
   // would repeat it back a second time.
   const wordmarkEl =
@@ -169,7 +156,6 @@ export function renderOgSvg({
   <rect width="${WIDTH}" height="${HEIGHT}" fill="${brandColor}"/>
   <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#og-shade)"/>
 
-  ${kindEl}
   ${titleEls}
   ${subtitleEl}
 
@@ -192,36 +178,4 @@ function truncate(text: string, max: number): string {
   const lastSpace = clipped.lastIndexOf(' ');
   const kept = lastSpace > max * 0.6 ? clipped.slice(0, lastSpace) : clipped;
   return kept.replace(/[\s.,;:—-]+$/, '') + '…';
-}
-
-
-/** Path (relative to site root) for a blog post's generated OG image. */
-export function getBlogOgPath(slug: string): string {
-  return `/og/blog/${slug}.png`;
-}
-
-/** Path (relative to site root) for a blog tag archive's generated OG image. */
-export function getBlogTagOgPath(tagSlug: string): string {
-  return `/og/blog/tag/${tagSlug}.png`;
-}
-
-/** Path (relative to site root) for a project's generated OG image. */
-export function getProjectOgPath(slug: string): string {
-  return `/og/projects/${slug}.png`;
-}
-
-/** Path for the site-wide OG image, used by every page without one of its own. */
-export function getDefaultOgPath(): string {
-  return '/og/default.png';
-}
-
-/**
- * Whether a URL can be used as `og:image` directly.
- *
- * Social platforms accept these four raster formats and nothing else — an SVG
- * cover, however good it looks on the page, has to be replaced by a generated
- * card. AVIF is left out on purpose: browsers read it, the crawlers don't.
- */
-export function isShareableImage(url: string): boolean {
-  return /\.(png|jpe?g|webp|gif)(\?|$)/i.test(url);
 }
