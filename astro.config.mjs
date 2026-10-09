@@ -2,7 +2,6 @@ import { join, dirname } from 'node:path';
 import { writeFile, mkdir, readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, envField } from 'astro/config';
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
@@ -24,7 +23,7 @@ import { SITE_NAME, THEME_COLOR } from './src/config/branding.ts';
  * real environment variables exist. So `SITE_URL` in `.env` reached
  * `site.config.ts` and not `site` below, and a site configured the way
  * `.env.example` describes shipped canonical tags for the fallback domain
- * while its JSON-LD named the real one (#643).
+ * while its JSON-LD named the real one.
  *
  * `.env.local` is loaded first on purpose. `process.loadEnvFile` does not
  * overwrite a variable that is already set, so whichever file is read first
@@ -51,7 +50,7 @@ for (const file of ['.env.local', '.env']) {
  * Build-time check that the site knows its own address.
  *
  * With `SITE_URL` unset the build still succeeds, and every canonical tag,
- * `og:url`, `og:image`, RSS link and sitemap entry is written against the
+ * `og:url`, `og:image` and sitemap entry is written against the
  * placeholder above — pointing search engines and social crawlers at a domain
  * that isn't yours. Nothing in the output looks broken, so it survives to
  * production easily. Warn where it will be read: the build log.
@@ -63,7 +62,7 @@ function siteUrlCheck() {
       'astro:build:start': ({ logger }) => {
         if (process.env.SITE_URL) return;
         logger.warn(
-          `SITE_URL is not set, so canonical URLs, og:image, RSS and the sitemap ` +
+          `SITE_URL is not set, so canonical URLs, og:image and the sitemap ` +
             `will all be written against ${SITE_URL_FALLBACK}. Set SITE_URL in ` +
             `your host's environment variables to your own domain.`
         );
@@ -75,24 +74,11 @@ function siteUrlCheck() {
 /**
  * Favicon PNG/ICO files, written after every `astro build`.
  *
- * These used to be prerendered endpoints under `src/pages/`. That worked on
- * Vercel and Netlify but broke on Cloudflare: `@astrojs/cloudflare` prerenders
- * routes inside workerd, and the renderer needs `sharp`, a native Node module
- * that cannot load there. Every favicon route failed with
- * `No such module "…/chunks/sharp"` and the build died — so Cloudflare users
- * got no site at all. Reported in #600.
- *
- * `astro:build:done` always runs in Node, whichever adapter is active, and
- * `dir` already points at that adapter's real output directory. So the same
- * files land in the same place on all three targets, with no native module
- * anywhere near a page.
- *
- * `favicon.svg` is written here too, rather than staying a route. It needs no
- * *native* module, so keeping it as a route looked safe — but `buildFaviconSvg`
- * decodes an embedded font subset with `Buffer` and parses it with fontkit,
- * and neither exists in workerd without `nodejs_compat`. As a route it emitted
- * a 0-byte file on Cloudflare while the build reported success. The cost is
- * that `astro dev` has no favicon, since build hooks do not run there.
+ * They are generated in a build hook rather than served as routes: the hook
+ * always runs in Node, where `sharp` (a native module) and `fontkit` load, so
+ * no page ever depends on them. The files land in the real output directory,
+ * next to the HTML. The cost is that `astro dev` has no favicon, since build
+ * hooks do not run there.
  */
 function faviconAssets() {
   const letter = SITE_NAME.charAt(0).toUpperCase();
@@ -129,29 +115,19 @@ function faviconAssets() {
 /**
  * OG share cards, drawn after every `astro build`.
  *
- * These used to be prerendered endpoints under `src/pages/og/`, and they hit
- * the same wall as the favicons in #600: rasterising needs `sharp`, which
- * cannot load in the workerd runtime the Cloudflare adapter prerenders in.
- * Worse than the favicons, `src/lib/og.ts` also held the `getBlogOgPath`
- * helpers that `BlogLayout` and `ProjectLayout` import — so `sharp` was
- * reachable from every blog and project page, not just from the card routes.
- * The library is split in two now: `og/svg.ts` is safe anywhere, `og/raster.ts`
- * is Node-only and reached only from here.
+ * Rasterising needs `sharp`, so the cards are drawn in a build hook, which runs
+ * in Node, and not from a page. The library is split in two: `og/svg.ts` draws
+ * the card as a string and imports nothing native; `og/raster.ts` turns it
+ * into a PNG and is reached only from here.
  *
- * Rather than re-deriving which cards to draw from the content collections —
- * which this file cannot read — the hook scans the built HTML for the
- * `og:image` each page declares, and draws exactly those. Cards therefore
- * match what the pages ask for by construction, and a page using its own cover
- * photo silently produces no card, which is correct. Title and subtitle come
- * from the same page's `og:title` and `og:description`.
+ * Rather than re-deriving which cards to draw from the content collections,
+ * which this file cannot read, the hook scans the built HTML for the
+ * `og:image` each page declares and draws exactly those. Cards therefore match
+ * what the pages ask for by construction, and a page using its own image
+ * silently produces no card, which is correct. Title and subtitle come from
+ * the same page's `og:title` and `og:description`.
  */
 function ogCards() {
-  const KINDS = [
-    [/^\/og\/blog\/tag\//, 'BLOG'],
-    [/^\/og\/blog\//, 'BLOG'],
-    [/^\/og\/projects\//, 'PROJECTS'],
-  ];
-
   async function htmlFiles(directory) {
     const found = [];
     for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -180,8 +156,15 @@ function ogCards() {
         // Collect one entry per distinct card path; several pages can point at
         // the same card (the default one, most obviously).
         const wanted = new Map();
-        for (const file of await htmlFiles(out)) {
+        // The first page to name a card decides its text, so the order matters:
+        // pages that ask not to be indexed (the 404) are skipped, and the page
+        // closest to the root, the default-language home, goes first.
+        const pages = (await htmlFiles(out)).sort(
+          (a, b) => a.split('/').length - b.split('/').length || a.localeCompare(b)
+        );
+        for (const file of pages) {
           const html = await readFile(file, 'utf8');
+          if (/<meta name="robots" content="noindex/.test(html)) continue;
           const image = meta(html, 'og:image');
           if (!image) continue;
           let path;
@@ -194,7 +177,6 @@ function ogCards() {
           wanted.set(path, {
             title: meta(html, 'og:title') || SITE_NAME,
             subtitle: meta(html, 'og:description'),
-            kind: KINDS.find(([re]) => re.test(path))?.[1],
           });
         }
 
@@ -220,8 +202,8 @@ function ogCards() {
  * Stops a build whose pages disagree about the site's own address.
  *
  * The address is read from two places that cannot share code: `site` here,
- * from `process.env`, which writes the canonical tags, the sitemap, the RSS
- * links and robots.txt; and `url` in `src/config/site.config.ts`, from
+ * from `process.env`, which writes the canonical tags, the sitemap and
+ * robots.txt; and `url` in `src/config/site.config.ts`, from
  * `astro:env/server`, which writes the JSON-LD, the share cards and the
  * footer. See `scripts/site-url-agreement.mjs` for why neither can do the
  * other's job.
@@ -229,11 +211,11 @@ function ogCards() {
  * They do not read the same places. `astro:env` loads `.env` files and this
  * file does not, so a user who follows `.env.example` and sets SITE_URL in
  * `.env` configures one of the two. Their pages then carry canonical tags for
- * the fallback domain and JSON-LD for their own (#643).
+ * the fallback domain and JSON-LD for their own.
  *
  * This runs in `astro:build:done` rather than in `scripts/verify-build.mjs`,
- * where the theme's other output checks live, because that script runs on
- * `pnpm verify` and a deploy runs `astro build`. A misconfiguration that only
+ * where the other output checks live, because that script runs on
+ * `npm run verify` and a deploy runs `astro build`. A misconfiguration that only
  * a local audit catches is one that reaches production.
  *
  * One page is enough: both values are global, so if they agree anywhere they
@@ -325,7 +307,6 @@ export default defineConfig({
   },
 
   integrations: [
-    mdx(),
     sitemap(),
     icon(),
     siteUrlCheck(),

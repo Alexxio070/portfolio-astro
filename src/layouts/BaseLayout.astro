@@ -5,7 +5,7 @@ import manropeFont from '@fontsource-variable/manrope/files/manrope-latin-wght-n
 import SEO from '@/components/seo/SEO.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import CursorTrail from '@/components/effects/CursorTrail.astro';
-import { createWebsiteSchema, createOrganizationSchema, createPersonSchema, createProfessionalServiceSchema } from '@/lib/schema';
+import { createWebsiteSchema, createPersonSchema } from '@/lib/schema';
 import type { Thing, WithContext } from 'schema-dts';
 import siteConfig from '@/config/site.config';
 import { t, getLocaleFromPath } from '@/i18n';
@@ -15,21 +15,10 @@ interface Props {
   description?: string;
   image?: string;
   imageAlt?: string;
-  article?: {
-    publishedTime?: Date;
-    modifiedTime?: Date;
-    authors?: string[];
-    tags?: string[];
-  };
   noindex?: boolean;
   nofollow?: boolean;
-  includeOrgSchema?: boolean;
   includePersonSchema?: boolean;
-  includeProfessionalServiceSchema?: boolean;
-  extraSchemas?: WithContext<Thing>[];
   eagerReveal?: boolean;
-  /** Verified locale alternates for this page, forwarded to SEO for hreflang. */
-  localeAlternates?: { locale: string; url: string }[];
 }
 
 const {
@@ -37,29 +26,17 @@ const {
   description,
   image,
   imageAlt,
-  article,
   noindex = false,
   nofollow = false,
-  includeOrgSchema = false,
   includePersonSchema = false,
-  includeProfessionalServiceSchema = false,
-  extraSchemas = [],
   eagerReveal = false,
-  localeAlternates,
 } = Astro.props;
 
 // Build JSON-LD schemas
 const schemas: WithContext<Thing>[] = [createWebsiteSchema()];
-if (includeOrgSchema) {
-  schemas.push(createOrganizationSchema());
-}
 if (includePersonSchema) {
   schemas.push(createPersonSchema());
 }
-if (includeProfessionalServiceSchema) {
-  schemas.push(createProfessionalServiceSchema());
-}
-schemas.push(...extraSchemas);
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 ---
@@ -71,14 +48,14 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Preload display + body fonts so they're ready for first paint -->
+    {/* Preload display + body fonts so they're ready for first paint */}
     <link rel="preload" as="font" type="font/woff2" href={manropeFont} crossorigin="anonymous" />
     <link rel="preload" as="font" type="font/woff2" href={outfitFont} crossorigin="anonymous" />
 
 
-    <!-- Favicon. The SVG letter is outlined to a vector path at build time (see
+    {/* Favicon. The SVG letter is outlined to a vector path at build time (see
          src/lib/favicon), and PNG/ICO fallbacks are provided so search-engine
-         crawlers, Safari and legacy browsers all render the brand mark. -->
+         crawlers, Safari and legacy browsers all render the brand mark. */}
     <link rel="icon" type="image/svg+xml" href={siteConfig.branding.favicon.svg} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -87,39 +64,37 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <link rel="author" type="text/plain" href="/humans.txt" />
     <meta name="theme-color" content={siteConfig.branding.colors.themeColor} />
 
-    <!-- SEO -->
+    {/* SEO */}
     <SEO
       title={title}
       description={description}
       image={image}
       imageAlt={imageAlt}
-      article={article}
       noindex={noindex}
       nofollow={nofollow}
-      localeAlternates={localeAlternates}
     />
 
-    <!-- JSON-LD Structured Data -->
+    {/* JSON-LD Structured Data */}
     <JsonLd schema={schemas} />
 
-    <!-- Client-side view transitions are intentionally disabled. They composed
+    {/* Client-side view transitions are intentionally disabled. They composed
          poorly with the theme's CSS keyframe animations (hero slide-up,
          data-reveal fades) and produced a visible post-fade "aftershake" on
          mobile. Each navigation now does a normal page load, so animations
-         run cleanly from frame 0 every time. -->
+         run cleanly from frame 0 every time. */}
 
-    <!-- The favicon is a single static brand mark (see the Favicon block above).
+    {/* The favicon is a single static brand mark (see the Favicon block above).
          It intentionally does NOT re-tint to the active theme at runtime: the
          logo must stay identical across every context — browser tab, search
-         results, social previews and home-screen icon. -->
+         results, social previews and home-screen icon. */}
 
-    <!-- Theme bootstrap (runs before body paint; no flash of wrong theme).
+    {/* Theme bootstrap (runs before body paint; no flash of wrong theme).
          Implements a 2-state colour-mode contract:
            localStorage.theme ∈ {'light','dark'}   (set once the visitor chooses)
            <html data-theme-mode="…">               (the mode in force)
            <html class="dark">                      (resolved appearance)
          With no saved choice the visitor's system setting decides, once, at
-         load. An older saved 'system' value counts as no choice. -->
+         load. An older saved 'system' value counts as no choice. */}
     <script is:inline>
       (function () {
         const COLOR_THEMES = ['emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple'];
@@ -282,7 +257,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
   </head>
 
   <body class="min-h-screen bg-background text-foreground antialiased" data-eager-reveal={eagerReveal ? '' : undefined}>
-    <!-- Skip to content link -->
+    {/* Skip to content link */}
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
@@ -300,21 +275,21 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 
     {siteConfig.effects?.cursorTrail !== false && <CursorTrail />}
 
-    <!-- Back to top button -->
+    {/* Back to top button */}
     <button
       id="back-to-top"
       aria-label={t('common.backToTop', locale)}
       class="fixed bottom-6 right-6 z-50 h-12 w-12"
       style="opacity:0;translate:0 2rem;pointer-events:none"
     >
-      <!-- Scroll-progress ring (rotated so arc starts at 12 o'clock) -->
+      {/* Scroll-progress ring (rotated so arc starts at 12 o'clock) */}
       <svg class="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 48 48" aria-hidden="true">
-        <!-- Faint grey track -->
+        {/* Faint grey track */}
         <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" class="text-border" stroke-width="2" opacity="0.5" />
-        <!-- Brand progress arc -->
+        {/* Brand progress arc */}
         <circle id="back-to-top-ring" cx="24" cy="24" r="21" fill="none" stroke="currentColor" class="text-brand-500" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="131.95" stroke-dashoffset="131.95" />
       </svg>
-      <!-- Inner face -->
+      {/* Inner face */}
       <span class="absolute inset-[5px] flex items-center justify-center rounded-full bg-background border border-border-strong text-foreground-muted shadow-md" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
       </span>
@@ -427,16 +402,8 @@ const locale = getLocaleFromPath(Astro.url.pathname);
       (function () {
         function initReveal() {
           const els = Array.prototype.slice.call(
-            document.querySelectorAll('[data-reveal]:not(.is-visible), [data-reveal-children]:not(.is-visible)')
+            document.querySelectorAll('[data-reveal]:not(.is-visible)')
           );
-
-          // Also observe each direct child of [data-reveal-content] so long
-          // article bodies (blog posts, project pages) animate block-by-block.
-          document.querySelectorAll('[data-reveal-content]').forEach(function (container) {
-            Array.prototype.forEach.call(container.children, function (child) {
-              if (!child.classList.contains('is-visible')) els.push(child);
-            });
-          });
 
           if (!els.length) return;
 
