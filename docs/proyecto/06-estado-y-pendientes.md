@@ -76,10 +76,10 @@ Son funciones de la plantilla, completas y probadas, pero apagadas:
 
 | Tema | Detalle |
 |---|---|
-| **Descripción del sitio en un solo idioma** | `site.config.ts` tiene una única `description` (en inglés). La usan el JSON-LD (`WebSite`), el manifiesto y la tarjeta para redes, **también en `/es/`**. Las etiquetas `<title>` y `<meta description>` de cada página sí vienen de los archivos de idioma |
-| **La imagen para compartir en redes es una sola, en inglés** | `og/default.png` se dibuja con el título y la descripción de la portada en inglés y la comparten las dos versiones. Las páginas `noindex` (la 404) no se usan para dibujarla |
+| **Descripción del sitio en un solo idioma** | `site.config.ts` tiene una única `description` (en español, el idioma por defecto). La usan el JSON-LD (`WebSite`), el manifiesto y la tarjeta para redes, **también en `/en/`**. Las etiquetas `<title>` y `<meta description>` de cada página sí vienen de los archivos de idioma |
+| **La imagen para compartir en redes es una sola, en español** | `og/default.png` se dibuja con el título y la descripción de la portada en español y la comparten las dos versiones. Las páginas `noindex` (la 404) no se usan para dibujarla |
 | **La 404 publicada es la genérica de Cloudflare** | `wrangler.jsonc` no activa `not_found_handling`, así que `404.html` se genera pero no se sirve. Se activa con una línea (ver la receta de publicación) cuando se trabaje la 404 propia |
-| **La 404 solo tiene una versión** | Es una única página, que se genera una vez en el idioma por defecto (inglés) |
+| **La 404 solo tiene una versión** | Es una única página, que se genera una vez en el idioma por defecto (español) |
 | **El color del tema no se recuerda entre visitas** | Se guarda en `sessionStorage` (hasta cerrar la pestaña). El modo claro/oscuro sí es permanente |
 | **El diseño cambia a partir de 1280 px** | Desde ese ancho el hero es un panel fijo a la izquierda (nombre, presentación, enlaces y navegación en vertical) y las secciones se desplazan a su derecha. Por debajo es una sola columna, con la barra flotante. El panel tiene hueco libre entre la presentación y la navegación en pantallas altas |
 | **El cursor personalizado deja estela fuera del hero** | En el hero solo se ve el punto. Se puede desactivar del todo con `effects.cursorTrail: false` en `site.config.ts` |

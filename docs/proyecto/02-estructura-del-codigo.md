@@ -53,8 +53,8 @@ src/
 
 | Archivo | URL | Función |
 |---|---|---|
-| `index.astro` | `/` | La portada en el idioma por defecto (inglés). Solo pinta `HomeView` |
-| `[locale]/index.astro` | `/es/` | La misma portada en cada idioma secundario. Genera una página por idioma |
+| `index.astro` | `/` | La portada en el idioma por defecto (español). Solo pinta `HomeView` |
+| `[locale]/index.astro` | `/en/` | La misma portada en cada idioma secundario. Genera una página por idioma |
 | `404.astro` | página de error | Usa `PageLayout` (con cabecera y pie) |
 | `llms.txt.ts` | `/llms.txt` | Resumen del sitio en texto plano para modelos de lenguaje: páginas por idioma, secciones, perfiles y correo |
 | `humans.txt.ts` | `/humans.txt` | Créditos: quién hizo el sitio y con qué. Se genera con los datos de `site.config.ts` |

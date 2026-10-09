@@ -24,7 +24,7 @@ El sitio es **estático**: al ejecutar `npm run build`, Astro genera los HTML en
 | URL | Archivo que la define | Resultado |
 |---|---|---|
 | `/` | `src/pages/index.astro` | `dist/index.html` |
-| `/es/` | `src/pages/[locale]/index.astro` | `dist/es/index.html` |
+| `/en/` | `src/pages/[locale]/index.astro` | `dist/en/index.html` |
 | error | `src/pages/404.astro` | `dist/404.html` |
 
 Las dos portadas hacen **lo mismo**: renderizan `HomeView.astro` pasándole el idioma. Toda la portada vive en ese único componente. `[locale]/index.astro` genera una página por cada idioma secundario que haya en `i18n.config.ts`, con `getStaticPaths()`.
@@ -36,9 +36,9 @@ index.astro  ─ HomeView(locale = 'en') ─┐
 
 ## Idiomas
 
-**Configuración:** `src/config/i18n.config.ts` — activa (`enabled: true`), idioma por defecto `en`, idiomas `['en', 'es']`.
+**Configuración:** `src/config/i18n.config.ts` — activa (`enabled: true`), idioma por defecto `es`, idiomas `['es', 'en']`.
 
-**Rutas:** el inglés va en la raíz (`/`) y el español bajo prefijo (`/es/`).
+**Rutas:** el español va en la raíz (`/`) y el inglés bajo prefijo (`/en/`).
 
 **Textos:** viven en `src/i18n/en.json` y `src/i18n/es.json`. Se leen con la función `t('ruta.de.la.clave', idioma)`, o con `tData()` cuando el valor es una lista o un objeto (por ejemplo, los paneles de "Sobre mí"). Si una clave no existe en un idioma, se usa la del idioma por defecto; si no existe en ninguno, se devuelve la propia clave (así se nota el fallo).
 
@@ -182,7 +182,7 @@ La ruta (`slug`) se calcula del propio título: quita tildes, pasa a minúsculas
 |---|---|---|
 | `site-url-check` | Al empezar | Avisa en el registro si `SITE_URL` no está definida (se usa el valor por defecto `https://alexxio.dev`) |
 | `favicon-assets` | Al terminar | Genera `favicon.svg`, `favicon.ico`, `favicon-32x32.png`, `apple-touch-icon.png` y los iconos del manifiesto (192 y 512). Usa la **inicial** de `SITE_NAME` y `THEME_COLOR` de `branding.ts` |
-| `og-cards` | Al terminar | Genera `og/default.png`, la imagen que sale al compartir el enlace en redes. Toma el título y la descripción de la portada en inglés (la página más cercana a la raíz); ignora las páginas `noindex`, para que la 404 no dé su texto a la imagen |
+| `og-cards` | Al terminar | Genera `og/default.png`, la imagen que sale al compartir el enlace en redes. Toma el título y la descripción de la portada en español (la página más cercana a la raíz); ignora las páginas `noindex`, para que la 404 no dé su texto a la imagen |
 | `verify-site-url` | Al terminar | Falla si la dirección de las etiquetas canónicas y la del JSON-LD no coinciden |
 
 > En `npm run dev` **no se generan** el favicon ni las tarjetas, porque los plugins solo corren en el build.

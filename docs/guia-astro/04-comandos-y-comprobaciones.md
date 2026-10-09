@@ -111,7 +111,7 @@ git switch pruebas
 
 - [ ] Estás en `pruebas` y `git status` está limpio.
 - [ ] `npm run validate` termina bien.
-- [ ] `npm run preview` y revisas **la portada en inglés (`/`) y en español (`/es/`)**.
+- [ ] `npm run preview` y revisas **la portada en español (`/`) y en inglés (`/en/`)**.
 - [ ] Revisas a **375 px de ancho** (móvil) y a **1280 px** (escritorio): el menú, el hero, los desplegables y el contacto.
 - [ ] Pruebas el **selector de color** y el **interruptor claro/oscuro**.
 - [ ] El botón de **correo** abre Gmail con el asunto puesto.

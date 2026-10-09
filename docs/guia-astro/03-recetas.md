@@ -46,7 +46,7 @@ Un proyecto son **dos archivos** (uno por idioma). Si solo creas uno, el otro id
 
 - **Las comillas en `description` son obligatorias si lleva dos puntos** (`:`), porque el bloque es YAML. Sin comillas, el build falla.
 - **Solo `title` y `description` son obligatorios.** El resto es opcional.
-- **`locale`** debe ser `es` o `en`. Si lo omites, se asume `en` (el idioma por defecto).
+- **`locale`** debe ser `es` o `en`. Si lo omites, se asume `es` (el idioma por defecto).
 - **Sin `url` ni `repo`, la tarjeta no enlaza a nada** (es una tarjeta plana). No hay páginas de detalle de proyecto, así que no hay ningún enlace por defecto que pueda dar un 404.
 - Se muestran los **4 primeros**, ordenados por `order` (menor primero).
 
@@ -262,7 +262,7 @@ Ejemplo: francés (`fr`).
 
 4. **Proyectos:** crea los `.md` en `src/content/projects/fr/` con `locale: fr`.
 
-5. **Descripción del sitio:** `site.config.ts` tiene una única `description` (en inglés) que usan el JSON-LD y el manifiesto. No se traduce por idioma.
+5. **Descripción del sitio:** `site.config.ts` tiene una única `description` (en español) que usan el JSON-LD y el manifiesto. No se traduce por idioma.
 
 6. Se generará `/fr/`, y el selector de idioma lo mostrará.
 
@@ -401,7 +401,7 @@ git switch pruebas
 
 ### 8. Comprobar tras publicar
 
-`https://alexxio.dev/sitemap-index.xml`, `/robots.txt`, `/llms.txt`, que al compartir el enlace aparece la tarjeta, y que `/es/` carga.
+`https://alexxio.dev/sitemap-index.xml`, `/robots.txt`, `/llms.txt`, que al compartir el enlace aparece la tarjeta, y que `/en/` carga.
 
 ### La página 404
 

@@ -111,7 +111,7 @@ Hoy `astro check` termina con 0 errores, 0 avisos y **0 sugerencias**. Si aparec
 
 ### He cambiado un texto y en la otra página sigue el antiguo
 
-**Causa:** cada idioma tiene su archivo. Editaste solo uno. Mira `/` (inglés) y `/es/` (español).
+**Causa:** cada idioma tiene su archivo. Editaste solo uno. Mira `/` (español) y `/en/` (inglés).
 
 ### Aparece una clave en lugar de un texto (`pages.home.foo.bar`)
 

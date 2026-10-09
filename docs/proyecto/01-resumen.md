@@ -2,7 +2,7 @@
 
 ## Qué es
 
-El portfolio personal de **Alejandro Vizán**: una web de **una sola página**, **bilingüe** (inglés y español), **estática** y sin servidor, pensada para ponerla en el currículum y enseñarla a empresas, sobre todo consultoras de software.
+El portfolio personal de **Alejandro Vizán**: una web de **una sola página**, **bilingüe** (español e inglés), **estática** y sin servidor, pensada para ponerla en el currículum y enseñarla a empresas, sobre todo consultoras de software.
 
 - **Dominio previsto:** `alexxio.dev` (todavía sin comprar a fecha de esta documentación).
 - **Repositorio:** `Alexxio070/portfolio-astro` (privado).
@@ -25,7 +25,7 @@ Además:
 
 - **Barra de navegación flotante** (por debajo de 1280 px) que cambia de aspecto al hacer scroll.
 - **Selector de color** (8 temas) y **selector claro/oscuro**.
-- **Selector de idioma** inglés/español. El inglés está en `/` y el español en `/es/`.
+- **Selector de idioma** inglés/español. El español está en `/` y el inglés en `/en/`.
 - **Títulos de sección que se escriben como una ruta de Linux** (`~/alex/sobre-mi`) al llegar a ellos con el scroll.
 - **Detalles para quien se fija:** el título de la pestaña sigue a la sección actual (`~/alex/proyectos`), la consola del navegador saluda a quien la abre, el cambio claro/oscuro es un fundido y la barra de desplazamiento usa el color del tema.
 - **Página 404** propia.
@@ -63,7 +63,7 @@ Rocket venía con un blog, tienda, formularios, 44 componentes de demostración 
 
 | | Antes (Rocket) | Ahora |
 |---|---|---|
-| Páginas generadas | 89 | 3 (`/`, `/es/`, `404`) |
+| Páginas generadas | 89 | 3 (`/`, `/en/`, `404`) |
 | Archivos de código en `src/` (`.astro`, `.ts`, `.css`) | ~200 | 79 |
 | Librería de componentes `src/components/ui/` | decenas | 9 archivos |
 

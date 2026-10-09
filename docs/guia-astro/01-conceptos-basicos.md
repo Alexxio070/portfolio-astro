@@ -72,7 +72,7 @@ Cada archivo de `src/pages/` **es una URL**. El nombre del archivo es la ruta:
 |---|---|
 | `src/pages/index.astro` | `/` |
 | `src/pages/404.astro` | página de error |
-| `src/pages/[locale]/index.astro` | `/es/`, `/en/`… (el `[locale]` es un parámetro) |
+| `src/pages/[locale]/index.astro` | `/en/`, `/fr/`… (el `[locale]` es un parámetro) |
 | `src/pages/robots.txt.ts` | `/robots.txt` (un `.ts` puede generar un archivo en vez de una página) |
 
 Las páginas con `[corchetes]` necesitan `getStaticPaths()`, que lista las URLs que debe generar.

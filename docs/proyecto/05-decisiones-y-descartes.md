@@ -9,6 +9,8 @@ Lo que se decidió, lo que se probó y se quitó, y **por qué**. Sirve para no 
 | **Una sola página con anclas**, no varias páginas | Es lo que necesita un portfolio de este tamaño y se navega rápido. Se eliminaron `/projects` y `/contact` cuando dejaron de tener enlaces |
 | **Estática, sin backend** | Más barata, rápida y segura. No hay formularios que mantener ni datos de visitantes |
 | **Conservar el sistema de idiomas** de Rocket | Para tener español e inglés. Es la única funcionalidad "grande" de la plantilla que se mantuvo |
+| **Español como idioma por defecto** | La web está pensada para empresas españolas: el español vive en `/` y el inglés en `/en/`. Se cambia con `defaultLocale` en `i18n.config.ts` |
+| **Un solo hover para desplegables, tarjetas de proyecto y tarjeta de contacto** | Borde de 2 px que se aclara y brillo de la marca. Las tres piezas comparten las reglas `.about-panel`, `.project-card` y `.contact-card` de `HomeView.astro`. |
 | **Despliegue en Cloudflare Workers, solo archivos estáticos** | `wrangler.jsonc` sirve `dist/` sin código de servidor ni adaptador de Astro. Se despliega con `npm run deploy`, que valida antes de subir |
 | **404 de Cloudflare por ahora** | La página 404 propia aún no está trabajada, así que no se activa en el despliegue (una línea en `wrangler.jsonc` lo hará) |
 | **Sin React** | Tras borrar la librería no quedó ningún componente que lo usara |
