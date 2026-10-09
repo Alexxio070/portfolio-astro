@@ -7,7 +7,7 @@ Foto del proyecto a **8 de octubre de 2026** (rama `pruebas`, commit `368538a`),
 | Comprobación | Resultado |
 |---|---|
 | `npm run build` | Correcto, 3 páginas |
-| `npm run test:run` | 88 tests en verde |
+| `npm run test:run` | 76 tests en verde |
 | `npm run check` (`astro check`) | 0 errores, 0 avisos, 7 sugerencias |
 | `npm run lint` | 0 errores, 2 avisos de `console` en `scripts/verify-build.mjs` (heredados, intencionados) |
 | `npm run verify` | "output looks good" |
@@ -41,23 +41,17 @@ Cosas que **funcionan** pero que son restos del proceso de recorte. Ninguna es u
 
 | Dónde | Qué | Comentario |
 |---|---|---|
-| `package.json` | `"name": "astro-rocket"` y `"version": "2.6.0"` | Son los de la plantilla. Se pueden renombrar sin efecto en la web |
-| `src/config/site.config.ts` | `blogImageOverlay`, `blog.*` | **Nada los lee.** Eran del blog |
-| `src/config/site.config.ts` | `articleFeatures` (índice, comentarios con Giscus) | Solo los consulta `BaseLayout.astro` para los comentarios, que están desactivados |
-| `src/config/site.config.ts` | `projects.perPage`, `projects.tagCloudLimit` | Pertenecían a la lista paginada de proyectos, eliminada |
 | `src/config/nav.config.ts` | Claves y comentarios que mencionan el blog | Cosméticos |
 | `src/styles/**/*.css` | Cabeceras de comentario "Astro Rocket Theme…" | Son atribución; se pueden dejar |
+| `LICENSE` | Copyright de Hans Martens | Es la licencia MIT de Rocket y se conserva a propósito |
 
-### Código que solo se mantiene vivo por sus tests
+Ya no quedan restos del blog en `site.config.ts` ni en `BaseLayout.astro`, y `package.json` lleva el nombre, la descripción, el autor y el repositorio del portfolio.
+
+### Tests que usan un idioma de ejemplo
 
 | Archivo | Situación |
 |---|---|
-| `src/lib/content-validation.ts` | Detectaba URLs duplicadas en el contenido y lo llamaban las rutas de proyecto, ya eliminadas. Hoy solo lo ejecuta su test |
-| `src/lib/projects.ts` (parte) | Funciones de URL, paginación y etiquetas para páginas de proyecto que ya no existen. Las usan `projects-urls-i18n.test.ts` y la carga de proyectos de la portada |
-| `src/lib/tags.ts` | Igual: slugs de etiquetas para páginas que no existen |
-| `src/__tests__/` con idiomas `nl` de ejemplo | Usan un idioma holandés ficticio para probar rutas con prefijo |
-
-Si algún día se quiere limpiar a fondo: borrar el archivo **y** su test a la vez, y comprobar `build`, `check` y tests después.
+| `src/__tests__/` con idiomas `nl` de ejemplo | `i18n.test.ts`, `nav-i18n.test.ts` y `format-date.test.ts` usan un idioma holandés ficticio para probar rutas con prefijo |
 
 ### Avisos benignos en la salida del build
 

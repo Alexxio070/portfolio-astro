@@ -1,29 +1,19 @@
 {
-  "name": "astro-rocket",
-  "version": "2.6.0",
-  "description": "Astro Rocket — A production-ready Astro 7 theme built on Tailwind CSS v4",
+  "name": "portfolio-astro",
+  "version": "1.0.0",
+  "description": "Portfolio personal de Alejandro Vizán, hecho con Astro 7 y Tailwind CSS 4",
   "type": "module",
-  "author": "Hans Martens",
+  "author": "Alejandro Vizán",
   "license": "MIT",
   "keywords": [
     "astro",
-    "astro-theme",
-    "theme",
-    "tailwind",
     "tailwindcss",
     "typescript",
-    "blog",
-    "starter",
-    "boilerplate",
-    "seo"
+    "portfolio"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hansmartensdev/astro-rocket"
-  },
-  "homepage": "https://github.com/hansmartensdev/astro-rocket#readme",
-  "bugs": {
-    "url": "https://github.com/hansmartensdev/astro-rocket/issues"
+    "url": "https://github.com/Alexxio070/portfolio-astro"
   },
   "scripts": {
     "dev": "astro dev",

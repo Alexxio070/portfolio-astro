@@ -119,8 +119,6 @@ src/
 | `utils.ts`, `cn.ts` | Utilidades generales y combinador de clases CSS |
 | `footer.ts` | Construye los grupos de enlaces del pie |
 | `focus-trap.ts` | Mantiene el foco dentro de un panel abierto (accesibilidad) |
-| `tags.ts` | Convierte etiquetas en slugs |
-| `content-validation.ts` | Detecta URLs duplicadas en el contenido. Hoy solo lo mantiene vivo su test |
 | `favicon/`, `og/` | Generan el favicon y la tarjeta para redes al compilar |
 
 ### `src/styles/` — el CSS
