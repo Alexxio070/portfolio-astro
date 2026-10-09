@@ -14,7 +14,7 @@ Mapa de lo que hay en el repositorio y para qué sirve cada cosa. Si buscas **qu
 | `.env.example` | Plantilla de variables de entorno. Solo contiene `SITE_URL` |
 | `.nvmrc` | Versión de Node recomendada |
 | `LICENSE` | Licencia MIT de Astro Rocket. **No se borra:** la licencia obliga a conservarla |
-| `public/` | Archivos que se copian tal cual al sitio (hoy solo `fonts/`, vacía) |
+| `public/` | Archivos que se copian tal cual al raíz del sitio. Hoy no hay ninguno: la carpeta se crea cuando hace falta (por ejemplo, para un PDF de CV) |
 | `scripts/` | Comprobaciones que se ejecutan tras el build |
 | `docs/` | Esta documentación |
 | `src/` | Todo el código del sitio |
@@ -44,7 +44,6 @@ src/
 ├── content.config.ts ← esquema de ese contenido
 ├── lib/              ← utilidades de código
 ├── styles/           ← CSS global, colores, temas, tipografía
-├── assets/           ← (vacía)
 ├── __tests__/        ← tests
 └── test/stubs/       ← apoyo para los tests
 ```
@@ -56,7 +55,8 @@ src/
 | `index.astro` | `/` | La portada en el idioma por defecto (inglés). Solo pinta `HomeView` |
 | `[locale]/index.astro` | `/es/` | La misma portada en cada idioma secundario. Genera una página por idioma |
 | `404.astro` | página de error | Usa `PageLayout` (con cabecera y pie) |
-| `llms.txt.ts` | `/llms.txt` | Resumen del sitio en texto plano para modelos de lenguaje |
+| `llms.txt.ts` | `/llms.txt` | Resumen del sitio en texto plano para modelos de lenguaje: páginas por idioma, secciones, perfiles y correo |
+| `humans.txt.ts` | `/humans.txt` | Créditos: quién hizo el sitio y con qué. Se genera con los datos de `site.config.ts` |
 | `robots.txt.ts` | `/robots.txt` | Reglas para rastreadores |
 | `manifest.webmanifest.ts` | `/manifest.webmanifest` | Manifiesto de aplicación web |
 
@@ -114,10 +114,10 @@ src/
 | Archivo | Para qué |
 |---|---|
 | `themes.ts` | Lista de los 8 temas de color y su color de muestra |
-| `projects.ts` | Cargar y filtrar proyectos por idioma |
-| `schema.ts` | Genera los datos estructurados JSON-LD (sitio, persona, organización) |
-| `utils.ts`, `cn.ts` | Utilidades generales y combinador de clases CSS |
-| `footer.ts` | Construye los grupos de enlaces del pie |
+| `projects.ts` | Cargar los proyectos de un idioma, ordenados, y ocultar los borradores en producción |
+| `schema.ts` | Genera los datos estructurados JSON-LD: de sitio y de persona |
+| `utils.ts`, `cn.ts` | Utilidades: enlaces externos, iconos de redes sociales y combinador de clases CSS |
+| `footer.ts` | Construye los grupos de enlaces del pie (solo se muestra en la 404) |
 | `focus-trap.ts` | Mantiene el foco dentro de un panel abierto (accesibilidad) |
 | `favicon/`, `og/` | Generan el favicon y la tarjeta para redes al compilar |
 

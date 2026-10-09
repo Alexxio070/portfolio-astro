@@ -38,7 +38,7 @@ Los scripts están en `package.json`.
 |---|---|
 | `lint` | Variables sin usar, imports muertos, errores de código |
 | `check` | Props mal escritos, tipos incorrectos, plantillas rotas |
-| `test:run` | Que los 76 tests sigan pasando (ver abajo) |
+| `test:run` | Que los 63 tests sigan pasando (ver abajo) |
 | `build` | Que el sitio compila, que el contenido cumple su esquema y que la dirección canónica coincide con el JSON-LD |
 | `verify` | Que hay HTML con contenido real, imágenes generadas válidas y tarjeta para redes |
 
@@ -46,7 +46,7 @@ Los scripts están en `package.json`.
 
 ## Los tests
 
-Hay 9 archivos en `src/__tests__/` (76 tests). Qué protege cada uno:
+Hay 6 archivos en `src/__tests__/` (63 tests). Qué protege cada uno:
 
 | Archivo | Protege |
 |---|---|
@@ -56,8 +56,6 @@ Hay 9 archivos en `src/__tests__/` (76 tests). Qué protege cada uno:
 | `colour-themes.test.ts` | Que los 8 temas tengan archivo, se aíslen en su `data-theme` y definan la escala completa |
 | `bar-color.test.ts` | Que el color de la barra del navegador en móvil coincida con el final del degradado del hero |
 | `site-url-agreement.test.ts` | La lectura de la dirección del sitio en las páginas generadas |
-| `projects-urls-i18n.test.ts` | La dirección de cada proyecto en el idioma por defecto y en el secundario |
-| `format-date.test.ts`, `reading-time.test.ts` | Utilidades heredadas de Rocket |
 
 > **Si un test falla tras borrar código:** no lo borres sin más. Pregúntate si el test comprobaba algo que ya no existe (entonces se borra **con** el código) o si comprobaba algo que sigue existiendo (entonces se adapta). Esa fue la regla durante todo el proyecto.
 

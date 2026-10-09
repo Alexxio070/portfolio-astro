@@ -34,7 +34,6 @@ Un proyecto son **dos archivos** (uno por idioma). Si solo creas uno, el otro id
    tags: [Flutter, PostgreSQL]
    year: 2026
    order: 2
-   placeholder: true
    locale: es
    ---
    ```
@@ -48,7 +47,7 @@ Un proyecto son **dos archivos** (uno por idioma). Si solo creas uno, el otro id
 - **Las comillas en `description` son obligatorias si lleva dos puntos** (`:`), porque el bloque es YAML. Sin comillas, el build falla.
 - **Solo `title` y `description` son obligatorios.** El resto es opcional.
 - **`locale`** debe ser `es` o `en`. Si lo omites, se asume `en` (el idioma por defecto).
-- **`placeholder: true`** hace que la tarjeta **no enlace a nada**. Es lo que debes poner mientras las páginas de detalle no existan (ver la receta siguiente). Si lo omites, la tarjeta enlazará a `/projects/mi-proyecto`, que **no existe** y daría un 404.
+- **Sin `url` ni `repo`, la tarjeta no enlaza a nada** (es una tarjeta plana). No hay páginas de detalle de proyecto, así que no hay ningún enlace por defecto que pueda dar un 404.
 - Se muestran los **4 primeros**, ordenados por `order` (menor primero).
 
 ### Campos disponibles
@@ -60,55 +59,31 @@ Un proyecto son **dos archivos** (uno por idioma). Si solo creas uno, el otro id
 | `tags` | lista | Se muestran como `#etiqueta` |
 | `year` | número | Se muestra arriba a la izquierda |
 | `order` | número | Posición (por defecto 99) |
-| `url`, `repo` | enlace | Hoy no se usan; ver la receta siguiente |
+| `url`, `repo` | enlace | Destino de la tarjeta: `url` y, si no hay, `repo`. Ver la receta siguiente |
 | `draft` | `true/false` | Oculto en producción, visible en `npm run dev` |
-| `placeholder` | `true/false` | Tarjeta sin enlace |
 | `locale` | `es` / `en` | Idioma |
-| `featured`, `client`, `role`, `services`, `meta`, `image`, `imageAlt`, `gallery`, `toc` | varios | Existen en el esquema (`src/content.config.ts`) pero **la tarjeta actual no los pinta** |
 
-Para un proyecto con **texto largo** debajo del bloque `---` (descripción extensa), hoy ese texto no se muestra en ningún sitio: la portada solo usa la tarjeta.
+El esquema solo admite estos campos. Si escribes otro (por ejemplo `image:`), se ignora sin avisar.
+
+Para un proyecto con **texto largo** debajo del bloque `---`, hoy ese texto no se muestra en ningún sitio: la portada solo usa la tarjeta.
 
 ---
 
 ## Hacer que una tarjeta de proyecto sea un enlace
 
-Hoy las tarjetas no enlazan. Para que lleven a tu repositorio o a una demo:
+No hay que tocar código: basta con añadir la dirección en el `.md` del proyecto.
 
-1. En el `.md` del proyecto, añade `url` y/o `repo`, y **quita `placeholder: true`**:
+```md
+url: https://mi-demo.vercel.app
+repo: https://github.com/Alexxio070/mi-proyecto
+```
 
-   ```md
-   url: https://mi-demo.vercel.app
-   repo: https://github.com/Alexxio070/mi-proyecto
-   ```
+- La tarjeta enlaza a `url`; si no la hay, a `repo`.
+- Se abre en una **pestaña nueva** (`target="_blank"` con `rel="noopener noreferrer"`).
+- Con enlace, la tarjeta muestra la flecha ↗ y se eleva al pasar el ratón; sin él, es una tarjeta plana.
+- Ambos campos deben ser direcciones completas (`https://…`); si no, el build falla con un error de esquema.
 
-2. En `src/components/projects/ProjectCard.astro`, calcula el destino y úsalo en lugar de la ruta de detalle. Busca el `<Card …>` y cambia `href`:
-
-   ```astro
-   ---
-   // …después de `const { data } = project;`
-   const link = data.url ?? data.repo;
-   ---
-
-   <Card
-     variant="elevated"
-     hover
-     padding="none"
-     href={link}
-     target={link ? '_blank' : undefined}
-     rel={link ? 'noopener noreferrer' : undefined}
-     class="group flex flex-col"
-     …
-   ```
-
-3. En el mismo archivo, la flecha ↗ solo debe verse si hay enlace. Cambia la condición `{!data.placeholder && (` por:
-
-   ```astro
-   {link && (
-   ```
-
-4. Si dejas de usar `getProjectUrl` en el archivo, borra su `import` para que ESLint no avise.
-
-> `Card` (`src/components/ui/data-display/Card/Card.astro`) acepta `href`, `target` y `rel`, y se convierte en `<a>` cuando recibe `href`.
+> La lógica está en `src/components/projects/ProjectCard.astro` (`const link = data.url ?? data.repo;`). `Card` (`src/components/ui/data-display/Card/Card.astro`) se convierte en `<a>` cuando recibe `href`.
 
 ---
 
@@ -154,7 +129,7 @@ grep -rn "tu-correo-antiguo" src
 
 ## Añadir un botón de descarga del CV
 
-1. Copia el PDF a `public/` (por ejemplo `public/cv-alejandro-vizan.pdf`). Todo lo de `public/` se sirve en la raíz: quedará en `/cv-alejandro-vizan.pdf`.
+1. Copia el PDF a `public/` (crea la carpeta en la raíz del proyecto si no existe; por ejemplo `public/cv-alejandro-vizan.pdf`). Todo lo de `public/` se sirve en la raíz: quedará en `/cv-alejandro-vizan.pdf`.
 
 2. En `src/components/pages/views/HomeView.astro`, dentro de `<Fragment slot="actions">`, tras el botón del correo, añade:
 

@@ -51,7 +51,7 @@ El fondo del hero fue evolucionando hasta una de las partes más elaboradas del 
 
 | Idea | Por qué no |
 |---|---|
-| Rejilla de puntos con luz que sigue al cursor, y degradado que "respira" | Se propusieron como alternativas más sobrias; se eligió el cursor de terminal, la luz sobre el nombre y las micro-interacciones. **Siguen disponibles** si el hero resulta demasiado sobrio |
+| Rejilla de puntos con luz que sigue al cursor, y degradado que "respira" | Se propusieron como alternativas más sobrias al fondo de símbolos. La rejilla de puntos **se implementó después**, solo en pantallas de 1280 px o más; el degradado sigue sin hacerse |
 | Selector de estilos (forma, borde, sombra) tipo "bento" | Del plan original, "para más adelante" |
 | Botón de descarga del CV | No se incluye (descartado o resuelto fuera del código) |
 | Foto de perfil | No se incluye. El avatar de relleno de la plantilla se borró con los recursos de ejemplo |

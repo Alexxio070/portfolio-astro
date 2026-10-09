@@ -76,7 +76,7 @@ description: "Mi portfolio: una web estática"        ← bien
 
 ### El build falla con `verify-site-url: … disagrees with itself about this site's address`
 
-**Causa:** la dirección que usan las etiquetas canónicas (`astro.config.mjs`) y la del JSON-LD (`site.config.ts`) **no coinciden**. Suele pasar por poner `SITE_URL` en un `.env` que solo una de las dos lee.
+**Causa:** la dirección que usan las etiquetas canónicas (`astro.config.mjs`) y la del JSON-LD (`site.config.ts`) **no coinciden**. `astro.config.mjs` carga `.env.local` y `.env` por sí mismo, así que suele pasar con otros archivos de entorno (por ejemplo `.env.production`), que solo lee una de las dos partes.
 
 **Solución:** define `SITE_URL` en el **entorno** del anfitrión, o cambia `SITE_URL_FALLBACK` en `src/config/site-url.ts`. Ver `scripts/site-url-agreement.mjs`.
 
@@ -101,9 +101,9 @@ Dos causas posibles, y el mensaje te dice cuál:
 
 **Causa:** algo seguía importándolo. **Solución:** `grep -rn "NombreDelArchivo" src` para encontrar quién lo usa. Cuidado con las cargas masivas (`import.meta.glob`): leen carpetas enteras y pueden mantener "vivo" código que parece muerto.
 
-### `astro check` avisa de `z.string().url()` obsoleto
+### `astro check` avisa de algo obsoleto
 
-Son sugerencias (*hints*) y no impiden nada. Vienen de `src/content.config.ts`.
+Hoy `astro check` termina con 0 errores, 0 avisos y **0 sugerencias**. Si aparecen sugerencias (*hints*) tras actualizar una dependencia, suelen ser avisos de obsolescencia: no impiden nada, pero conviene cambiar la llamada indicada.
 
 ---
 
@@ -125,9 +125,13 @@ Son sugerencias (*hints*) y no impiden nada. Vienen de `src/content.config.ts`.
 
 ## Proyectos
 
-### Mi tarjeta de proyecto lleva a una página 404
+### Mi tarjeta de proyecto no enlaza a nada
 
-**Causa:** el proyecto no tiene `placeholder: true` y la tarjeta enlaza a una página de detalle que **ya no existe**. **Solución:** añade `placeholder: true`, o configúrala con enlace (ver [la receta](03-recetas.md#hacer-que-una-tarjeta-de-proyecto-sea-un-enlace)).
+**Causa:** el proyecto no tiene `url` ni `repo`. Sin ellos la tarjeta es plana, a propósito: no hay páginas de detalle a las que enlazar. **Solución:** añade `url:` o `repo:` (con `https://…`) en el `.md` del proyecto (ver [la receta](03-recetas.md#hacer-que-una-tarjeta-de-proyecto-sea-un-enlace)).
+
+### Escribí un campo en un proyecto y no hace nada
+
+**Causa:** el esquema solo admite `title`, `description`, `icon`, `url`, `repo`, `tags`, `order`, `year`, `draft` y `locale`. Cualquier otro campo (`image`, `featured`…) se ignora sin avisar. **Solución:** ver la tabla de campos en [la receta](03-recetas.md#añadir-un-proyecto).
 
 ### El proyecto no aparece en la página
 

@@ -64,11 +64,11 @@ pages.home
 Las tarjetas de proyecto salen de la **colección de contenido** `projects`:
 
 - **Archivos:** `src/content/projects/en/*.md` y `src/content/projects/es/*.md`.
-- **Esquema:** `src/content.config.ts` (campos como `title`, `description`, `icon`, `tags`, `year`, `order`, `placeholder`, `locale`…).
+- **Esquema:** `src/content.config.ts`. Campos: `title` y `description` (obligatorios), `icon`, `tags`, `year`, `order`, `draft`, `url`, `repo` y `locale`.
 - **Carga:** `HomeView.astro` pide los proyectos del idioma con `getVisibleProjects(locale)` (`src/lib/projects.ts`). Si ese idioma no tiene ninguno, usa los del idioma por defecto. Los ordena por `order` y **muestra los 4 primeros**.
 - **Borradores:** un proyecto con `draft: true` se oculta en el build de producción, pero se ve en `npm run dev`.
 
-> **Importante:** `ProjectCard` enlaza por defecto a una página de detalle (`/projects/<slug>`), pero **esas páginas ya no existen**. Por eso el proyecto actual lleva `placeholder: true`: la tarjeta se pinta sin enlace y sin flecha. Si quieres que una tarjeta lleve al repositorio o a una demo, hay que adaptar `ProjectCard.astro` (ver [la receta](../guia-astro/03-recetas.md#hacer-que-una-tarjeta-de-proyecto-sea-un-enlace)).
+- **Enlace de la tarjeta:** `ProjectCard` enlaza a `url` y, si no hay, a `repo`, en una pestaña nueva y con una flecha ↗. Un proyecto sin ninguno de los dos es una **tarjeta plana**, sin enlace, sin flecha y sin el efecto de elevación al pasar el ratón. No hay páginas de detalle de proyecto, así que no existe ninguna ruta a la que enlazar por defecto.
 
 ## Temas: color y modo claro/oscuro
 
@@ -98,16 +98,29 @@ Todo está en `src/components/pages/views/HomeView.astro`, de arriba abajo:
 |---|---|
 | Cabecera del archivo (`---`) | Carga proyectos, textos (`tData`), redes sociales y construye el enlace de Gmail |
 | `<LandingLayout …>` | Pasa título, descripción y `includePersonSchema` |
+| `<div class="home-split">` y `<div class="home-content">` | Dos envoltorios: el primero contiene el hero y el segundo las tres secciones. Solo importan desde 1280 px (ver abajo); por debajo no hacen nada |
 | `<Hero id="home">` | Titular en dos líneas (`.hero-name`), botones (`.hero-actions`), subtítulo con cursor (`.hero-caret`) |
 | `<section id="about">` | Seis `<details name="about-panels">`: `name` hace que al abrir uno se cierre el anterior |
 | `<section id="projects">` | `SectionTitle` + frase + tarjetas |
 | `<section id="contact">` | `SectionTitle` + texto + tarjeta con correo y botón |
 | `<style is:global>` | Estilos propios de la portada (cursor de terminal, bordes de 2 px, transiciones…) |
-| `<script>` | La luz que sigue al cursor sobre el nombre |
+| `<script>` (dos) | La luz que sigue al cursor sobre el nombre del hero y, desde 1280 px, sobre la rejilla de puntos |
+| `<script is:inline>` | El saludo de la consola del navegador (ver Animaciones y detalles) |
 
 **El correo:** el botón no usa `mailto:` (que no hace nada si no hay un programa de correo configurado). Construye un enlace a la **ventana de redactar de Gmail** (`mail.google.com/mail/?view=cm&fs=1&to=…&su=…`), con la dirección y el asunto ya puestos (`pages.home.contact.subject`). Se abre en pestaña nueva. La dirección sigue impresa en la tarjeta para quien no use Gmail.
 
-**La altura de las secciones:** "Sobre mí" y "Proyectos" miden lo que mide su contenido. **Contacto** tiene `min-h-[80svh]` y centra su contenido: sin eso, al final de la página su tarjeta quedaba demasiado abajo para activar la animación de aparición y se veía vacía.
+**La altura de las secciones:** "Sobre mí" y "Proyectos" miden lo que mide su contenido. **Contacto** tiene `min-h-[80svh]` (70svh en el diseño de panel lateral) y centra su contenido: sin eso, al final de la página su tarjeta quedaba demasiado abajo para activar la animación de aparición y se veía vacía.
+
+### El panel lateral (desde 1280 px)
+
+Con `@media (min-width: 1280px)` cambia el diseño, todo en el CSS de `HomeView.astro` y `FloatingNav.astro`:
+
+- `.home-split` pasa a ser una **rejilla de dos columnas**: a la izquierda el hero (`clamp(380px, 28vw, 540px)`), a la derecha las secciones.
+- El hero queda **fijo** (`position: sticky`, alto de pantalla) mostrando nombre, presentación y botones. Sus dos columnas internas se reordenan con `display: contents` para que salga en ese orden.
+- La **barra flotante** deja de ser una cápsula arriba y se convierte en una **lista vertical** al pie del panel (sin el enlace "Inicio", que ya es el propio panel), con los selectores de tema, modo e idioma debajo; sus desplegables se abren hacia arriba.
+- Las secciones pierden su fondo propio y se centran en su columna sobre una **rejilla de puntos** (`.home-content::before` y `::after`). Los puntos cercanos al cursor se iluminan con el color del tema; un script suaviza ese movimiento. Con "reducir movimiento" queda solo la textura fija.
+- El bloque de contacto se **apila** (título y texto, luego la tarjeta) porque el título es una ruta que no se parte en líneas y no cabe junto a la tarjeta. Esto también ocurre en tabletas en vertical: el cambio de dos columnas a una está ahora en 1024 px (`lg:`) y no en 768 px.
+- El ajuste del color de la barra del navegador en iPhone ignora las secciones que no ocupan casi todo el ancho de la pantalla, como este panel.
 
 ## Animaciones
 
@@ -123,6 +136,17 @@ Todas respetan `prefers-reduced-motion` (ver [Accesibilidad](#accesibilidad-y-mo
 | **Desplegables suaves** | `.about-panel` (`HomeView`) | `::details-content` con `interpolate-size`; en navegadores que no lo soportan, se abren de golpe |
 | **Botones que se elevan** | `.hero-actions > a` | `translate` de −3 px y sombra de color al pasar el ratón |
 | **Cursor personalizado** | `CursorTrail.astro` | Punto, aro y estela. **En el hero solo queda el punto**: el hero lleva `data-cursor-calm` |
+| **Rejilla de puntos con luz** | `.home-content` (`HomeView`, solo desde 1280 px) | Puntos tenues detrás de las secciones; los cercanos al cursor se iluminan con el color del tema. Solo con ratón o lápiz |
+| **Fundido claro/oscuro** | `ThemeToggle.astro` | Usa `document.startViewTransition` si el navegador lo tiene: el cambio es un fundido de toda la página. Sin soporte o con "reducir movimiento", cambia de golpe |
+
+### Otros detalles pequeños
+
+| Detalle | Dónde | Qué hace |
+|---|---|---|
+| **Título de la pestaña vivo** | Script de `SectionTitle.astro` | Mientras una sección es la actual, la pestaña dice `~/alex/<sección> — <nombre>`; sobre la primera sección vuelve al título de la página. Solo cambia la pestaña en vivo: el `<title>` del HTML, que leen los buscadores, no se toca |
+| **Saludo en la consola** | `<script is:inline>` de `HomeView.astro` | Escribe en la consola del navegador una línea con tu nombre y tu correo, en el idioma de la página. El texto está en `pages.home.console.greeting` |
+| **Barra de desplazamiento** | `global.css` (`html { scrollbar-color … }`) | Usa el color del tema, también en Firefox. Los estilos `-webkit-` cubren versiones de Safari anteriores |
+| **`humans.txt`** | `src/pages/humans.txt.ts` y `<link rel="author">` en `BaseLayout` | Créditos del sitio, generados con los datos de `site.config.ts` |
 
 ### Los títulos como ruta de Linux
 
@@ -136,17 +160,18 @@ La ruta (`slug`) se calcula del propio título: quita tildes, pasa a minúsculas
 
 `FloatingNav.astro`:
 
-- **Escritorio:** barra fija arriba, centrada, al **80 %** del ancho. Al hacer scroll se convierte en una **cápsula** que se estrecha de forma progresiva hasta **528 px** (`MIN_WIDTH`), a lo largo de **1000 px** de scroll (`MAX_SCROLL`).
+- **Escritorio (768–1279 px):** barra fija arriba, centrada, al **80 %** del ancho. Al hacer scroll se convierte en una **cápsula** que se estrecha de forma progresiva hasta **528 px** (`MIN_WIDTH`), a lo largo de **1000 px** de scroll (`MAX_SCROLL`).
 - **Móvil (< 768 px):** barra fija **abajo** con iconos sobre las etiquetas, y un botón "Tema" que abre un panel hacia arriba con el selector de color, el de modo y el de idioma.
+- **Pantallas anchas (desde 1280 px):** lista vertical al pie del panel lateral; ver [El panel lateral](#el-panel-lateral-desde-1280-px).
 - **Enlace activo:** marcado con un punto y `aria-current`, calculado con `IntersectionObserver`.
 - **Enlaces:** salen de `homeNavItems` en `nav.config.ts` (`#home`, `#about`, `#projects`, `#contact`); los iconos de móvil, del mapa `icons` en la propia `FloatingNav`.
 - **Sobre el hero:** mientras la barra no tiene fondo (sin scroll), los botones de tema, modo e idioma usan un borde, texto y tinte claros propios, porque los colores normales son oscuros en modo claro y se perdían sobre el hero oscuro.
 
 ## SEO y datos para buscadores
 
-- **`SEO.astro`:** escribe `<title>` (con el formato `Título — Nombre del sitio`), descripción, URL canónica, etiquetas Open Graph y Twitter, y las alternativas por idioma (`hreflang`). Por eso **los textos `meta.title` no deben incluir tu nombre**: un test lo comprueba.
-- **JSON-LD (datos estructurados):** `schema.ts` genera tres tipos. La portada emite **`WebSite`** (siempre) y **`Person`** (porque `HomeView` pasa `includePersonSchema`), con tu nombre, rol, correo y enlaces a GitHub y LinkedIn. `Organization` y `ProfessionalService` existen pero no se activan.
-- **Archivos generados:** `sitemap-index.xml` y `sitemap-0.xml` (integración de Astro), `robots.txt`, `llms.txt` (mapa del sitio para modelos de lenguaje) y `manifest.webmanifest`.
+- **`SEO.astro`:** escribe `<title>` (con el formato `Título — Nombre del sitio`), descripción, URL canónica, etiquetas Open Graph y Twitter, y las alternativas por idioma (`hreflang`, con la misma barra final que la URL canónica y omitidas en páginas `noindex` como la 404). Por eso **los textos `meta.title` no deben incluir tu nombre**: un test lo comprueba.
+- **JSON-LD (datos estructurados):** `schema.ts` genera dos tipos. La portada emite **`WebSite`** (siempre) y **`Person`** (porque `HomeView` pasa `includePersonSchema`), con tu nombre, rol, correo y enlaces a GitHub y LinkedIn.
+- **Archivos generados:** `sitemap-index.xml` y `sitemap-0.xml` (integración de Astro), `robots.txt`, `llms.txt` (mapa del sitio para modelos de lenguaje), `humans.txt` y `manifest.webmanifest`.
 - **La dirección del sitio** se lee de dos sitios a la vez (`astro.config.mjs` y `site.config.ts`, ver [`site-url.ts`](../../src/config/site-url.ts)); el build comprueba que **coincidan** y avisa si falta `SITE_URL`.
 
 ## El build y lo que genera
@@ -157,7 +182,7 @@ La ruta (`slug`) se calcula del propio título: quita tildes, pasa a minúsculas
 |---|---|---|
 | `site-url-check` | Al empezar | Avisa en el registro si `SITE_URL` no está definida (se usa el valor por defecto `https://alexxio.dev`) |
 | `favicon-assets` | Al terminar | Genera `favicon.svg`, `favicon.ico`, `favicon-32x32.png`, `apple-touch-icon.png` y los iconos del manifiesto (192 y 512). Usa la **inicial** de `SITE_NAME` y `THEME_COLOR` de `branding.ts` |
-| `og-cards` | Al terminar | Genera `og/default.png`, la imagen que sale al compartir el enlace en redes. Usa el nombre y la etiqueta del sitio |
+| `og-cards` | Al terminar | Genera `og/default.png`, la imagen que sale al compartir el enlace en redes. Toma el título y la descripción de la portada en inglés (la página más cercana a la raíz); ignora las páginas `noindex`, para que la 404 no dé su texto a la imagen |
 | `verify-site-url` | Al terminar | Falla si la dirección de las etiquetas canónicas y la del JSON-LD no coinciden |
 
 > En `npm run dev` **no se generan** el favicon ni las tarjetas, porque los plugins solo corren en el build.

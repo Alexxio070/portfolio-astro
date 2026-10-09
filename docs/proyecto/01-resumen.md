@@ -19,14 +19,17 @@ Una portada con cuatro bloques, a los que se salta con anclas:
 | Proyectos | `#projects` | Tarjetas de proyectos (hoy una: el propio portfolio) |
 | Contacto | `#contact` | Tarjeta con el correo y un botón que abre Gmail |
 
+**En pantallas anchas (desde 1280 px)** el bloque de inicio deja de ser un banner y pasa a ser un **panel fijo a la izquierda** (nombre, presentación, enlaces, menú vertical y selectores); las otras tres secciones se desplazan a la derecha, sobre una rejilla de puntos muy tenue que se ilumina cerca del cursor. Por debajo de 1280 px la página es una sola columna.
+
 Además:
 
-- **Barra de navegación flotante** que cambia de aspecto al hacer scroll.
+- **Barra de navegación flotante** (por debajo de 1280 px) que cambia de aspecto al hacer scroll.
 - **Selector de color** (8 temas) y **selector claro/oscuro**.
 - **Selector de idioma** inglés/español. El inglés está en `/` y el español en `/es/`.
 - **Títulos de sección que se escriben como una ruta de Linux** (`~/alex/sobre-mi`) al llegar a ellos con el scroll.
+- **Detalles para quien se fija:** el título de la pestaña sigue a la sección actual (`~/alex/proyectos`), la consola del navegador saluda a quien la abre, el cambio claro/oscuro es un fundido y la barra de desplazamiento usa el color del tema.
 - **Página 404** propia.
-- Archivos de SEO generados: `sitemap`, `robots.txt`, `llms.txt`, `manifest`, favicon y tarjeta para compartir en redes (`og/default.png`), más datos estructurados (JSON-LD) de sitio y de persona.
+- Archivos generados: `sitemap`, `robots.txt`, `llms.txt` (mapa del sitio para modelos de lenguaje), `humans.txt` (créditos), `manifest`, favicon y tarjeta para compartir en redes (`og/default.png`), más datos estructurados (JSON-LD) de sitio y de persona.
 
 ## Qué no tiene (a propósito)
 
@@ -42,7 +45,7 @@ Además:
 | [Astro](https://astro.build) | 7.3.1, modo `output: 'static'` |
 | [Tailwind CSS](https://tailwindcss.com) | 4.3 (con el plugin de Vite, sin Sass) |
 | TypeScript | 5.7 |
-| Contenido | Colecciones de contenido de Astro (`projects`) en Markdown/MDX |
+| Contenido | Colecciones de contenido de Astro (`projects`) en Markdown |
 | Iconos | `astro-icon` con los sets Lucide (interfaz) y Simple Icons (marcas) |
 | Tipografías | Fontsource, autoalojadas: Manrope (texto), Outfit (títulos), JetBrains Mono (código y rutas) |
 | Variantes de componentes | `class-variance-authority` y `tailwind-merge` |
@@ -61,7 +64,7 @@ Rocket venía con un blog, tienda, formularios, 44 componentes de demostración 
 | | Antes (Rocket) | Ahora |
 |---|---|---|
 | Páginas generadas | 89 | 3 (`/`, `/es/`, `404`) |
-| Archivos de código en `src/` (`.astro`, `.ts`, `.css`) | ~200 | 84 |
+| Archivos de código en `src/` (`.astro`, `.ts`, `.css`) | ~200 | 79 |
 | Librería de componentes `src/components/ui/` | decenas | 9 archivos |
 
 > El historial completo, commit a commit, está en [04-historial.md](04-historial.md).

@@ -125,4 +125,4 @@ Solo en `pruebas`. Los dos primeros se hicieron en la sesión de asistencia; los
 
 ## Qué NO está en `main`
 
-`main` está en el commit `c5c6f46`. Todo lo de las etapas 6, 7 y 8 **solo está en `pruebas`** (32 commits por delante de `main`). Para publicarlo hay que repetir el *squash* de `pruebas` a `main` y subirlo, cuando decidas.
+`main` está en el commit `c5c6f46`. Todo lo de las etapas 6, 7 y 8 **solo está en `pruebas`** (muy por delante de `main`). Para publicarlo hay que repetir el *squash* de `pruebas` a `main` y subirlo, cuando decidas.

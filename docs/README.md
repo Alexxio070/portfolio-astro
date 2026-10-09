@@ -2,7 +2,7 @@
 
 Esta carpeta explica **qué es** el proyecto, **cómo se llegó a él** y **cómo se toca**. Está pensada para ti dentro de unos meses, cuando hayas olvidado dónde estaba cada cosa.
 
-Estado descrito: **8 de octubre de 2026**, rama `pruebas`, commit `368538a`.
+Estado descrito: **9 de octubre de 2026**, rama `pruebas`, tras el barrido de limpieza general.
 
 ## Dos bloques
 
@@ -18,7 +18,7 @@ Estado descrito: **8 de octubre de 2026**, rama `pruebas`, commit `368538a`.
 | [01-resumen.md](proyecto/01-resumen.md) | Qué es, tecnologías, qué tiene y qué no |
 | [02-estructura-del-codigo.md](proyecto/02-estructura-del-codigo.md) | Mapa de carpetas y archivos, con la función de cada uno |
 | [03-como-funciona.md](proyecto/03-como-funciona.md) | Cómo se construye la página, el idioma, los temas, las animaciones, el SEO y el build |
-| [04-historial.md](proyecto/04-historial.md) | Los 34 commits explicados por etapas |
+| [04-historial.md](proyecto/04-historial.md) | Los commits explicados por etapas |
 | [05-decisiones-y-descartes.md](proyecto/05-decisiones-y-descartes.md) | Lo que se probó y se quitó, y por qué |
 | [06-estado-y-pendientes.md](proyecto/06-estado-y-pendientes.md) | Qué falta, deuda conocida y límites |
 | [plan-original.md](proyecto/plan-original.md) | El plan de fases del principio, conservado como referencia histórica |

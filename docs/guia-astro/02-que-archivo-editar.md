@@ -60,11 +60,12 @@ La tabla de consulta rápida. Busca lo que quieres lograr y ve al archivo.
 | Cambiar un proyecto existente | Su `.md` (el título, `description`, `tags`, `year`, `icon`, `order`…) | |
 | Quitar un proyecto | Borrar su `.md` (o `draft: true` para ocultarlo en producción) | |
 | Ordenar los proyectos | Campo `order` de cada `.md` (menor = antes) | |
-| Que una tarjeta lleve a mi repositorio o a una demo | `src/components/projects/ProjectCard.astro` y los campos `url` / `repo` del `.md` | [Tarjeta con enlace](03-recetas.md#hacer-que-una-tarjeta-de-proyecto-sea-un-enlace) |
+| Que una tarjeta lleve a mi repositorio o a una demo | Solo el `.md` del proyecto: `url:` (o `repo:`). No hay que tocar código | [Tarjeta con enlace](03-recetas.md#hacer-que-una-tarjeta-de-proyecto-sea-un-enlace) |
 | Mostrar más (o menos) de 4 proyectos | `src/components/pages/views/HomeView.astro` → `.slice(0, 4)` | |
 | Cambiar las columnas de la rejilla | `HomeView.astro` → la clase `md:grid-cols-2` del contenedor de tarjetas | |
+| Cambiar el nivel de título de las tarjetas | `ProjectCard.astro` → su `<h3>` (cuelga del `<h2>` de la sección) | |
 | Cambiar el aspecto de la tarjeta | `src/components/projects/ProjectCard.astro` (estructura) y `src/components/ui/data-display/Card/card.variants.ts` (marco) | |
-| Cambiar qué campos puede tener un proyecto | `src/content.config.ts` | |
+| Cambiar qué campos puede tener un proyecto | `src/content.config.ts` (hoy: `title`, `description`, `icon`, `url`, `repo`, `tags`, `order`, `year`, `draft`, `locale`) | |
 
 ## Colores y temas
 
@@ -106,6 +107,10 @@ La tabla de consulta rápida. Busca lo que quieres lograr y ve al archivo.
 | Ajustar la animación de aparición al hacer scroll | `src/styles/global.css` → `[data-reveal]` | |
 | Hacer que un elemento nuevo aparezca con animación | Ponerle el atributo `data-reveal` (y `data-reveal-delay="1"`…`"4"` para escalonar) | |
 | Cambiar cómo se escriben los títulos de sección | `src/components/pages/SectionTitle.astro` | |
+| Cambiar o quitar el título de pestaña que sigue a la sección (`~/alex/…`) | `SectionTitle.astro` → el bloque `document.title = …` del script | |
+| Cambiar o quitar el saludo de la consola del navegador | `HomeView.astro` → el `<script is:inline>` del final, y el texto en i18n → `pages.home.console.greeting` | |
+| Quitar el fundido al cambiar de claro a oscuro | `src/components/layout/ThemeToggle.astro` → la llamada a `startViewTransition` | |
+| Cambiar el color de la barra de desplazamiento | `src/styles/global.css` → `html { scrollbar-color … }` y las reglas `::-webkit-scrollbar` | |
 | Cambiar el prefijo `~/alex/` de los títulos | `SectionTitle.astro` → `prefix = '~/alex/'` | |
 | Quitar el efecto de ruta de los títulos | `HomeView.astro` → sustituir `<SectionTitle title={…} class="…" />` por un `<h2 class="…">{…}</h2>` | |
 | Desactivar la animación de apertura de los desplegables | `HomeView.astro` → `.about-panel::details-content` | |
@@ -119,6 +124,9 @@ La tabla de consulta rápida. Busca lo que quieres lograr y ve al archivo.
 | Cambiar el orden de las secciones | El orden de los `<section>` en `HomeView.astro` **y** el campo `order` en `homeNavItems` | |
 | Añadir, quitar o renombrar un enlace del menú | `src/config/nav.config.ts` → `homeNavItems` (+ `icons` de `FloatingNav.astro` para el móvil) | |
 | Cambiar el icono de un enlace en móvil | `FloatingNav.astro` → el mapa `icons` | |
+| Cambiar el ancho a partir del cual aparece el panel lateral (1280 px) | `HomeView.astro` → `@media (min-width: 1280px)` (y el mismo valor en `FloatingNav.astro` y en el script de la rejilla) | |
+| Cambiar el aspecto del panel lateral fijo | `HomeView.astro` → `.home-split` y reglas siguientes del bloque `@media (min-width: 1280px)` | |
+| Cambiar o quitar la rejilla de puntos con luz de cursor | `HomeView.astro` → `.home-content::before` / `::after` y el segundo `<script>` | |
 | Cambiar el ancho de la barra al hacer scroll | `FloatingNav.astro` → `MIN_WIDTH` (528) y `MAX_SCROLL` (1000), y la clase `md:w-[80%]` | |
 | Cambiar la altura de una sección | La clase del `<section>` en `HomeView.astro` (por ejemplo `min-h-[80svh]` en contacto) | |
 | Cambiar el número de columnas de los paneles de "Sobre mí" | `HomeView.astro` → `aboutColumns` (más de 6 paneles abre una tercera columna) | |
@@ -153,6 +161,7 @@ La tabla de consulta rápida. Busca lo que quieres lograr y ve al archivo.
 | Cambiar el favicon | Se genera con la inicial de `SITE_NAME` y `THEME_COLOR`. Para uno propio, ver la receta | [Favicon](03-recetas.md#usar-mi-propio-favicon) |
 | Cambiar las reglas de `robots.txt` | `src/pages/robots.txt.ts` | |
 | Cambiar el contenido de `llms.txt` | `src/pages/llms.txt.ts` | |
+| Cambiar el contenido de `humans.txt` | `src/pages/humans.txt.ts` (usa los datos de `site.config.ts`) | |
 | Cambiar el manifiesto (nombre al instalar la web como app) | `src/pages/manifest.webmanifest.ts` | |
 | Verificar la propiedad del sitio en Google o Bing | Variables de entorno `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` en el anfitrión | |
 | Definir el dominio al publicar | Variable `SITE_URL` en el anfitrión (`.env.example` muestra el formato) | [Publicar](03-recetas.md#publicar-con-un-dominio-propio) |
