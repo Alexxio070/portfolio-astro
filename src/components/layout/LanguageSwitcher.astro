@@ -60,7 +60,7 @@ const currentLanguageLabel = t('nav.currentLanguage', currentLocale);
         )}
         aria-haspopup="menu"
         aria-expanded="false"
-        aria-label={`${currentLanguageLabel}: ${getLocaleName(currentLocale)}. ${triggerLabel}.`}
+        aria-label={compact ? `${currentLanguageLabel}: ${getLocaleName(currentLocale)}. ${triggerLabel}.` : `${currentLocale} · ${currentLanguageLabel}: ${getLocaleName(currentLocale)}. ${triggerLabel}.`}
       >
         <svg
           class="h-4 w-4"
