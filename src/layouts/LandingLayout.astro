@@ -2,9 +2,6 @@
 /**
  * LandingLayout
  * Layout wrapper for the single-page home: the floating navigation bar and no footer.
- *
- * This layout is part of the "demo" layer - it can be optionally installed
- * via CLI for users who want the full landing page experience.
  */
 import BaseLayout from './BaseLayout.astro';
 import FloatingNav from '@/components/layout/FloatingNav.astro';
@@ -16,9 +13,7 @@ interface Props {
   imageAlt?: string;
   noindex?: boolean;
   nofollow?: boolean;
-  includeOrgSchema?: boolean;
   includePersonSchema?: boolean;
-  includeProfessionalServiceSchema?: boolean;
 }
 
 const {
@@ -28,9 +23,7 @@ const {
   imageAlt,
   noindex = false,
   nofollow = false,
-  includeOrgSchema = false,
   includePersonSchema = false,
-  includeProfessionalServiceSchema = false,
 } = Astro.props;
 ---
 
@@ -41,9 +34,7 @@ const {
   imageAlt={imageAlt}
   noindex={noindex}
   nofollow={nofollow}
-  includeOrgSchema={includeOrgSchema}
   includePersonSchema={includePersonSchema}
-  includeProfessionalServiceSchema={includeProfessionalServiceSchema}
 >
   <FloatingNav slot="header" />
 

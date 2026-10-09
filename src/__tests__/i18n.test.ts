@@ -14,12 +14,12 @@ import {
 
 describe('i18n t() helper', () => {
   it('returns a translation for a valid dotted key', () => {
-    expect(t('common.readMore', 'en')).toBe('Read more');
+    expect(t('common.backToTop', 'en')).toBe('Back to top');
   });
 
   it('falls back to the default-locale string when the locale has no entry', () => {
     // 'de' has no dictionary loaded yet — should fall back to English
-    expect(t('common.readMore', 'de')).toBe('Read more');
+    expect(t('common.backToTop', 'de')).toBe('Back to top');
   });
 
   it('returns the key itself when no translation exists in any dictionary', () => {
@@ -158,9 +158,6 @@ describe('i18n meta titles never embed the site name', () => {
   // would pull in `astro:env/server` (see i18n.config.ts).
   const SITE_NAME = 'Alejandro Vizán';
   const METATITLE_KEYS = [
-    'projects.metaTitle',
-    'projects.pageMetaTitle',
-    'projects.tagMetaTitle',
     'errors.metaTitle',
     'pages.home.meta.title',
   ];

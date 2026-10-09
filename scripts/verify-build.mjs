@@ -1,15 +1,12 @@
 /**
  * Checks that a finished build actually produced a usable site.
  *
- * Exit codes are not enough on their own. Both Cloudflare bugs behind #600
- * reported a successful build: the favicon endpoints wrote error text into
- * files named like images, and `nodejs_compat` made every page prerender to
- * the string "[object Object]" while the build logged nothing but success.
- * Anything that only watches for a non-zero exit misses both.
+ * Exit codes are not enough on their own. A build can report success while its
+ * favicon endpoints wrote error text into files named like images, or while
+ * every page rendered to the string "[object Object]". Anything that only
+ * watches for a non-zero exit misses both.
  *
- * Run after `astro build`, or via `pnpm verify:<target>`. Finds the output
- * directory itself, since it differs per adapter: Vercel and Cloudflare write
- * to `dist/client`, Netlify to `dist`.
+ * Run after `astro build`, or through `npm run verify`.
  */
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -39,11 +36,8 @@ async function exists(path) {
 }
 
 async function findOutputDir() {
-  for (const candidate of ['dist/client', 'dist']) {
-    const path = join(ROOT, candidate);
-    if (await exists(join(path, 'index.html'))) return path;
-  }
-  return null;
+  const path = join(ROOT, 'dist');
+  return (await exists(join(path, 'index.html'))) ? path : null;
 }
 
 async function walk(directory, match) {
@@ -61,7 +55,7 @@ const note = (message) => console.log(`  ${message}`);
 
 const out = await findOutputDir();
 if (!out) {
-  console.error('verify-build: no build output found — expected dist/client/index.html or dist/index.html');
+  console.error('verify-build: no build output found — expected dist/index.html');
   process.exit(1);
 }
 note(`output directory: ${out.replace(ROOT + '/', '')}`);
@@ -96,8 +90,8 @@ for (const [name, minBytes] of Object.entries(REQUIRED_ASSETS)) {
   if (size < minBytes) failures.push(`${name} is only ${size} bytes (expected at least ${minBytes})`);
 }
 
-// A favicon route that fails inside workerd still writes a file — of error
-// text. Check the magic bytes rather than trusting the extension.
+// A failed favicon render can still write a file, of error text. Check the
+// magic bytes rather than trusting the extension.
 const png = await readFile(join(out, 'favicon-32x32.png')).catch(() => null);
 if (png && !(png[0] === 0x89 && png[1] === 0x50 && png[2] === 0x4e && png[3] === 0x47)) {
   failures.push('favicon-32x32.png is not a PNG — first bytes are not the PNG signature');

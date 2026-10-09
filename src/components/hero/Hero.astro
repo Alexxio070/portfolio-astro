@@ -18,8 +18,6 @@ interface Props extends HTMLAttributes<'section'> {
   showBlob?: boolean;
   /** Render the light-mode architectural grid + dark-mode halo behind the hero */
   showHeroHalo?: boolean;
-  /** Blob position (only applies when showBlob is true) */
-  blobPosition?: 'left' | 'right' | 'center';
   /** Fade the bottom of the section into the next section's background */
   bottomFade?: boolean;
   /** Show an animated scroll indicator at the bottom (desktop only, hides on scroll) */
@@ -33,7 +31,6 @@ const {
   size = 'lg',
   showGrid = false,
   showBlob = false,
-  blobPosition: _blobPosition = 'center',
   showGlow = false,
   showHeroHalo = false,
   bottomFade = false,
@@ -148,8 +145,6 @@ const gridClasses = cn(
       </div>
     </div>
   )}
-
-  <slot name="background" />
 
   <div class={gridClasses}>
     {/* Content Column */}

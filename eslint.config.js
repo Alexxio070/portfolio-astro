@@ -24,7 +24,7 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', '.astro/', 'public/pagefind/', 'referencias/'],
+    ignores: ['dist/', 'node_modules/', '.astro/', '.claude/', 'referencias/'],
   },
   {
     rules: {

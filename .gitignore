@@ -3,12 +3,13 @@ node_modules/
 
 # Build output
 dist/
-.vercel/
-.netlify/
-.wrangler/
 
 # Astro
 .astro/
+
+# Cloudflare Wrangler: local cache and local secrets
+.wrangler/
+.dev.vars*
 
 # Environment variables
 .env

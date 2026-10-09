@@ -3,23 +3,11 @@ import { defaultLocale, t } from '@/i18n';
 import type { FooterLinkGroup } from '@/components/layout/Footer.astro';
 
 /**
- * The columns footer's default link groups, derived from what a site has.
- *
- * The alternative was a list someone types into config, which is how the
- * columns layout ended up rendering a logo and empty space: `linkGroups`
- * defaulted to `[]`, so anyone who found the layout and switched to it saw a
- * footer that looked broken. A default nobody configures has to fill itself.
- *
- * Each group is dropped when it has nothing in it, so the footer reports what
- * exists rather than what someone remembered to add. A new site with no posts
- * and no projects gets the site column alone, which renders as a simple
- * footer without anyone choosing a layout — and it fills out as the site
- * grows.
- *
- * Set `footerLinkGroups` in `nav.config.ts` to replace all of this.
+ * The footer's link groups: a Site column built from `footerNavItems`, followed
+ * by whatever `footerLinkGroups` in `nav.config.ts` adds. A group with no links
+ * is dropped, so the footer reports what exists rather than what someone
+ * remembered to add.
  */
-
-/** How many entries each derived group shows before it stops. */
 
 export async function getDerivedFooterGroups(
   locale: string = defaultLocale

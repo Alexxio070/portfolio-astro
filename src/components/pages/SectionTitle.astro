@@ -1,0 +1,163 @@
+---
+/**
+ * SectionTitle
+ * A section heading that is plain text until its section is the one on
+ * screen, and then is typed out as a path in a Linux shell: "About me"
+ * becomes `~/alex/about-me`. Moving on to another section erases it back to
+ * the plain title, so only the current section shows its path. Nothing to
+ * hover or wait for: the scroll is the trigger.
+ *
+ * The heading's own text stays the plain title, which is what screen readers
+ * and search engines get; the path is a decoration drawn over it and hidden
+ * from assistive technology. The slug is made from the title, so it follows
+ * the language: "Sobre mí" gives `sobre-mi`, "About me" gives `about-me`.
+ *
+ * The browser tab follows along: while a section is current, the tab reads
+ * `~/alex/<section> — <name>`, and goes back to the page's own title above the
+ * first section. Only the live tab changes; the title in the HTML, which is
+ * what search engines read, stays as the page set it.
+ *
+ * Without JavaScript the title simply stays plain. With reduced motion the
+ * path appears at once, without typing.
+ */
+interface Props {
+  title: string;
+  /** Start of the path, before the slug. */
+  prefix?: string;
+  /** Extra classes for the heading, for its size and weight. */
+  class?: string;
+}
+
+const { title, prefix = '~/alex/', class: className } = Astro.props;
+
+const slug = title
+  .normalize('NFD')
+  .replace(/[̀-ͯ]/g, '')
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+const length = prefix.length + slug.length;
+---
+
+<h2 class:list={['sec-title', className]} style={`--n:${length}`}>
+  <span class="sec-plain">{title}</span>
+  <span class="sec-path" aria-hidden="true"><span class="sec-prefix">{prefix}</span>{slug}</span>
+</h2>
+
+<style>
+  /* Both layers share one grid cell, so the heading's height never changes
+     when the path takes over. */
+  .sec-title {
+    display: grid;
+  }
+  .sec-plain,
+  .sec-path {
+    grid-area: 1 / 1;
+  }
+
+  .sec-path {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    /* Closed: nothing of the path shows. It is erased back quickly. */
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 260ms steps(8, end);
+  }
+  .sec-prefix {
+    color: var(--color-foreground-muted);
+    font-weight: 500;
+  }
+  /* The caret that blinks a few times once the path is typed. */
+  .sec-path::after {
+    content: '';
+    display: inline-block;
+    width: 0.4em;
+    height: 0.8em;
+    margin-left: 0.15em;
+    background: var(--color-brand-500);
+    border-radius: 1px;
+    opacity: 0;
+  }
+
+  /* The plain title is back as the path is erased, and goes as it is typed. */
+  .sec-plain {
+    transition:
+      opacity 220ms ease 140ms,
+      transform 220ms ease 140ms;
+  }
+  .sec-title.is-path .sec-plain {
+    opacity: 0;
+    transform: translateY(-0.2em);
+    transition-delay: 0ms;
+  }
+  .sec-title.is-path .sec-path {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path calc(var(--n) * 42ms) steps(var(--n), end) 180ms;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sec-title.is-path .sec-path::after {
+      animation: sec-caret 0.5s steps(1, end) 180ms 4 both;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sec-plain,
+    .sec-path,
+    .sec-title.is-path .sec-path {
+      transition: none;
+    }
+  }
+  @keyframes sec-caret {
+    0% {
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  // The title of whichever section crosses a line a little above the middle
+  // of the screen shows its path; the others show their plain title. A line
+  // rather than "the title is visible" so it reads the same on a phone, where
+  // the heading is on screen for a moment, and so a section is still current
+  // while its heading has scrolled out of view.
+  const titles = Array.from(document.querySelectorAll<HTMLElement>('.sec-title'));
+  const sections = titles.map((title) => title.closest('section'));
+  if (titles.length) {
+    // The page title is "<page> — <name>"; the tab keeps the name and swaps the rest.
+    const pageTitle = document.title;
+    const siteName = pageTitle.includes(' — ') ? pageTitle.split(' — ').pop() : pageTitle;
+    let shown = -2;
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const line = window.innerHeight * 0.4;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      let active = -1;
+      sections.forEach((section, i) => {
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= line && rect.bottom > line) active = i;
+      });
+      // A last section too short to ever reach the line is current at the foot.
+      if (atBottom) active = titles.length - 1;
+      titles.forEach((title, i) => title.classList.toggle('is-path', i === active));
+      if (active !== shown) {
+        shown = active;
+        const path = active >= 0 ? titles[active].querySelector('.sec-path')?.textContent?.trim() : '';
+        document.title = path ? `${path} — ${siteName}` : pageTitle;
+      }
+    };
+    const queue = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    update();
+  }
+</script>

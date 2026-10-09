@@ -1,11 +1,9 @@
 /**
  * Favicon generation — the raster half.
  *
- * `sharp` is a native Node module. It cannot load in workerd, so nothing here
- * may be imported by a page or by a prerendered endpoint when building for
- * Cloudflare. These are called from the `favicon-assets` integration in
- * `astro.config.mjs`, which runs in `astro:build:done` — always in Node, on
- * every adapter.
+ * `sharp` is a native Node module, so nothing here may be imported by a page.
+ * These functions are called from the `favicon-assets` integration in
+ * `astro.config.mjs`, which runs in `astro:build:done`, always in Node.
  */
 import sharp from 'sharp';
 import pngToIco from 'png-to-ico';

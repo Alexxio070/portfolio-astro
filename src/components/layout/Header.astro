@@ -28,7 +28,7 @@ import { headerVariants, headerInnerVariants } from './header.variants';
 import Button from '@/components/ui/form/Button/Button.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import Logo from '@/components/ui/marketing/Logo/Logo.astro';
-import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
+import ThemeToggle from '@/components/layout/ThemeToggle.astro';
 import ThemeSelector from '@/components/layout/ThemeSelector.astro';
 import ThemeSelectorDropdown from '@/components/layout/ThemeSelectorDropdown.astro';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
@@ -69,8 +69,9 @@ interface Props extends HTMLAttributes<'header'> {
   showLanguageSwitcher?: boolean;
   /**
    * Optional `locale -> URL` map forwarded to the LanguageSwitcher so it can
-   * link to the same content in each locale (e.g. a blog post's real
-   * per-locale URLs) instead of swapping the current path's locale segment.
+   * link to the same content in each locale (e.g. a page whose translation
+   * lives at a different URL) instead of swapping the current path's locale
+   * segment.
    */
   languageAlternates?: Record<string, string>;
   showSocialLinks?: boolean;
@@ -193,9 +194,7 @@ function getSocialIconData(url: string): { icon: string; label: string } {
 
 function getNavIcon(href: string): string {
   if (href === '/' || href === '') return 'home';
-  if (href.startsWith('/blog'))     return 'pen-line';
   if (href.startsWith('/projects')) return 'layers';
-  if (href.startsWith('/services')) return 'sparkles';
   if (href.startsWith('/about'))    return 'user';
   if (href.startsWith('/contact'))  return 'mail';
   if (href.startsWith('#'))         return 'hash';
@@ -288,7 +287,7 @@ const buttonId = `${menuId}-button`;
           <>
             {showThemeToggle && (
               <div class="flex">
-                <ThemeModeDropdown class={isFloating ? 'hdr-invert-text' : undefined} />
+                <ThemeToggle variant="pill" class={isFloating ? 'hdr-invert-text' : undefined} />
               </div>
             )}
 
@@ -1258,8 +1257,8 @@ const buttonId = `${menuId}-button`;
 
   /* End at `transform: none` (not translateY(0)) so each row drops its
      stacking context after the entry animation. Otherwise the
-     ThemeModeDropdown panel's z-50 is trapped inside its row and the
-     colour-theme swatches in the next row paint through it. */
+     colour-theme dropdown's z-50 is trapped inside its row and the swatches
+     in the next row paint through it. */
   @keyframes mobileMenuItemIn {
     from {
       opacity: 0;
@@ -1269,14 +1268,5 @@ const buttonId = `${menuId}-button`;
       opacity: 1;
       transform: none;
     }
-  }
-
-  /* While the theme-mode dropdown is open, promote its row to a positioned
-     stacking context above sibling rows. The row sits in a non-flex
-     <section>, so a bare `z-index` is inert — `position: relative` is what
-     lets the panel paint above the colour-theme swatches below it. */
-  .mobile-menu-stagger:has(.ttg-panel:not(.hidden)) {
-    position: relative;
-    z-index: 60;
   }
 </style>

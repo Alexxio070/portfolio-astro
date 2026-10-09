@@ -259,9 +259,9 @@ function getSocialIcon(platform: string): string {
   <div class={cn('mx-auto px-6', maxWidthClass)}>
     {layout === 'centered' && (
       <>
-        <!-- One centered axis, top to bottom: identity, then navigation. The
+        {/* One centered axis, top to bottom: identity, then navigation. The
              legal bar below shares the same centre line — no left-aligned
-             mass anywhere, matching centred page layouts. -->
+             mass anywhere, matching centred page layouts. */}
         <div class="flex flex-col items-center text-center gap-[var(--space-stack-lg)]">
           {!hideLogo && (
             <div class="flex flex-col items-center gap-3">
@@ -298,9 +298,9 @@ function getSocialIcon(platform: string): string {
           </nav>
         </div>
 
-        <!-- max-sm:pb-12 keeps the last centered line clear of the floating
+        {/* max-sm:pb-12 keeps the last centered line clear of the floating
              back-to-top button, which covers the bottom-right corner on
-             narrow viewports where the line runs nearly full-width. -->
+             narrow viewports where the line runs nearly full-width. */}
         {(showCopyright || resolvedLegalLinks.length > 0) && (
           <div class="mt-[var(--space-stack-lg)] pt-[var(--space-stack-lg)] max-sm:pb-12 border-t border-border flex flex-col items-center text-center gap-2">
             {showCopyright && (

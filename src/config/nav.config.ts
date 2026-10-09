@@ -17,8 +17,8 @@
  * You write each link once. When i18n is enabled, the Header and Footer
  * localize it automatically for the active locale:
  *
- * - **href** is locale-prefixed via `localizedPath` — `/blog` stays `/blog`
- *   on the default locale and becomes `/<locale>/blog` elsewhere — so nav
+ * - **href** is locale-prefixed via `localizedPath` — `/projects` stays `/projects`
+ *   on the default locale and becomes `/<locale>/projects` elsewhere — so nav
  *   keeps the visitor inside their locale. External, `mailto:`/`tel:`, and
  *   `#anchor` hrefs are left untouched.
  * - **label** is translated when you give the item a `labelKey` pointing at
@@ -45,7 +45,7 @@ export interface NavItem {
   href: string;
   order: number;
   external?: boolean;
-  /** i18n dictionary key for the label (e.g. `'nav.items.blog'`). Falls back to `label`. */
+  /** i18n dictionary key for the label (e.g. `'nav.items.projects'`). Falls back to `label`. */
   labelKey?: string;
   /** Per-locale label/path overrides, keyed by locale code. */
   locales?: Record<string, NavItemOverride>;
@@ -107,21 +107,12 @@ export const footerNavItems: NavItem[] = [
 export const legalLinks: LegalLink[] = [];
 
 /**
- * Extra columns for the footer's `columns` layout.
+ * Extra columns for the footer's `columns` layout, added after the Site column
+ * that the footer builds from `footerNavItems`. Only the 404 page shows a
+ * footer on this site.
  *
- * Leave this empty and the footer builds its own from the site: a Site column
- * from `footerNavItems`, a Topics column from the most-used blog tags, and a
- * Projects column from the visible projects. Each is dropped when it has
- * nothing in it, so a new site shows one column and fills out as it grows.
- *
- * Anything here is *added* to those, which is what this is for: a column the
- * site has that cannot be derived — a support column, an offices column, a
- * second product. To replace the derived set entirely rather than add to it,
- * pass `linkGroups` to `<Footer>` directly.
- *
- * Every link is real on the demo. A footer that pads itself out with links to
- * somewhere else is worse than a short one, and worse still on a theme people
- * fork: they inherit whatever is here.
+ * To replace the derived set entirely rather than add to it, pass
+ * `linkGroups` to `<Footer>` directly.
  */
 export const footerLinkGroups: FooterLinkGroupConfig[] = [
   {
